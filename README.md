@@ -1,20 +1,25 @@
-# Introduction 
-TODO: Give a short introduction of your project. Let this section explain the objectives or the motivation behind this project. 
+# Operación Pangea
+## Integrantes
+- Sergio Otero
+- Enrique Gonzalez
 
-# Getting Started
-TODO: Guide users through getting your code up and running on their own system. In this section you can talk about:
-1.	Installation process
-2.	Software dependencies
-3.	Latest releases
-4.	API references
+## Resumen
+- Se va a realizar un videojuego online del genero [clicker](https://es.wikipedia.org/wiki/Videojuego_incremental), el cual se basara en un multijugador en el cual varias personas lucharan por [el dominio total del mundo.](https://www.youtube.com/watch?v=raz5bQqXzJo)
 
-# Build and Test
-TODO: Describe and show how to build your code and run the tests. 
+## Descripción
+- Al realizar una revisión sobre los videojuegos del genero [clicker](https://es.wikipedia.org/wiki/Videojuego_incremental)(juego que consiste en dar clicks para incrementar el nivel e ir avanzando en el juego) encontramos que no existe alguno con características multijugador, pocos con un final y muy pocos con un time to win corto. Nosotros presentamos una solución a esta escases de alternativas, nuestro juego consiste en ser dueño de un ejercito, crecer y conquistar el mundo. El objetivo es conquistar el mayor numero de naciones antes que el resto de jugadores, esto se hará ganando soldados con clicks, comprando mejoras y activando poderes que aparecen en el mapa a lo largo del juego, los cuales ayudaran a nuestro propio ejercito o perjudicara al de los demás.  
 
-# Contribute
-TODO: Explain how other users and developers can contribute to make your code better. 
 
-If you want to learn more about creating good readme files then refer the following [guidelines](https://docs.microsoft.com/en-us/azure/devops/repos/git/create-a-readme?view=azure-devops). You can also seek inspiration from the below readme files:
-- [ASP.NET Core](https://github.com/aspnet/Home)
-- [Visual Studio Code](https://github.com/Microsoft/vscode)
-- [Chakra Core](https://github.com/Microsoft/ChakraCore)
+## Boceto
+- Login
+<IMG  src="https://cdn.discordapp.com/attachments/898369871912534016/1022290349542080512/unknown.png"/>
+- Pantalla principal
+<IMG  src="https://cdn.discordapp.com/attachments/898369871912534016/1022290372942114937/unknown.png"/>
+- Pantalla de mejoras
+<IMG  src="https://cdn.discordapp.com/attachments/898369871912534016/1022290396950319154/unknown.png"/>
+
+## Definition of ready
+- Las historias estarán listas para empezar una vez estén calificadas, ordenadas y con las funcionalidades implementadas necesarias para su desarrollo que sean de historias anteriores.
+
+## Definition of done
+- Las historias estarán completas cuando estén sus funcionalidades, integradas, desplegadas, pasen todas las pruebas de unidad y  pruebas de pruebas de aceptación.

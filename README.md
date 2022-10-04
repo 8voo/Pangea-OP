@@ -15,10 +15,14 @@
 
 
 <IMG  src="https://cdn.discordapp.com/attachments/898369871912534016/1022290349542080512/unknown.png"/>
+
+
 - Pantalla principal
 
 
 <IMG  src="https://cdn.discordapp.com/attachments/898369871912534016/1022290372942114937/unknown.png"/>
+
+
 - Pantalla de mejoras
 
 

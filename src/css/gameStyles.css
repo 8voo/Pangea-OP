@@ -1,0 +1,113 @@
+th, td{
+    padding: 5px;
+    border: 3px solid #d2533d
+}
+
+.tabla-datos{
+    border-collapse: collapse;
+    border: 3px solid #d2533d;
+    background-color: #ff995e;
+    width: 90%;
+    font-family: 'Black Ops One', cursive;
+}
+
+.container{
+    display: flex;
+    justify-content: center;
+}
+
+
+.tittle{
+    color: #ffc37c;
+    font-family: 'Black Ops One', cursive;
+}
+
+.boton{
+    margin-top: 5%;
+    padding: 5%;
+    border-radius: 5px;
+    font-family: 'Black Ops One', cursive;
+    color: #260a07;
+    overflow: hidden;
+    cursor: pointer;
+    background-color: #b25c41;
+    width: 90px;
+    transition: 0.5s;
+    display: flex;
+    justify-content: center;
+}
+
+.boton:hover{
+    background-color: #ffcb7c;
+    width: 130px;
+}
+
+.grid-item{
+    border: 3px solid #d2533d;
+    text-align: center;
+    padding-top: 10%;
+    padding-bottom: 10%;
+
+} .grid-item:hover{
+    background-color: #e2902c;
+    cursor: pointer;
+}
+
+#mejoras{
+    display: none;
+}
+
+#boton-crear-container{
+    margin-top: 5vh;
+}
+
+#game-map{
+    background-color: #ffc37c ;
+    width: 100%;
+    height: 70vh;
+    display: grid;
+    grid-template-columns: auto auto auto auto auto;
+    padding: 10px;
+    border: 3px solid #d2533d;
+}
+
+#game-container{
+    display: grid;
+    grid-template-columns: 70% 30%;
+    gap: 5px;
+    height: 70%;
+    width: 99%;
+    
+}
+
+#game-controller{
+    padding-top: 3%;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+}
+
+#tabla-top{
+    height: 40vh;
+}
+
+#crear{
+    border: 2px solid wheat;
+    background-image: radial-gradient(#9c352c ,60%, red);
+    font-family: 'Black Ops One', cursive;
+    border-radius: 100%;
+    width: 150px;
+    height: 150px;
+    transition:  0.1s;
+}
+
+#crear:hover{
+    border: 10px solid #9b190d;
+    font-weight:800;
+    background-image: radial-gradient(white ,60%, #d2533d);
+    outline: 10px dashed #9b190d;
+}
+
+#crear:active{
+    outline: none;
+    border: 10px dashed #9b190d;
+}

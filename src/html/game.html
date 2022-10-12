@@ -88,7 +88,7 @@
                     </table>
                 </div>
                 <div class="container" id="boton-crear-container">
-                    <button id="crear">Crear Soldados</button>
+                    <button id="crear" data-bind="click : addDisponibles">Crear Soldados</button>
                 </div>
             </div>
         </div>
@@ -103,9 +103,9 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <td>200</td>
-                        <td>200</td>
-                        <td>200</td>
+                        <td data-bind="text : soldadosDisponibles"></td>
+                        <td data-bind="text : nacionesConquistadas">200</td>
+                        <td data-bind="text : soldadosTotal">200</td>
                     </tbody>
                 </table>
             </div>
@@ -116,7 +116,10 @@
                 <h2 class="tittle">Poder Activo:</h2>
             </div>
         </div>
-        
     </div>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src = "..\lib\knockout.js"></script>
+    <script src = "..\lib\jquery.js"></script>
+    <script src = "..\js\game.js"></script>
 </body>
 </html>

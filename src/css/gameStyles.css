@@ -53,6 +53,13 @@ th, td{
     cursor: pointer;
 }
 
+.power-alert{
+    background-color: #ad3326;
+    border: 5px solid #F0E1A1;
+    border-radius: 10px;
+    text-align: center;
+}
+
 #mejoras{
     display: none;
 }

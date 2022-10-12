@@ -91,16 +91,18 @@ th, td{
 }
 
 #crear{
-    border: 2px solid wheat;
-    background-image: radial-gradient(#9c352c ,60%, red);
+    border: 4px solid wheat;
+    background-image: radial-gradient( #9c352c,60%, #630d04);
     font-family: 'Black Ops One', cursive;
     border-radius: 100%;
     width: 150px;
     height: 150px;
     transition:  0.1s;
+    color: wheat;
 }
 
 #crear:hover{
+    color: black;
     border: 10px solid #9b190d;
     font-weight:800;
     background-image: radial-gradient(white ,60%, #d2533d);

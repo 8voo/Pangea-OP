@@ -70,7 +70,7 @@ th, td{
 
 #game-map{
     background-color: #ffc37c ;
-    width: 100%;
+    width: 70vw;
     height: 70vh;
     display: grid;
     grid-template-columns: auto auto auto auto auto;
@@ -83,7 +83,7 @@ th, td{
     grid-template-columns: 70% 30%;
     gap: 5px;
     height: 70%;
-    width: 99%;
+    width: 100vw;
     
 }
 
@@ -119,4 +119,22 @@ th, td{
 #crear:active{
     outline: none;
     border: 10px dashed #9b190d;
+}
+
+#power{
+    height: 50px;
+    width: 50px;
+    top: 100%;
+    left: 100%;
+    position: relative;
+    background-color: wheat;
+    border-radius: 50%;
+    padding: 1px;
+    cursor: pointer;
+}
+
+#power-container{
+    width: 60vw;
+    height: 60vh;
+    position: absolute;
 }

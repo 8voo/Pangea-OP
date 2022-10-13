@@ -12,6 +12,9 @@
         <div id="game-container">
             <div class="container" id="map">
                 <div id="game-map">
+                    <a id = "power-container">
+                        <img id = "power" data-bind="attr : { src : iconImage }, click : changePower" alt="poder">
+                    </a>
                     <div class="grid-item">1</div>
                     <div class="grid-item">2</div>
                     <div class="grid-item">3</div>  
@@ -116,6 +119,7 @@
                 <h2 class="tittle">Poder Activo:</h2>
             </div>
         </div>
+        
     </div>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script src = "..\lib\knockout.js"></script>

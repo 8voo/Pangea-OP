@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pangea</title>
+    <link rel="stylesheet" href="..\css\styles.css" type="text/css">
+    <link rel="stylesheet" href="..\css\gameStyles.css" type="text/css">
+</head>
+<body>
+    <div>
+        <div id="game-container">
+            <div class="container" id="map">
+                <div id="game-map">
+                    <a id = "power-container">
+                        <img id = "power" data-bind="attr : { src : iconImage }, click : changePower" alt="poder">
+                    </a>
+                    <div class="grid-item">1</div>
+                    <div class="grid-item">2</div>
+                    <div class="grid-item">3</div>  
+                    <div class="grid-item">4</div>
+                    <div class="grid-item">5</div>
+                    <div class="grid-item">1</div>
+                    <div class="grid-item">2</div>
+                    <div class="grid-item">3</div>  
+                    <div class="grid-item">4</div>
+                    <div class="grid-item">5</div>
+                    <div class="grid-item">1</div>
+                    <div class="grid-item">2</div>
+                    <div class="grid-item">3</div>  
+                    <div class="grid-item">4</div>
+                    <div class="grid-item">5</div>
+                    <div class="grid-item">1</div>
+                    <div class="grid-item">2</div>
+                    <div class="grid-item">3</div>  
+                    <div class="grid-item">4</div>
+                    <div class="grid-item">5</div>
+                    <div class="grid-item">1</div>
+                    <div class="grid-item">2</div>
+                    <div class="grid-item">3</div>  
+                    <div class="grid-item">4</div>
+                    <div class="grid-item">5</div>
+                    <div class="grid-item">1</div>
+                    <div class="grid-item">2</div>
+                    <div class="grid-item">3</div>  
+                    <div class="grid-item">4</div>
+                    <div class="grid-item">5</div>
+
+                </div>
+            </div>
+            <div>
+                <div class="container">
+                    <div><h1 class="tittle">TOP 5</h></div>
+                </div>
+                <div id = "table-container" class="container">
+                    <table id="tabla-top" class="tabla-datos">
+                        <thead>
+                            <tr>
+                                <th>Nombre</th>
+                                <th>Soldados</th>
+                                <th>Naciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>          
+                            <tr>
+                                <td>Name1</td>
+                                <td>3</td>
+                                <td>42432</td>
+                            </tr>
+                            <tr>
+                                <td>Name1</td>
+                                <td>3</td>
+                                <td>42432</td>
+                            </tr>
+                            <tr>
+                                <td>Name1</td>
+                                <td>3</td>
+                                <td>42432</td>
+                            </tr>
+                            <tr>    
+                                <td>Name1</td>
+                                <td>3</td>
+                                <td>42432</td>
+                            </tr>
+                            <tr>
+                                <td>Name1</td>
+                                <td>3</td>
+                                <td>42432</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="container" id="boton-crear-container">
+                    <button id="crear" data-bind="click : addDisponibles">Crear Soldados</button>
+                </div>
+            </div>
+        </div>
+        <div id="game-controller">
+            <div id="info-personal" class="container">
+                <table id="tabla-perso" class="tabla-datos">
+                    <thead>
+                        <tr>
+                            <th>Soldados disponibles</th>
+                            <th>Naciones conquistadas</th>
+                            <th>Total soldados</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <td data-bind="text : soldadosDisponibles"></td>
+                        <td data-bind="text : nacionesConquistadas">200</td>
+                        <td data-bind="text : soldadosTotal">200</td>
+                    </tbody>
+                </table>
+            </div>
+            <div id="mejoras" class="container" >
+                <button class="boton">Mejoras</button>
+            </div>
+            <div id="poder-activo" class="container">
+                <h2 class="tittle">Poder Activo:</h2>
+            </div>
+        </div>
+        
+    </div>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src = "..\lib\knockout.js"></script>
+    <script src = "..\lib\jquery.js"></script>
+    <script src = "..\js\game.js"></script>
+</body>
+</html>

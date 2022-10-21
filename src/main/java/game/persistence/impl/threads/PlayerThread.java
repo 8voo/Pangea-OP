@@ -11,4 +11,6 @@ public class PlayerThread {
     public void run(){
 
     }
+    public void start() {
+    }
 }

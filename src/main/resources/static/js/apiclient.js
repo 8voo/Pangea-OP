@@ -14,11 +14,17 @@ var apiclient = (function(){
         },
 
         changeListo: function(nickname){
-            var datos = JSON.stringify(true);
+            var boton = $('#listeado');
+            if(boton.prop('nodeName') == "BUTTON"){
+                var listo = JSON.stringify(true);
+            }else{
+                var listo = JSON.stringify(false);
+            }
+            
             $.ajax({
                 type:'PUT',
                 url:'player/' + nickname,
-                data:datos,
+                data:listo,
                 contentType: "application/json"
             })
         }

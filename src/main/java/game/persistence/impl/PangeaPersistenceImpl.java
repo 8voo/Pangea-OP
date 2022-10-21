@@ -29,6 +29,16 @@ public class PangeaPersistenceImpl implements PangeaPersistence{
     }
 
     @Override
+    public Player getPlayer(String nickname){
+        for(Player p :players){
+            if(p.getNickname() == nickname){
+                return p;
+            }
+        }
+        return null;
+    }
+
+    @Override
     public boolean allReady() {
         for(Player p: players){
             if(p.isListo() == false){

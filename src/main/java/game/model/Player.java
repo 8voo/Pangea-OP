@@ -2,16 +2,14 @@ package game.model;
 
 public class Player {
     private int id;
-    private String nickname;
+    private String nickname="";
     private int soldadosDisponibles = 0;
     private int soldadosTotales = 0;
     private int nacionesTotal=1;
     private boolean listo = false;
 
 
-    public Player(String nickname){
-        this.nickname = nickname;
-    }
+
 
     public void setId(int id){
         this.id = id;

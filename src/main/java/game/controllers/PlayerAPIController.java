@@ -34,6 +34,23 @@ public class PlayerAPIController {
         pgs.addNewPlayer(p);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
+
+    @RequestMapping(path="{nickname}/" ,method = RequestMethod.PUT)
+    public ResponseEntity<?> changeToReady(@PathVariable String nickname, @RequestBody boolean state){
+        Player player = pgs.getPlayer(nickname);
+        player.setListo(state);
+        return new ResponseEntity<>(HttpStatus.CREATED);
+    }
+    
+    @RequestMapping(method = RequestMethod.GET, path = "{nickname}")
+    public ResponseEntity<?> getPlayerByNickname(@PathVariable String nickname){
+        if(pgs.getPlayer(nickname) == null){
+            return new ResponseEntity<>( HttpStatus.NOT_FOUND);
+        }else{
+            return new ResponseEntity<>(new Gson().toJson(pgs.getPlayer(nickname)), HttpStatus.ACCEPTED);
+        }
+    }
+
     
 
 }

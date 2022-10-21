@@ -13,4 +13,5 @@ public interface PangeaPersistence {
     public ArrayList<Player> getAllPlayers();
 
     public boolean allReady();
+    public Player getPlayer(String nickname);
 }

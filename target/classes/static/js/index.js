@@ -13,7 +13,13 @@ var index = (function(){
         }
     }
 
+    var disableInput = function(){
+        var input = $('#nickname');
+        input.prop('disabled', true);
+    }
+
     return{
-        toggleListo: toggleListo
+        toggleListo: toggleListo,
+        disableInput:disableInput
     }
 })()

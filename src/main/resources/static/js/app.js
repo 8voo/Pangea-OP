@@ -1,31 +1,32 @@
 var app = (function(){
     allPlayersReady = function(){
         allready = false;
-        while (!allready){
+        index.toggleListo();
+        apiclient.changeListo($('#nickname').val());
+        console.log($('#nickname').val())
+        //while (!allready){
             allready = JSON.parse($.ajax({type:'GET', url:'player/ready', async:false}).responseText);
+            console.log(allready);
             if(allready){
                 console.log("Todos listos");
             }
-        }
+        //}
         
     },
 
-    toggleListo = function(){
-        index.toggleListo();
-    },
 
     addPlayer = function(){
         var nickname = $("#nickname").val();
-        console.log(nickname);
+        index.disableInput();
         apiclient.addPlayer(nickname).then(() => {
-            console.log("añadioestamondaaaaaa");
+            console.log("Jugador añadido");
         })
-        .catch(error => console.log("noañadioestamondaaaaaa"));
+        .catch(error => console.log("No se pudo añadir el jugador"));
     }
 
 
     return{
-        toggleListo: toggleListo,
+        allPlayersReady:allPlayersReady,
         addPlayer:addPlayer
         
     }

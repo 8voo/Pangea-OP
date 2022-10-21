@@ -25,6 +25,10 @@ public class PangeaServices {
         return pp.allReady();
     }
 
+    public Player getPlayer(String nickname){
+        return pp.getPlayer(nickname);
+    }
+
     public void addNewPlayer(Player player){
         pp.addPlayer(player);
     }
@@ -32,4 +36,6 @@ public class PangeaServices {
     public void addOneSol(Player player){
         pp.addSoldier(player);
     }
+
+    
 }

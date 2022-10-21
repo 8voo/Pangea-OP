@@ -1,5 +1,7 @@
 package game.services;
 
+import java.util.ArrayList;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +15,14 @@ public class PangeaServices {
 
     public void setPangeaPersistence(PangeaPersistence pp){
         this.pp = pp;
+    }
+
+    public ArrayList<Player> getAllPlayers(){
+        return pp.getAllPlayers();
+    }
+
+    public boolean allReady(){
+        return pp.allReady();
     }
 
     public void addNewPlayer(Player player){

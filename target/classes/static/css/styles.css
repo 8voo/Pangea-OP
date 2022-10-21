@@ -6,6 +6,24 @@ body{
     background-color: #260a07;
 }
 
+button {
+    margin-top: 5%;
+    padding: 5%;
+    border-radius: 5px;
+    font-family: 'Peralta', cursive;
+    color: #260a07;
+    overflow: hidden;
+    cursor: pointer;
+    background-color: #b25c41;
+    width:80px;
+    transition: 0.2s;
+}
+
+button:active{
+    background-color: #662f1e;
+    color: wheat;
+}
+
 .header{
     text-align: center;
 } .header h1{

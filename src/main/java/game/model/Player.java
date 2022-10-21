@@ -1,15 +1,20 @@
 package game.model;
 
 public class Player {
-    private int soldadosDisponibles;
-    private int soldadosTotales;
-    private int nacionesTotal;
+    private int id;
+    private String nickname;
+    private int soldadosDisponibles = 0;
+    private int soldadosTotales = 0;
+    private int nacionesTotal=1;
+    private boolean listo = false;
 
 
-    public Player(int disponibles, int totales, int naciones){
-        this.soldadosTotales = totales;
-        this.soldadosDisponibles = disponibles;
-        this.nacionesTotal = naciones;
+    public Player(String nickname){
+        this.nickname = nickname;
+    }
+
+    public void setId(int id){
+        this.id = id;
     }
 
     public void setSoldadosTotales(int soldados){
@@ -24,6 +29,14 @@ public class Player {
         this.soldadosDisponibles = soldados;
     }
 
+    public void setListo(boolean listo){
+        this.listo = listo;
+    }
+
+    public void setNickname(String nickname){
+        this.nickname = nickname;
+    }
+
     public int getSoldadosDisponibles(){
         return this.soldadosDisponibles;
     }
@@ -34,6 +47,17 @@ public class Player {
 
     public int getNaciones(){
         return this.nacionesTotal;
+    }
+    
+    public boolean isListo(){
+        return listo;
+    }
+    public int getId(){
+        return id;
+    }
+
+    public String getNickname(){
+        return this.nickname;
     }
 
     public void addOneSol(){

@@ -29,25 +29,14 @@
 }
 
 /* Seventh Button */
-#boton-listo{
-    margin-top: 5%;
-    padding: 5%;
-    border-radius: 5px;
-    font-family: 'Peralta', cursive;
-    color: #260a07;
-    overflow: hidden;
-    cursor: pointer;
-    background-color: #b25c41;
-    width:80px;
-    transition: 0.5s;
-}
 
 #boton-listo:hover{
     background-color: #ffcb7c;
     width: 130px;
 }
 
-#boton-listo:active{
+#listeado{
+    transition: 0.5s;
     background-color: green;
     border-radius: 100%;
     width: 49.2px;

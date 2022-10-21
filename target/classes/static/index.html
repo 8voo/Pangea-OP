@@ -17,13 +17,18 @@
         <div class="nickname-div">
             <div>
                 <h2>Ingrese su nickname</h2>
-                <input type="text" placeholder="Nickname" autofocus/>
+                <input id="nickname" type="text" placeholder="Nickname" autofocus/>
                 <div class = "button-container">
-                    <button id="boton-listo" hr>Listo!</button>
+                    <button onclick="app.addPlayer()">Crear!</button>
+                    <button id="boton-listo" onclick="app.toggleListo()" >Listo!</button>
                 </div>
             </div>
         </div>
         
     </div>
+    <script src = "lib\jquery.js"></script>
+    <script src = "js\index.js"></script>
+    <script src = "js\app.js"></script>
+    <script src = "js\apiclient.js"></script>
 </body>
 </html>

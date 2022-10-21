@@ -20,4 +20,11 @@ public class PangeaPersistenceImpl implements PangeaPersistence{
     public void addSoldier(Player player){
         player.addOneSol();
     }
+    
+    public void playersThreats(){
+        for (Player p : players){
+            
+        }
+    }
+
 }

@@ -64,12 +64,10 @@
                                 <th>Naciones</th>
                             </tr>
                         </thead>
-                        <tbody>          
-                            <tr>
-                                <td>Name1</td>
-                                <td>3</td>
-                                <td>42432</td>
-                            </tr>
+                        <tbody data-bind = "foreach: players">
+                            <td data-bind = "text: nickname"></td>
+                            <td data-bind = "text: soldadosTotales"></td>
+                            <td data-bind = "text: nacionesTotal"></td>
                         </tbody>
                     </table>
                 </div>

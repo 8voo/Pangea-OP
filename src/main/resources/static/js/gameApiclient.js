@@ -12,19 +12,13 @@ var gameApiclient = (function(){
                 }))
             })
     },
-    getDisponibleSoldiers:function(nickname){
+    getSoldiers:function(nickname){
       return JSON.parse($.ajax({
         type:'GET',
-        url: "../player/" + nickname + "/disponibles", 
+        url: "../player/" + nickname + "/soldierQuantity", 
         async:false
       }).responseText); 
     },
-    getTotalSoldiers:function(nickname){
-      return JSON.parse($.ajax({
-        type:'GET',
-        url: "../player/" + nickname + "/totales", 
-        async:false
-      }).responseText); 
-    }
+    
   }  
 })();

@@ -14,17 +14,17 @@ var game = (function(){
     self.nacionesConquistadas = ko.observable(0);
     self.iconImage = ko.observable(powerIcons["congelar"]);
     self.activePower = "congelar";
+    self.players = ko.observable(JSON.parse($.ajax({type:'GET', url:'../player', async:false}).responseText));
 
     //Con cada click al boton de crear, suma la cantidad de soldados
     //predeterminados a la cantidad de soldados disponibles del usuario
     self.addDisponibles = function(){
         gameApiclient.addSoldier(self.nickname(), self.clickSum).then(() => {
+            self.soldadosDisponibles(gameApiclient.getSoldiers(self.nickname())[0]);
+            self.soldadosTotal(gameApiclient.getSoldiers(self.nickname())[1]);
+            stompClient.send("/topic/soldiers", {}, JSON.stringify("añadio soldados stomp"));
             console.log("Soldado añadido");
         }).catch(error => console.log("No se pudo añadir el soldado"));
-        self.soldadosDisponibles(gameApiclient.getDisponibleSoldiers(self.nickname()));
-        // console.log("disponible" + gameApiclient.getDisponibleSoldiers(self.nickname()));
-        self.soldadosTotal(gameApiclient.getTotalSoldiers(self.nickname()))
-        // console.log("Total" + gameApiclient.getTotalSoldiers(self.nickname()));
     },
 
     //Cambia el icono del poder que se va a desplegar
@@ -65,16 +65,19 @@ var game = (function(){
         //subscribe to /topic/TOPICXX when connections succeed
         stompClient.connect({}, function (frame) {
             console.log('Connected: ' + frame);
-            stompClient.subscribe('/game/players', function () {
-                // actualizeSoldiers();
-            });
-            stompClient.subscribe('/game/soldiers', function () {
-                // actualizeSoldiers();
+            stompClient.subscribe('/topic/soldiers', function () {
+                actualizeTable();
             });
         });
     },
+
+    self.actualizeTable = function(){
+        console.log("actualicetable")
+        self.players(JSON.parse($.ajax({type:'GET', url:'../player', async:false}).responseText));
+    }
     
     connect = (function(){
+        console.log("entro connect")
         self.connectAndSubscribe();
     })();
 

@@ -17,7 +17,6 @@ public class RealTimeGameConfig extends AbstractWebSocketMessageBrokerConfigurer
     @Override
     public void configureMessageBroker(MessageBrokerRegistry config) {
         config.enableSimpleBroker("/topic");
-        // config.enableSimpleBroker("/game");
         config.setApplicationDestinationPrefixes("/app");        
     }
 

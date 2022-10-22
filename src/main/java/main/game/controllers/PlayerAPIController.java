@@ -1,4 +1,6 @@
 package main.game.controllers;
+import java.util.ArrayList;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,16 +25,13 @@ public class PlayerAPIController {
         return new ResponseEntity<>(new Gson().toJson(pgs.getAllPlayers()), HttpStatus.ACCEPTED);
     }
 
-    @RequestMapping(path = "{nickname}/disponibles", method = RequestMethod.GET)
+    @RequestMapping(path = "{nickname}/soldierQuantity", method = RequestMethod.GET)
     public ResponseEntity<?> getDisponibleSoldiers(@PathVariable String nickname){
         Player player = pgs.getPlayer(nickname);
-        return new ResponseEntity<>(new Gson().toJson(player.getSoldadosDisponibles()), HttpStatus.ACCEPTED);
-    }
-
-    @RequestMapping(path = "{nickname}/totales", method = RequestMethod.GET)
-    public ResponseEntity<?> getTotalSoldiers(@PathVariable String nickname){
-        Player player = pgs.getPlayer(nickname);
-        return new ResponseEntity<>(new Gson().toJson(player.getSoldadosTotales()), HttpStatus.ACCEPTED);
+        ArrayList<Integer> soldadosq = new ArrayList<Integer>();
+        soldadosq.add(player.getSoldadosDisponibles());
+        soldadosq.add(player.getSoldadosTotales());
+        return new ResponseEntity<>(new Gson().toJson(soldadosq), HttpStatus.ACCEPTED);
     }
 
     @RequestMapping(path = "ready", method = RequestMethod.GET)
@@ -57,7 +56,6 @@ public class PlayerAPIController {
 
     @RequestMapping(path = "{nickname}/soldiers", method = RequestMethod.PUT)
     public ResponseEntity<?> addSoldiers(@PathVariable String nickname, @RequestBody String quant){
-
         pgs.addOneSol(pgs.getPlayer(nickname));
         return new ResponseEntity<>(HttpStatus.CREATED);
     }

@@ -32,7 +32,6 @@ public class PangeaPersistenceImpl implements PangeaPersistence{
     public Player getPlayer(String nickname){
         for(Player p :players){
             if(p.getNickname().equals(nickname)){
-                System.out.println("Entro");
                 return p;
             }
         }

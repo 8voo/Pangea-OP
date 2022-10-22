@@ -3,28 +3,38 @@ var app = (function(){
         index.toggleListo();
         allready = false;
         apiclient.changeListo($('#nickname').val());
-        console.log($('#nickname').val())
-        // while (!allready){
-            jugadores =JSON.parse($.ajax({type:'GET', url:'player', async:false}).responseText); 
-            if(jugadores.length > 1 ){
-                allready = JSON.parse($.ajax({type:'GET', url:'player/ready', async:false}).responseText);
+        stompClient.send("/topic/ready.", {}, JSON.stringify("Jugador"+ nickname+"listo"));
+    },
+
+
+   
+
+    addPlayer = function(){
+        var nickname = $("#nickname").val();
+        $("#crear").hide();
+        $("#boton-listo").show();
+        if (nickname){
+            index.disableInput();
+            apiclient.addPlayer(nickname).then(() => {
+                console.log("Jugador añadido");
+            })
+            .catch(error => console.log("No se pudo añadir el jugador"));
+        } else {
+            alert("El Nickname no puede ser vacio");
+        }
+    },
+
+
+    redirect = function(){
+        jugadores =JSON.parse($.ajax({type:'GET', url:'player', async:false}).responseText); 
+        if(jugadores.length > 1 ){
+            allready = JSON.parse($.ajax({type:'GET', url:'player/ready', async:false}).responseText);
             console.log(allready);
             if(allready){
                 location.href = "http://localhost:8080/html/game.html"
                 console.log("Todos listos");
             }
-            }
-        // }
-    },
-
-
-    addPlayer = function(){
-        var nickname = $("#nickname").val();
-        index.disableInput();
-        apiclient.addPlayer(nickname).then(() => {
-            console.log("Jugador añadido");
-        })
-        .catch(error => console.log("No se pudo añadir el jugador"));
+        }
     },
 
     connectAndSubscribe = function(){
@@ -35,9 +45,8 @@ var app = (function(){
         //subscribe to /topic/TOPICXX when connections succeed
         stompClient.connect({}, function (frame) {
             console.log('Connected: ' + frame);
-            stompClient.subscribe('/topic/newpoint.' + id, function (ola) {
-                console.log(id)
-                messiCallback(ola);
+            stompClient.subscribe('/topic/ready.', function () {
+                redirect();
             });
         });
     }
@@ -46,6 +55,7 @@ var app = (function(){
         allPlayersReady:allPlayersReady,
         addPlayer:addPlayer,
         conncect:function(){
+            connectAndSubscribe();
         }
     }
 })();

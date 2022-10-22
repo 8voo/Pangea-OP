@@ -12,7 +12,7 @@
     <title>Pangea</title>
 
 </head>
-<body>
+<body onload="app.conncect()">
     <div>
         <div class="header">
             <h1>Pangea Op</h1>
@@ -22,7 +22,7 @@
                 <h2>Ingrese su nickname</h2>
                 <input id="nickname" type="text" placeholder="Nickname" autofocus/>
                 <div class = "button-container">
-                    <button onclick="app.addPlayer()">Crear!</button>
+                    <button id="crear" onclick="app.addPlayer()">Crear!</button>
                     <button id="boton-listo" onclick="app.allPlayersReady()" >Listo!</button>
                 </div>
             </div>
@@ -32,6 +32,7 @@
     <script src = "lib\jquery.js"></script>
     <script src = "js\index.js"></script>
     <script src = "js\app.js"></script>
+    <script src = "js\game.js"></script>
     <script src = "js\apiclient.js"></script>
 </body>
 </html>

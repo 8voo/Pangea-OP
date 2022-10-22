@@ -28,7 +28,9 @@
     margin-top : 5%;
 }
 
-/* Seventh Button */
+#boton-listo{
+    display: none;
+}
 
 #boton-listo:hover{
     background-color: #ffcb7c;

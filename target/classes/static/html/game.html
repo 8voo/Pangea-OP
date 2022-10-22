@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="..\css\styles.css" type="text/css">
     <link rel="stylesheet" href="..\css\gameStyles.css" type="text/css">
 </head>
-<body>
+<body onload="connect">
     <div>
         <div id="game-container">
             <div class="container" id="map">
@@ -67,26 +67,6 @@
                                 <td>3</td>
                                 <td>42432</td>
                             </tr>
-                            <tr>
-                                <td>Name1</td>
-                                <td>3</td>
-                                <td>42432</td>
-                            </tr>
-                            <tr>
-                                <td>Name1</td>
-                                <td>3</td>
-                                <td>42432</td>
-                            </tr>
-                            <tr>    
-                                <td>Name1</td>
-                                <td>3</td>
-                                <td>42432</td>
-                            </tr>
-                            <tr>
-                                <td>Name1</td>
-                                <td>3</td>
-                                <td>42432</td>
-                            </tr>
                         </tbody>
                     </table>
                 </div>
@@ -100,12 +80,14 @@
                 <table id="tabla-perso" class="tabla-datos">
                     <thead>
                         <tr>
+                            <th>Mi nickname</th>
                             <th>Soldados disponibles</th>
                             <th>Naciones conquistadas</th>
                             <th>Total soldados</th>
                         </tr>
                     </thead>
                     <tbody>
+                        <td data-bind="text : nickname"></td>
                         <td data-bind="text : soldadosDisponibles"></td>
                         <td data-bind="text : nacionesConquistadas">200</td>
                         <td data-bind="text : soldadosTotal">200</td>
@@ -125,5 +107,6 @@
     <script src = "..\lib\knockout.js"></script>
     <script src = "..\lib\jquery.js"></script>
     <script src = "..\js\game.js"></script>
+    
 </body>
 </html>

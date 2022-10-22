@@ -42,6 +42,11 @@ public class PlayerAPIController {
         player.setListo(state);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
+
+    @RequestMapping(path = "{nickname}/soldiers", method = RequestMethod.PUT)
+    public ResponseEntity<?> addSoldiers(@PathVariable String nickname, @RequestBody boolean quant){
+        return new ResponseEntity<>(HttpStatus.CREATED);
+    }
     
     @RequestMapping(method = RequestMethod.GET, path = "{nickname}")
     public ResponseEntity<?> getPlayerByNickname(@PathVariable String nickname){

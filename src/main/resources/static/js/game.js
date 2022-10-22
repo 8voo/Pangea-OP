@@ -1,12 +1,14 @@
-var powerIcons = { 
+var powerIcons = {
     
     tripleClick : "../img/click.png", 
     quitaSoldados : "../img/soldado.png", 
     congelar : "../img/winter.png"
 }
 
-var game = function(){
+var game = (function(){
+    
     var self = this;
+    self.nickname = ko.observable("");
     self.clickSum = 1;
     self.soldadosDisponibles = ko.observable(0);
     self.soldadosTotal = ko.observable(0);
@@ -14,6 +16,10 @@ var game = function(){
     self.iconImage = ko.observable(powerIcons["congelar"]);
     self.activePower = "congelar";
 
+
+    self.setNickName = function(newNickname){
+        self.nickname(newNickname);
+    },
     //Con cada click al boton de crear, suma la cantidad de soldados
     //predeterminados a la cantidad de soldados disponibles del usuario
     self.addDisponibles = function(){
@@ -21,7 +27,8 @@ var game = function(){
         self.soldadosDisponibles(currentDisponible + clickSum);
         var currentTotal = self.soldadosTotal();
         self.soldadosTotal(currentTotal + clickSum);
-    }
+        gameApiclient.addSoldier(self.nickname, self.clickSum);
+    },
 
     //Cambia el icono del poder que se va a desplegar
     self.changePower = function(){
@@ -43,15 +50,40 @@ var game = function(){
         setTimeout(() => {
             currentPower.style.visibility = "visible";
         }, 60)//60000
-    }
+    },
 
     //Alerta sobre el poder que se ha activado
-    var activarAlerta = function(){
+    activarAlerta = function(){
         swal("Se ha utilizado un poder!", "'Jugador' ha activado " + activePower.toUpperCase(), "warning", {
             button : false,
             className : "power-alert"
         });
+    },
+    
+    connectAndSubscribe = function(){
+        console.info('Connecting to WS...');
+        var socket = new SockJS('/stompendstart');
+        stompClient = Stomp.over(socket);
+        
+        //subscribe to /topic/TOPICXX when connections succeed
+        stompClient.connect({}, function (frame) {
+            console.log('Connected: ' + frame);
+            stompClient.subscribe('/game/players', function () {
+                // actualizeSoldiers();
+            });
+            stompClient.subscribe('/game/soldiers', function () {
+                // actualizeSoldiers();
+            });
+        });
     }
-}
 
+    return{
+        addDisponibles:addDisponibles,
+        changePower:changePower,
+        setNickName: setNickName,
+        connect:function(){
+            connectAndSubscribe();
+        }
+    }
+});
 ko.applyBindings(game());

@@ -27,14 +27,15 @@ var app = (function(){
 
     redirect = function(){
         jugadores =JSON.parse($.ajax({type:'GET', url:'player', async:false}).responseText); 
-        if(jugadores.length > 1 ){
+        // if(jugadores.length > 1 ){
             allready = JSON.parse($.ajax({type:'GET', url:'player/ready', async:false}).responseText);
             console.log(allready);
             if(allready){
+                localStorage.nickname = JSON.stringify($("#nickname").val());
                 location.href = "http://localhost:8080/html/game.html"
                 console.log("Todos listos");
             }
-        }
+        // }
     },
 
     connectAndSubscribe = function(){
@@ -54,7 +55,7 @@ var app = (function(){
     return{
         allPlayersReady:allPlayersReady,
         addPlayer:addPlayer,
-        conncect:function(){
+        connect:function(){
             connectAndSubscribe();
         }
     }

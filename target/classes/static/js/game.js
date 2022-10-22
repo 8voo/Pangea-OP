@@ -8,7 +8,7 @@ var powerIcons = {
 var game = (function(){
     
     var self = this;
-    self.nickname = ko.observable("");
+    self.nickname = ko.observable(JSON.parse(localStorage.nickname));
     self.clickSum = 1;
     self.soldadosDisponibles = ko.observable(0);
     self.soldadosTotal = ko.observable(0);
@@ -17,9 +17,6 @@ var game = (function(){
     self.activePower = "congelar";
 
 
-    self.setNickName = function(newNickname){
-        self.nickname(newNickname);
-    },
     //Con cada click al boton de crear, suma la cantidad de soldados
     //predeterminados a la cantidad de soldados disponibles del usuario
     self.addDisponibles = function(){
@@ -80,7 +77,6 @@ var game = (function(){
     return{
         addDisponibles:addDisponibles,
         changePower:changePower,
-        setNickName: setNickName,
         connect:function(){
             connectAndSubscribe();
         }

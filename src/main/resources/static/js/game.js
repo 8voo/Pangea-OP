@@ -6,7 +6,6 @@ var powerIcons = {
 }
 
 var game = (function(){
-    
     var self = this;
     self.nickname = ko.observable(JSON.parse(localStorage.nickname));
     self.clickSum = 1;
@@ -16,15 +15,16 @@ var game = (function(){
     self.iconImage = ko.observable(powerIcons["congelar"]);
     self.activePower = "congelar";
 
-
     //Con cada click al boton de crear, suma la cantidad de soldados
     //predeterminados a la cantidad de soldados disponibles del usuario
     self.addDisponibles = function(){
-        var currentDisponible = self.soldadosDisponibles();
-        self.soldadosDisponibles(currentDisponible + clickSum);
-        var currentTotal = self.soldadosTotal();
-        self.soldadosTotal(currentTotal + clickSum);
-        gameApiclient.addSoldier(self.nickname, self.clickSum);
+        gameApiclient.addSoldier(self.nickname(), self.clickSum).then(() => {
+            console.log("Soldado añadido");
+        }).catch(error => console.log("No se pudo añadir el soldado"));
+        self.soldadosDisponibles(gameApiclient.getDisponibleSoldiers(self.nickname()));
+        // console.log("disponible" + gameApiclient.getDisponibleSoldiers(self.nickname()));
+        self.soldadosTotal(gameApiclient.getTotalSoldiers(self.nickname()))
+        // console.log("Total" + gameApiclient.getTotalSoldiers(self.nickname()));
     },
 
     //Cambia el icono del poder que se va a desplegar
@@ -50,14 +50,14 @@ var game = (function(){
     },
 
     //Alerta sobre el poder que se ha activado
-    activarAlerta = function(){
+    self.activarAlerta = function(){
         swal("Se ha utilizado un poder!", "'Jugador' ha activado " + activePower.toUpperCase(), "warning", {
             button : false,
             className : "power-alert"
         });
     },
     
-    connectAndSubscribe = function(){
+    self.connectAndSubscribe = function(){
         console.info('Connecting to WS...');
         var socket = new SockJS('/stompendstart');
         stompClient = Stomp.over(socket);
@@ -72,14 +72,15 @@ var game = (function(){
                 // actualizeSoldiers();
             });
         });
-    }
+    },
+    
+    connect = (function(){
+        self.connectAndSubscribe();
+    })();
 
     return{
         addDisponibles:addDisponibles,
-        changePower:changePower,
-        connect:function(){
-            connectAndSubscribe();
-        }
+        changePower:changePower
     }
 });
 ko.applyBindings(game());

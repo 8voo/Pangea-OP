@@ -23,6 +23,18 @@ public class PlayerAPIController {
         return new ResponseEntity<>(new Gson().toJson(pgs.getAllPlayers()), HttpStatus.ACCEPTED);
     }
 
+    @RequestMapping(path = "{nickname}/disponibles", method = RequestMethod.GET)
+    public ResponseEntity<?> getDisponibleSoldiers(@PathVariable String nickname){
+        Player player = pgs.getPlayer(nickname);
+        return new ResponseEntity<>(new Gson().toJson(player.getSoldadosDisponibles()), HttpStatus.ACCEPTED);
+    }
+
+    @RequestMapping(path = "{nickname}/totales", method = RequestMethod.GET)
+    public ResponseEntity<?> getTotalSoldiers(@PathVariable String nickname){
+        Player player = pgs.getPlayer(nickname);
+        return new ResponseEntity<>(new Gson().toJson(player.getSoldadosTotales()), HttpStatus.ACCEPTED);
+    }
+
     @RequestMapping(path = "ready", method = RequestMethod.GET)
     public ResponseEntity<?> getReady(){
         return new ResponseEntity<>(new Gson().toJson(pgs.allReady()), HttpStatus.ACCEPTED);
@@ -44,7 +56,9 @@ public class PlayerAPIController {
     }
 
     @RequestMapping(path = "{nickname}/soldiers", method = RequestMethod.PUT)
-    public ResponseEntity<?> addSoldiers(@PathVariable String nickname, @RequestBody boolean quant){
+    public ResponseEntity<?> addSoldiers(@PathVariable String nickname, @RequestBody String quant){
+
+        pgs.addOneSol(pgs.getPlayer(nickname));
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
     

@@ -6,8 +6,11 @@
     <title>Pangea</title>
     <link rel="stylesheet" href="..\css\styles.css" type="text/css">
     <link rel="stylesheet" href="..\css\gameStyles.css" type="text/css">
+    <script src="/webjars/jquery/jquery.min.js"></script>
+    <script src="/webjars/sockjs-client/sockjs.min.js"></script>
+    <script src="/webjars/stomp-websocket/stomp.min.js"></script>
 </head>
-<body onload="game.connect()">
+<body >
     <div>
         <div id="game-container">
             <div class="container" id="map">
@@ -106,6 +109,7 @@
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script src = "..\lib\knockout.js"></script>
     <script src = "..\lib\jquery.js"></script>
+    <script src="..\js\gameApiclient.js"></script>
     <script src = "..\js\game.js"></script>
     
 </body>

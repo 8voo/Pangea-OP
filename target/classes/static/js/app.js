@@ -32,7 +32,7 @@ var app = (function(){
             console.log(allready);
             if(allready){
                 localStorage.nickname = JSON.stringify($("#nickname").val());
-                location.href = "http://localhost:8080/html/game.html"
+                location.href += "/html/game.html"
                 console.log("Todos listos");
             }
         // }

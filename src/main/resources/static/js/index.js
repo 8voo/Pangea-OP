@@ -1,5 +1,6 @@
 var index = (function(){
     var toggleListo = function(){
+        console.log("prueba listo");
         var listo = $('#boton-listo');
         if(listo.prop('nodeName') == "BUTTON"){
             listo.text("✔");

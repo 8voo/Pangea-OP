@@ -38,6 +38,25 @@ public class PlayerAPIController {
     public ResponseEntity<?> getReady(){
         return new ResponseEntity<>(new Gson().toJson(pgs.allReady()), HttpStatus.ACCEPTED);
     }
+    
+    @RequestMapping(path = "{nickname}", method = RequestMethod.GET)
+    public ResponseEntity<?> getPlayerByNickname(@PathVariable String nickname){
+        if(pgs.getPlayer(nickname) == null){
+            return new ResponseEntity<>( HttpStatus.NOT_FOUND);
+        }else{
+            return new ResponseEntity<>(new Gson().toJson(pgs.getPlayer(nickname)), HttpStatus.ACCEPTED);
+        }
+    }
+
+    @RequestMapping(path = "{nickname}/nations", method = RequestMethod.GET)
+    public ResponseEntity<?> getNationsByNickname(@PathVariable String nickname){
+        Player player = pgs.getPlayer(nickname);
+        if(player == null){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }else{
+            return new ResponseEntity<>(new Gson().toJson(player.getNaciones()), HttpStatus.ACCEPTED);
+        }
+    }
 
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<?> addNewPlayer(@RequestBody Player p){
@@ -59,16 +78,12 @@ public class PlayerAPIController {
         pgs.addOneSol(pgs.getPlayer(nickname));
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
-    
-    @RequestMapping(method = RequestMethod.GET, path = "{nickname}")
-    public ResponseEntity<?> getPlayerByNickname(@PathVariable String nickname){
-        if(pgs.getPlayer(nickname) == null){
-            return new ResponseEntity<>( HttpStatus.NOT_FOUND);
-        }else{
-            return new ResponseEntity<>(new Gson().toJson(pgs.getPlayer(nickname)), HttpStatus.ACCEPTED);
-        }
-    }
 
-    
+    @RequestMapping(path = "{nickname}/nations", method = RequestMethod.PUT)
+    public ResponseEntity<?> addNations(@PathVariable String nickname){
+        pgs.getNations(pgs.getPlayer(nickname));
+        //No esta terminado
+        return new ResponseEntity<>(HttpStatus.ACCEPTED);
+    }
 
 }

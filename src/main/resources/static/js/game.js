@@ -7,6 +7,8 @@ var powerIcons = {
 var game = (function(){
     var self = this;
     self.nickname = ko.observable(JSON.parse(localStorage.nickname));
+    self.currentPlayer = JSON.parse($.ajax({type:'GET', url:'../player/' + self.nickname(), async:false}).responseText);
+    self.currentColor = self.currentPlayer.color;
     self.clickSum = 1;
     self.soldadosDisponibles = ko.observable(0);
     self.soldadosTotal = ko.observable(0);
@@ -19,7 +21,6 @@ var game = (function(){
     self.añadirNacionesMapa = (function(){
         console.log("entro");
         var gameMap = $("#game-map");
-        console.log("mapa" + gameMap);
 
         for (i = 1; i <= 35; i++){
             // gameMap.append('<div class="grid-item" id = "nation' + i + '" data-bind="text : nation' + i + '-needed"></div>');
@@ -27,14 +28,14 @@ var game = (function(){
             var currentNation = "nation" + i;
             $("#" + currentNation).on("click", function(){
                 self.formNations(currentNation);
-            });
+            })();
         }
 
         //Asigna una nacion a cada jugador
         var nacionesDisponibles = [1, 35, 5, 31, 18]
         players().forEach(player => {
             var nationToUse = nacionesDisponibles.shift();
-            $("#nation" + nationToUse).css("background-color", player.color);
+            document.querySelector("#nation" + nationToUse).style.backgroundColor = player.color;
         });
     })();
 
@@ -45,16 +46,20 @@ var game = (function(){
             className : "nation-alert"
           })
           .then((value) => {
-            console.log(value)
+            // console.log(value)
             if (value != ""){
-                //atacarNAcion();
+                atacarNacion(currentNation);
             } // else if lo que entra no es numero 
             else {
                 swal(`Por favor, agregue el numero de soldados con el que va a atacar.`, {
                     className: "nation-alert"
                 });
             }
-          });
+        });
+    }
+
+    self.atacarNacion = function(currentNation){
+        document.querySelector("#" + currentNation).style.backgroundColor = self.currentColor;
     }
 
     //Con cada click al boton de crear, suma la cantidad de soldados

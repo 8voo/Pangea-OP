@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import org.springframework.stereotype.Component;
 
+import main.game.model.Nation;
 import main.game.model.Player;
 import main.game.persistence.PangeaPersistence;
 
@@ -54,6 +55,11 @@ public class PangeaPersistenceImpl implements PangeaPersistence{
         }
 
         return true;
+    }
+
+    @Override
+    public ArrayList<Nation> getNacionesPlayer(Player player) {
+        return player.getNaciones();
     }
 
     

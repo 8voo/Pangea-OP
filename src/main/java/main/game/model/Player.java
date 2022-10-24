@@ -1,14 +1,19 @@
 package main.game.model;
 
+import java.util.ArrayList;
+
 public class Player {
     private int id;
     private String nickname="";
     private int soldadosDisponibles = 0;
     private int soldadosTotales = 0;
-    private int nacionesTotal=1;
+    private ArrayList<Nation> naciones = new ArrayList<Nation>();
     private boolean listo = false;
     private String color;
 
+    public void deleteNation(Nation nacion){
+        this.naciones.remove(nacion);
+    }
 
     public void setId(int id){
         this.id = id;
@@ -18,8 +23,8 @@ public class Player {
         this.soldadosTotales = soldados;
     }
 
-    public void setNaciones(int naciones){
-        this.nacionesTotal = naciones;
+    public void setNacion(Nation nacion){
+        this.naciones.add(nacion);
     }
 
     public void setSoldadosDisponibles(int soldados){
@@ -46,8 +51,8 @@ public class Player {
         return this.soldadosTotales;
     }
 
-    public int getNaciones(){
-        return this.nacionesTotal;
+    public ArrayList<Nation> getNaciones(){
+        return this.naciones;
     }
     
     public boolean isListo(){

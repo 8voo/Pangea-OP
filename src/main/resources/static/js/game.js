@@ -20,6 +20,7 @@ var game = (function(){
         console.log("entro");
         var gameMap = $("#game-map");
         console.log("mapa" + gameMap);
+
         for (i = 1; i <= 35; i++){
             // gameMap.append('<div class="grid-item" id = "nation' + i + '" data-bind="text : nation' + i + '-needed"></div>');
             gameMap.append('<div class="grid-item" id = "nation' + i + '"></div>');
@@ -28,7 +29,9 @@ var game = (function(){
                 self.formNations(currentNation);
             });
         }
-        var nacionesDisponibles = [1, 5, 18, 31, 35]
+
+        //Asigna una nacion a cada jugador
+        var nacionesDisponibles = [1, 35, 5, 31, 18]
         players().forEach(player => {
             var nationToUse = nacionesDisponibles.shift();
             $("#nation" + nationToUse).css("background-color", player.color);
@@ -45,7 +48,8 @@ var game = (function(){
             console.log(value)
             if (value != ""){
                 //atacarNAcion();
-            } else {
+            } // else if lo que entra no es numero 
+            else {
                 swal(`Por favor, agregue el numero de soldados con el que va a atacar.`, {
                     className: "nation-alert"
                 });

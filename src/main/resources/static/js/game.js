@@ -26,9 +26,11 @@ var game = (function(){
             // gameMap.append('<div class="grid-item" id = "nation' + i + '" data-bind="text : nation' + i + '-needed"></div>');
             gameMap.append('<div class="grid-item" id = "nation' + i + '"></div>');
             var currentNation = "nation" + i;
-            $("#" + currentNation).on("click", function(){
-                self.formNations(currentNation);
-            })();
+            $("#" + currentNation).on("click", (function(currentNation){
+                return function(){
+                    self.formNations(currentNation);
+                };
+            })(currentNation));
         }
 
         //Asigna una nacion a cada jugador

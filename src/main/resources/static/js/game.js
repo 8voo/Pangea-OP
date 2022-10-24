@@ -1,5 +1,4 @@
 var powerIcons = {
-    
     tripleClick : "../img/click.png", 
     quitaSoldados : "../img/soldado.png", 
     congelar : "../img/winter.png"
@@ -14,7 +13,45 @@ var game = (function(){
     self.nacionesConquistadas = ko.observable(0);
     self.iconImage = ko.observable(powerIcons["congelar"]);
     self.activePower = "congelar";
-    self.players = ko.observable(JSON.parse($.ajax({type:'GET', url:'../player', async:false}).responseText));
+    self.players = ko.observable(JSON.parse($.ajax({type:'GET', url:'../player', async:false}).responseText).slice(0,5));
+
+    //Añade las naciones al mapa y asigna una nacion de inicio a cada jugador
+    self.añadirNacionesMapa = (function(){
+        console.log("entro");
+        var gameMap = $("#game-map");
+        console.log("mapa" + gameMap);
+        for (i = 1; i <= 35; i++){
+            // gameMap.append('<div class="grid-item" id = "nation' + i + '" data-bind="text : nation' + i + '-needed"></div>');
+            gameMap.append('<div class="grid-item" id = "nation' + i + '"></div>');
+            var currentNation = "nation" + i;
+            $("#" + currentNation).on("click", function(){
+                self.formNations(currentNation);
+            });
+        }
+        var nacionesDisponibles = [1, 5, 18, 31, 35]
+        players().forEach(player => {
+            var nationToUse = nacionesDisponibles.shift();
+            $("#nation" + nationToUse).css("background-color", player.color);
+        });
+    })();
+
+    //Alerta con input que se crea al querer atacar una nacion
+    self.formNations = function(currentNation){
+        swal("Atacar " + currentNation, "Los soldados necesarios para atacar esta nacion son 'numero'.", {
+            content: "input",
+            className : "nation-alert"
+          })
+          .then((value) => {
+            console.log(value)
+            if (value != ""){
+                //atacarNAcion();
+            } else {
+                swal(`Por favor, agregue el numero de soldados con el que va a atacar.`, {
+                    className: "nation-alert"
+                });
+            }
+          });
+    }
 
     //Con cada click al boton de crear, suma la cantidad de soldados
     //predeterminados a la cantidad de soldados disponibles del usuario
@@ -73,7 +110,7 @@ var game = (function(){
 
     self.actualizeTable = function(){
         console.log("actualicetable")
-        self.players(JSON.parse($.ajax({type:'GET', url:'../player', async:false}).responseText));
+        self.players(JSON.parse($.ajax({type:'GET', url:'../player', async:false}).responseText).slice(0,5));
     }
     
     connect = (function(){

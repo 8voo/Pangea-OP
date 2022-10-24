@@ -10,6 +10,8 @@ import main.game.persistence.PangeaPersistence;
 @Component
 public class PangeaPersistenceImpl implements PangeaPersistence{
 
+    private String[] colors = {"red", "blue", "green", "purple", "yellow"};
+
     private ArrayList<Player> players = new ArrayList<Player>();
 
 
@@ -45,7 +47,9 @@ public class PangeaPersistenceImpl implements PangeaPersistence{
                 return false;
             }
         }
-        for(Player p: players){
+        for(int i = 0; i < players.size(); i++){
+            Player p = players.get(i);
+            p.setColor(colors[i]);
             p.setId(players.indexOf(p));
         }
 

@@ -7,8 +7,7 @@ public class Player {
     private int soldadosTotales = 0;
     private int nacionesTotal=1;
     private boolean listo = false;
-
-
+    private String color;
 
 
     public void setId(int id){
@@ -35,6 +34,10 @@ public class Player {
         this.nickname = nickname;
     }
 
+    public void setColor(String color){
+        this.color = color;
+    }
+
     public int getSoldadosDisponibles(){
         return this.soldadosDisponibles;
     }
@@ -51,11 +54,15 @@ public class Player {
         return listo;
     }
     public int getId(){
-        return id;
+        return this.id;
     }
 
     public String getNickname(){
-        return nickname;
+        return this.nickname;
+    }
+
+    public String getColor(){
+        return this.color;
     }
 
     public void addOneSol(){

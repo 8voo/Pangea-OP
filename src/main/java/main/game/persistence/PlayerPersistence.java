@@ -2,10 +2,9 @@ package main.game.persistence;
 
 import java.util.ArrayList;
 
-import main.game.model.Nation;
 import main.game.model.Player;
 
-public interface PangeaPersistence {
+public interface PlayerPersistence {
 
     public void addPlayer(Player player);
         

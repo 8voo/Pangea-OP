@@ -5,9 +5,7 @@ import java.util.ArrayList;
 import org.springframework.stereotype.Component;
 
 import main.game.model.Nation;
-import main.game.model.Player;
 import main.game.persistence.NationsPersistence;
-import main.game.persistence.PangeaPersistence;
 
 @Component
 public class NationsPersistenceImpl implements NationsPersistence{
@@ -34,9 +32,18 @@ public class NationsPersistenceImpl implements NationsPersistence{
     }
 
     @Override
+    public Nation getNationById(String id){
+        for(Nation n:naciones){
+            if(n.getId().equals(id)){
+                return n;
+            }
+        }
+        return null;
+    }
+
+    @Override
     public void changeBlockNation(Nation nation) {
-        nation.setBloqueado(true);
-        
+        nation.changeBloqueado();
     }
 
 }

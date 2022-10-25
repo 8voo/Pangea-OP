@@ -19,7 +19,7 @@ public class NationServices {
     }
 
     public void changeBlockNation(String idNation){
-        np.get
+        Nation nation = np.getNationById(idNation);
         synchronized(nation){
             np.changeBlockNation(nation);
         }

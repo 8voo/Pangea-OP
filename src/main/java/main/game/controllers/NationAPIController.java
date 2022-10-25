@@ -31,4 +31,11 @@ public class NationAPIController {
         ns.changeColor(nation, color);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
+
+    @RequestMapping(path="{nation}/block", method = RequestMethod.PUT)
+    public ResponseEntity<?> blockNation(@PathVariable String nation){
+        ns.changeBlockNation(nation);
+        return new ResponseEntity<>(HttpStatus.CREATED);
+    }
+
 }

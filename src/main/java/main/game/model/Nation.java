@@ -28,7 +28,7 @@ public class Nation {
         this.leader = leader;
     }
 
-    public void setBloqueado(){
+    public void changeBloqueado(){
         this.bloqueada = !bloqueada;
     }
 

@@ -6,14 +6,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import main.game.model.Player;
-import main.game.persistence.PangeaPersistence;
+import main.game.persistence.PlayerPersistence;
 
 @Service
 public class PlayerServices {
     @Autowired 
-    private PangeaPersistence pp = null;
+    private PlayerPersistence pp = null;
 
-    public void setPangeaPersistence(PangeaPersistence pp){
+    public void setPangeaPersistence(PlayerPersistence pp){
         this.pp = pp;
     }
     

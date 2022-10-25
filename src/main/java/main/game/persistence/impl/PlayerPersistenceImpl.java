@@ -6,10 +6,10 @@ import org.springframework.stereotype.Component;
 
 import main.game.model.Nation;
 import main.game.model.Player;
-import main.game.persistence.PangeaPersistence;
+import main.game.persistence.PlayerPersistence;
 
 @Component
-public class PlayerPersistenceImpl implements PangeaPersistence{
+public class PlayerPersistenceImpl implements PlayerPersistence{
 
     private String[] colors = {"red", "blue", "green", "purple", "yellow"};
 

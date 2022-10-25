@@ -47,31 +47,49 @@ var game = (function(){
 
     //Alerta con input que se crea al querer atacar una nacion
     self.formNations = function(currentNation){
-        swal("Atacar " + currentNation, "Los soldados necesarios para atacar esta nacion son 'numero'.", {
-            content: {
-                element: "input",
-                attributes:{
-                    placeholder: "Numero de soldados que atacaran",
-                    type: "number",
-                    min: 0
-                    //usar este min para poner como minimo los soldados que tiene la nacion
-                },
-            },
-            buttons: ["Retirada", "Atacar"],
-            className : "nation-alert"
-          })
-          .then((value) => {
-            console.log();
-            console.log(value)
-            if (value == null){}
-            else if (value != ""){
-                atacarNacion(currentNation);
-            } else {
-                swal(`Por favor, agregue el numero de soldados con el que va a atacar.`, {
-                    className: "nation-alert"
-                });
-            }
-            })
+        var nacion = gameApiclient.getNationById(currentNation); 
+        console.log("fuera del if ", nacion.bloqueada);
+        if(nacion.bloqueada === false){
+            console.log("inicio del if ", nacion.bloqueada);
+            gameApiclient.changeBlock(nacion,true).then(() =>{
+                // if (nacion.bloqueada === true){
+                    nacion = gameApiclient.getNationById(currentNation);
+                    console.log("dentro del then ", nacion.bloqueada);
+                    swal("Atacar " + currentNation, "Los soldados necesarios para atacar esta nacion son 'numero'.", {
+                        content: {
+                            element: "input",
+                            attributes:{
+                                placeholder: "Numero de soldados que atacaran",
+                                type: "number",
+                                min: 0
+                                //usar este min para poner como minimo los soldados que tiene la nacion
+                            },
+                        },
+                        buttons: ["Retirada", "Atacar"],
+                        className : "nation-alert"
+                    })
+                    .then((value) => {
+                        console.log();
+                        console.log(value)
+                        if (value == null){}
+                        else if (value != ""){
+                            atacarNacion(currentNation);
+                        } else {
+                            swal(`Por favor, agregue el numero de soldados con el que va a atacar.`, {
+                                className: "nation-alert"
+                            });
+                        }
+                        gameApiclient.changeBlock(nacion,false).then(() => {
+                            console.log("desbloqueada")
+                        });
+                        })
+                    }
+                )
+        } else {
+            swal("Esta nación ya esta siendo conquistada",{
+                icon: "error",
+              });
+        }
     }
 
     self.atacarNacion = function(currentNation){
@@ -160,7 +178,7 @@ var game = (function(){
         console.log("entro connect")
         self.connectAndSubscribe();
         self.añadirNacionesMapa();
-        stompClient.send("/topic/nations", {}, JSON.stringify("Actualizacion tabla"));   
+        // stompClient.send("/topic/nations", {}, JSON.stringify("Actualizacion tabla"));   
     })();
 
     return{

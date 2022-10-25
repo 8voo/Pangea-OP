@@ -25,6 +25,11 @@ public class NationAPIController {
         return new ResponseEntity<>(new Gson().toJson(ns.getAllNations()), HttpStatus.ACCEPTED);
     }
 
+    @RequestMapping(path = "{nation}",method = RequestMethod.GET)
+    public ResponseEntity<?> getNationById(@PathVariable String nation){
+        return new ResponseEntity<>(new Gson().toJson(ns.getNationById(nation)), HttpStatus.ACCEPTED);
+    }
+
     //PUT
     @RequestMapping(path="{nation}", method = RequestMethod.PUT)
     public ResponseEntity<?> changeColor(@PathVariable String nation, @RequestBody String color){
@@ -33,8 +38,8 @@ public class NationAPIController {
     }
 
     @RequestMapping(path="{nation}/block", method = RequestMethod.PUT)
-    public ResponseEntity<?> blockNation(@PathVariable String nation){
-        ns.changeBlockNation(nation);
+    public ResponseEntity<?> blockNation(@PathVariable String nation, @RequestBody boolean block){
+            ns.changeBlockNation(nation);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 

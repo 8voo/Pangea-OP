@@ -13,6 +13,9 @@ public class NationServices {
     @Autowired 
     private NationsPersistence np = null;
 
+    public Nation getNationById(String id){
+        return np.getNationById(id);
+    }
 
     public ArrayList<Nation> getAllNations(){
         return np.getAllNations();

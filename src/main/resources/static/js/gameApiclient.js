@@ -15,9 +15,22 @@ var gameApiclient = (function(){
     changeColor:function(nation, color){
       return new Promise((resolve) => {
         resolve($.ajax({
-          type:"PUt",
+          type:"PUT",
           url: "../nation/" + nation,
           data: color,
+          contentType: "application/json"
+        }))
+      })
+    },
+
+    changeBlock:function(nation, block){
+      console.log(nation.id);
+      var boolean = JSON.stringify(block);
+      return new Promise((resolve) => {
+        resolve($.ajax({
+          type:"PUT",
+          url: "../nation/" + nation.id + "/block",
+          data: boolean,
           contentType: "application/json"
         }))
       })
@@ -35,6 +48,14 @@ var gameApiclient = (function(){
       return JSON.parse($.ajax({
         type:'GET',
         url: "../nation", 
+        async:false
+      }).responseText); 
+    },
+
+    getNationById:function(id){
+      return JSON.parse($.ajax({
+        type:'GET',
+        url: "../nation/" + id, 
         async:false
       }).responseText); 
     }

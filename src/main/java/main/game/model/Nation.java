@@ -1,16 +1,19 @@
 package main.game.model;
 
 public class Nation {
-    private int soldados;
-    private String color;
-    private String leader;
-    private boolean bloqueada;
+    private String id;
+    private int soldados = 0;
+    private String color = "transparent";
+    private String leader = "";
+    private boolean bloqueada =  false;
 
-    public Nation(int soldados, String color, String leader, boolean bloqueada){
-        this.soldados = soldados;
-        this.color = color;
-        this.leader = leader;
-        this.bloqueada = bloqueada;
+
+    public Nation(String id){
+        this.id = id;
+    }
+
+    public String getId(){
+        return id;
     }
 
     public void setSoldados(int soldados){

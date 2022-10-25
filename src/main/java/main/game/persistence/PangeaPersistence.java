@@ -10,11 +10,15 @@ public interface PangeaPersistence {
     public void addPlayer(Player player);
         
     public void addSoldier(Player player);
+
     
-    public ArrayList<Nation> getNacionesPlayer(Player player);
+    
+    public ArrayList<Integer> getNacionesPlayer(Player player);
 
     public ArrayList<Player> getAllPlayers();
+    
 
     public boolean allReady();
+
     public Player getPlayer(String nickname);
 }

@@ -2,7 +2,6 @@ var gameApiclient = (function(){
   return {
     addSoldier:function(nickname, quant){
         var quantity = JSON.stringify({quant});
-            console.log(quantity)
             return new Promise((resolve) => {
                 resolve($.ajax({
                     type:"PUT",
@@ -12,6 +11,18 @@ var gameApiclient = (function(){
                 }))
             })
     },
+
+    changeColor:function(nation, color){
+      return new Promise((resolve) => {
+        resolve($.ajax({
+          type:"PUt",
+          url: "../nation/" + nation,
+          data: color,
+          contentType: "application/json"
+        }))
+      })
+    },
+
     getSoldiers:function(nickname){
       return JSON.parse($.ajax({
         type:'GET',
@@ -19,6 +30,14 @@ var gameApiclient = (function(){
         async:false
       }).responseText); 
     },
+
+    getNations:function(){
+      return JSON.parse($.ajax({
+        type:'GET',
+        url: "../nation", 
+        async:false
+      }).responseText); 
+    }
     
   }  
 })();

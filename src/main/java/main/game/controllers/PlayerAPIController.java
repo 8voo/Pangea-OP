@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import com.google.gson.Gson;
 
 import main.game.model.Player;
-import main.game.services.PangeaServices;
+import main.game.services.PlayerServices;
 
 @Service
 @RestController
@@ -18,8 +18,17 @@ import main.game.services.PangeaServices;
 public class PlayerAPIController {
     
     @Autowired 
-    PangeaServices pgs;
+    PlayerServices pgs;
 
+
+    //POST
+    @RequestMapping(method = RequestMethod.POST)
+    public ResponseEntity<?> addNewPlayer(@RequestBody Player p){
+        pgs.addNewPlayer(p);
+        return new ResponseEntity<>(HttpStatus.CREATED);
+    }
+
+    // GET
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<?> getAllPlayers(){
         return new ResponseEntity<>(new Gson().toJson(pgs.getAllPlayers()), HttpStatus.ACCEPTED);
@@ -54,17 +63,11 @@ public class PlayerAPIController {
         if(player == null){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }else{
-            return new ResponseEntity<>(new Gson().toJson(player.getNaciones()), HttpStatus.ACCEPTED);
+            return new ResponseEntity<>(new Gson().toJson(pgs.getNations(player)), HttpStatus.ACCEPTED);
         }
     }
 
-    @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<?> addNewPlayer(@RequestBody Player p){
-        System.out.println(p);
-        pgs.addNewPlayer(p);
-        return new ResponseEntity<>(HttpStatus.CREATED);
-    }
-
+    //PUT
     @RequestMapping(path="{nickname}" ,method = RequestMethod.PUT)
     public ResponseEntity<?> changeToReady(@PathVariable String nickname, @RequestBody boolean state){
         Player player = pgs.getPlayer(nickname);
@@ -80,9 +83,9 @@ public class PlayerAPIController {
     }
 
     @RequestMapping(path = "{nickname}/nations", method = RequestMethod.PUT)
-    public ResponseEntity<?> addNations(@PathVariable String nickname){
-        pgs.getNations(pgs.getPlayer(nickname));
+    public ResponseEntity<?> addNations(@PathVariable String nickname, @RequestBody int idNation){
         //No esta terminado
+        // pgs.addNationToPlayer(pgs.getPlayer(nickname), idNation);
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
 

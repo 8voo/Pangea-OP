@@ -65,6 +65,11 @@ th, td{
     border: 5px solid #F0E1A1;
     border-radius: 10px;
     text-align: center;
+    color: wheat;
+}
+
+.nationSoldiers{
+    font-family: 'Peralta', cursive;
 }
 
 #mejoras{
@@ -145,3 +150,24 @@ th, td{
     height: 60vh;
     position: absolute;
 }
+
+/* Sweet alert */
+
+.swal-overlay {
+    background-color: #f0e1a14b;
+}
+
+.swal-title {
+    color: wheat;
+  }
+
+.swal-text{
+    color: wheat;
+}
+
+.swal-button {
+    width: fit-content;
+    height:fit-content;
+    background-color: #b25c41;
+    color: wheat;
+  }

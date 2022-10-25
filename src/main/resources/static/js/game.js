@@ -18,13 +18,14 @@ var game = (function(){
     self.players = ko.observable(JSON.parse($.ajax({type:'GET', url:'../player', async:false}).responseText).slice(0,5));
 
     //Añade las naciones al mapa y asigna una nacion de inicio a cada jugador
-    self.añadirNacionesMapa = (function(){
+    self.añadirNacionesMapa = function(){
+        gameApiclient.getNations();
         console.log("entro");
         var gameMap = $("#game-map");
 
         for (i = 1; i <= 35; i++){
             // gameMap.append('<div class="grid-item" id = "nation' + i + '" data-bind="text : nation' + i + '-needed"></div>');
-            gameMap.append('<div class="grid-item" id = "nation' + i + '"></div>');
+            gameMap.append('<div class="grid-item" id = "nation' + i + '"><div class = "nationSoldiers">10</div></div>');
             var currentNation = "nation" + i;
             $("#" + currentNation).on("click", (function(currentNation){
                 return function(){
@@ -33,36 +34,53 @@ var game = (function(){
             })(currentNation));
         }
 
+
         //Asigna una nacion a cada jugador
         var nacionesDisponibles = [1, 35, 5, 31, 18]
         players().forEach(player => {
             var nationToUse = nacionesDisponibles.shift();
-            document.querySelector("#nation" + nationToUse).style.backgroundColor = player.color;
+            gameApiclient.changeColor("nation" + nationToUse, player.color).then(() => {
+                document.querySelector("#nation" + nationToUse).style.backgroundColor = player.color; 
+                stompClient.send("/topic/nations", {}, JSON.stringify("cambio de color"));   
+            }).catch(error => console.log("No se pudo cambiar color de la nacion " + nationToUse));
         });
-    })();
+    },
 
     //Alerta con input que se crea al querer atacar una nacion
     self.formNations = function(currentNation){
         swal("Atacar " + currentNation, "Los soldados necesarios para atacar esta nacion son 'numero'.", {
-            content: "input",
+            content: {
+                element: "input",
+                attributes:{
+                    placeholder: "Numero de soldados que atacaran",
+                    type: "number",
+                    min: 0
+                    //usar este min para poner como minimo los soldados que tiene la nacion
+                },
+            },
+            buttons: ["Retirada", "Atacar"],
             className : "nation-alert"
           })
           .then((value) => {
-            // console.log(value)
-            if (value != ""){
+            console.log();
+            console.log(value)
+            if (value == null){}
+            else if (value != ""){
                 atacarNacion(currentNation);
-            } // else if lo que entra no es numero 
-            else {
+            } else {
                 swal(`Por favor, agregue el numero de soldados con el que va a atacar.`, {
                     className: "nation-alert"
                 });
             }
-        });
+            })
     }
 
     self.atacarNacion = function(currentNation){
-        document.querySelector("#" + currentNation).style.backgroundColor = self.currentColor;
-    }
+        gameApiclient.changeColor(currentNation, self.currentColor).then(() => {
+            document.querySelector("#" + currentNation).style.backgroundColor = self.currentColor; 
+            stompClient.send("/topic/nations", {}, JSON.stringify("cambio de color"));   
+        }).catch(error => console.log("No se pudo cambiar color de la nacion " + currentNation));
+    },
 
     //Con cada click al boton de crear, suma la cantidad de soldados
     //predeterminados a la cantidad de soldados disponibles del usuario
@@ -115,6 +133,11 @@ var game = (function(){
             console.log('Connected: ' + frame);
             stompClient.subscribe('/topic/soldiers', function () {
                 actualizeTable();
+                // actualizeMap();
+            });
+            stompClient.subscribe('/topic/nations', function () {
+            
+                actualizeMap();
             });
         });
     },
@@ -123,10 +146,21 @@ var game = (function(){
         console.log("actualicetable")
         self.players(JSON.parse($.ajax({type:'GET', url:'../player', async:false}).responseText).slice(0,5));
     }
+
+    self.actualizeMap = function(){
+        var nations = JSON.parse($.ajax({type:'GET', url:'../nation', async:false}).responseText);
+        for (i = 0; i < 35; i++){
+            console.log("nations[i] " + nations[i].color);
+            console.log("nation + i" + "#nation" + (i + 1));
+            
+            document.querySelector("#nation" + (i +1)).style.backgroundColor = nations[i].color; 
+        }
+    }
     
     connect = (function(){
         console.log("entro connect")
         self.connectAndSubscribe();
+        self.añadirNacionesMapa();
     })();
 
     return{

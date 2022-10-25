@@ -7,11 +7,11 @@ public class Player {
     private String nickname="";
     private int soldadosDisponibles = 0;
     private int soldadosTotales = 0;
-    private ArrayList<Nation> naciones = new ArrayList<Nation>();
+    private ArrayList<Integer> naciones = new ArrayList<Integer>();
     private boolean listo = false;
     private String color;
 
-    public void deleteNation(Nation nacion){
+    public void deleteNation(int nacion){
         this.naciones.remove(nacion);
     }
 
@@ -23,7 +23,7 @@ public class Player {
         this.soldadosTotales = soldados;
     }
 
-    public void setNacion(Nation nacion){
+    public void setNacion(int nacion){
         this.naciones.add(nacion);
     }
 
@@ -51,7 +51,7 @@ public class Player {
         return this.soldadosTotales;
     }
 
-    public ArrayList<Nation> getNaciones(){
+    public ArrayList<Integer> getNaciones(){
         return this.naciones;
     }
     

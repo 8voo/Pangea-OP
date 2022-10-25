@@ -9,11 +9,12 @@ import main.game.model.Player;
 import main.game.persistence.PangeaPersistence;
 
 @Component
-public class PangeaPersistenceImpl implements PangeaPersistence{
+public class PlayerPersistenceImpl implements PangeaPersistence{
 
     private String[] colors = {"red", "blue", "green", "purple", "yellow"};
 
     private ArrayList<Player> players = new ArrayList<Player>();
+    
 
 
     @Override
@@ -58,7 +59,7 @@ public class PangeaPersistenceImpl implements PangeaPersistence{
     }
 
     @Override
-    public ArrayList<Nation> getNacionesPlayer(Player player) {
+    public ArrayList<Integer> getNacionesPlayer(Player player) {
         return player.getNaciones();
     }
 

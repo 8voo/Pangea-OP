@@ -18,6 +18,13 @@ public class NationServices {
         return np.getAllNations();
     }
 
+    public void changeBlockNation(String idNation){
+        np.get
+        synchronized(nation){
+            np.changeBlockNation(nation);
+        }
+    }
+
     public void changeColor(String id, String color){
         np.changeColor(id, color);
     }

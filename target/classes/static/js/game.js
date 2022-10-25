@@ -16,7 +16,6 @@ var game = (function(){
     self.iconImage = ko.observable(powerIcons["congelar"]);
     self.activePower = "congelar";
     self.players = ko.observable(JSON.parse($.ajax({type:'GET', url:'../player', async:false}).responseText).slice(0,5));
-
     //Añade las naciones al mapa y asigna una nacion de inicio a cada jugador
     self.añadirNacionesMapa = function(){
         gameApiclient.getNations();
@@ -161,6 +160,7 @@ var game = (function(){
         console.log("entro connect")
         self.connectAndSubscribe();
         self.añadirNacionesMapa();
+        stompClient.send("/topic/nations", {}, JSON.stringify("Actualizacion tabla"));   
     })();
 
     return{

@@ -7,6 +7,8 @@ import main.game.model.Player;
 
 public interface NationsPersistence {
 
+    public void changeBlockNation(Nation nation);
+
     public ArrayList<Nation> getAllNations();
 
     public void changeColor(String id, String color);

@@ -28,8 +28,8 @@ public class Nation {
         this.leader = leader;
     }
 
-    public void setBloqueado(boolean bloqueada){
-        this.bloqueada = bloqueada;
+    public void setBloqueado(){
+        this.bloqueada = !bloqueada;
     }
 
     public int getSoldados(){

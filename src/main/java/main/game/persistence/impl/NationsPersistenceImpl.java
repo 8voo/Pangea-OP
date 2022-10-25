@@ -33,4 +33,10 @@ public class NationsPersistenceImpl implements NationsPersistence{
         }
     }
 
+    @Override
+    public void changeBlockNation(Nation nation) {
+        nation.setBloqueado(true);
+        
+    }
+
 }

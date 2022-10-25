@@ -63,5 +63,12 @@ public class PlayerPersistenceImpl implements PlayerPersistence{
         return player.getNaciones();
     }
 
+    @Override
+    public void substractSoldiers(String nickname, int subsoldiers) {
+        Player player = getPlayer(nickname);
+        player.setSoldadosDisponibles(player.getSoldadosDisponibles() - subsoldiers);   
+        player.setSoldadosTotales(player.getSoldadosTotales() - subsoldiers);
+    }
+
     
 }

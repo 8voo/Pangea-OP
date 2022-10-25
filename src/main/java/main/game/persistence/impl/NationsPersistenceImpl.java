@@ -46,4 +46,9 @@ public class NationsPersistenceImpl implements NationsPersistence{
         nation.changeBloqueado();
     }
 
+    @Override
+    public void setSoldados(Nation nation, int newSoldiers){
+        nation.setSoldados(newSoldiers);
+    }
+
 }

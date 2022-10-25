@@ -14,4 +14,6 @@ public interface NationsPersistence {
 
     public void changeColor(String id, String color);
 
+    public void setSoldados(Nation nation, int newSoldiers);
+
 }

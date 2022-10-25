@@ -36,6 +36,10 @@ public class PlayerServices {
     public Player getPlayer(String nickname){
         return pp.getPlayer(nickname);
     }
+    
+    public void substractSoldiers(String nickname, int subsoldiers){
+        pp.substractSoldiers(nickname, subsoldiers);
+    }
 
     public ArrayList<Integer> getNations(Player player){
         return pp.getNacionesPlayer(player);

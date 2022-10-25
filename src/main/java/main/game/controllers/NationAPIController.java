@@ -43,4 +43,10 @@ public class NationAPIController {
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
+    @RequestMapping(path = "{nation}/soldiers", method = RequestMethod.PUT)
+    public ResponseEntity<?> setSoldiers(@PathVariable String nation, @RequestBody int newSoldiers){
+        ns.setSoldiers(nation, newSoldiers);
+        return new ResponseEntity<>(HttpStatus.ACCEPTED);
+    }
+
 }

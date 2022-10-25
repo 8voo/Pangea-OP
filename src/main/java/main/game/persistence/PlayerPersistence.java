@@ -10,7 +10,7 @@ public interface PlayerPersistence {
         
     public void addSoldier(Player player);
 
-    
+    public void substractSoldiers(String nickname, int subsoldiers);
     
     public ArrayList<Integer> getNacionesPlayer(Player player);
 

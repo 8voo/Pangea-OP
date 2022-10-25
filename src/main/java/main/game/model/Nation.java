@@ -2,7 +2,7 @@ package main.game.model;
 
 public class Nation {
     private String id;
-    private int soldados = 0;
+    private int soldados = 10;
     private String color = "transparent";
     private String leader = "";
     private boolean bloqueada =  false;

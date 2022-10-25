@@ -27,7 +27,7 @@ var app = (function(){
 
     redirect = function(){
         jugadores =JSON.parse($.ajax({type:'GET', url:'player', async:false}).responseText); 
-        // if(jugadores.length > 1 ){
+        if(jugadores.length > 1 ){
             allready = JSON.parse($.ajax({type:'GET', url:'player/ready', async:false}).responseText);
             console.log(allready);
             if(allready){
@@ -35,7 +35,7 @@ var app = (function(){
                 location.href += "html/game.html"
                 console.log("Todos listos");
             }
-        // }
+        }
     },
 
     connectAndSubscribe = function(){

@@ -23,7 +23,6 @@ var game = (function(){
         var gameMap = $("#game-map");
 
         for (i = 1; i <= 35; i++){
-            // gameMap.append('<div class="grid-item" id = "nation' + i + '" data-bind="text : nation' + i + '-needed"></div>');
             gameMap.append('<div class="grid-item" id = "nation' + i + '"><div class = "nationSoldiers">10</div></div>');
             var currentNation = "nation" + i;
             $("#" + currentNation).on("click", (function(currentNation){
@@ -48,43 +47,55 @@ var game = (function(){
     //Alerta con input que se crea al querer atacar una nacion
     self.formNations = function(currentNation){
         var nacion = gameApiclient.getNationById(currentNation); 
-        console.log("fuera del if ", nacion.bloqueada);
+        // console.log("fuera del if ", nacion.bloqueada);
         if(nacion.bloqueada === false){
-            console.log("inicio del if ", nacion.bloqueada);
-            gameApiclient.changeBlock(nacion,true).then(() =>{
-                // if (nacion.bloqueada === true){
-                    nacion = gameApiclient.getNationById(currentNation);
-                    console.log("dentro del then ", nacion.bloqueada);
-                    swal("Atacar " + currentNation, "Los soldados necesarios para atacar esta nacion son 'numero'.", {
-                        content: {
-                            element: "input",
-                            attributes:{
-                                placeholder: "Numero de soldados que atacaran",
-                                type: "number",
-                                min: 0
-                                //usar este min para poner como minimo los soldados que tiene la nacion
+            if (nacion.soldados < self.soldadosDisponibles()){
+                // console.log("inicio del if ", nacion.bloqueada);
+                gameApiclient.changeBlock(nacion,true).then(() =>{
+                    console.log(nacion.soldados);
+                    // if (nacion.bloqueada === true){
+                        nacion = gameApiclient.getNationById(currentNation);
+                        // console.log("dentro del then ", nacion.bloqueada);
+                        swal("Atacar " + currentNation, "Los soldados necesarios para atacar esta nacion son 'numero'.", {
+                            content: {
+                                element: "input",
+                                attributes:{
+                                    placeholder: "Numero de soldados que atacaran",
+                                    type: "number",
+                                    min: nacion.soldados + 1
+                                },
                             },
-                        },
-                        buttons: ["Retirada", "Atacar"],
-                        className : "nation-alert"
-                    })
-                    .then((value) => {
-                        console.log();
-                        console.log(value)
-                        if (value == null){}
-                        else if (value != ""){
-                            atacarNacion(currentNation);
-                        } else {
-                            swal(`Por favor, agregue el numero de soldados con el que va a atacar.`, {
-                                className: "nation-alert"
-                            });
-                        }
-                        gameApiclient.changeBlock(nacion,false).then(() => {
-                            console.log("desbloqueada")
-                        });
+                            buttons: ["Retirada", "Atacar"],
+                            className : "nation-alert"
                         })
-                    }
-                )
+                        .then((value) => {
+                            if (value == null){}
+                            else if (value != ""){
+                                gameApiclient.substractSoldiers(self.currentPlayer.nickname, value).then(() => {
+                                    self.soldadosDisponibles(gameApiclient.getSoldiers(self.currentPlayer.nickname)[0]);
+                                    self.soldadosTotal(gameApiclient.getSoldiers(self.currentPlayer.nickname)[1]);
+                                    stompClient.send("/topic/soldiers", {}, JSON.stringify("se restaron" + value));
+                                    gameApiclient.setSoldiers(currentNation, value - nacion.soldados).then(() => {
+                                        stompClient.send("/topic/nations", {}, JSON.stringify("actualizo naciones"));
+                                    })
+                                });
+                                atacarNacion(currentNation);
+                            } else {
+                                swal(`Por favor, agregue el numero de soldados con el que va a atacar.`, {
+                                    className: "nation-alert"
+                                });
+                            }
+                            gameApiclient.changeBlock(nacion,false).then(() => {
+                                console.log("desbloqueada")
+                            });
+                            })
+                        }
+                    )
+            } else {
+                swal("No tienes suficientes soldados para conquistar esta nacion",{
+                    icon: "error",
+                  });
+            }
         } else {
             swal("Esta nación ya esta siendo conquistada",{
                 icon: "error",
@@ -167,10 +178,9 @@ var game = (function(){
     self.actualizeMap = function(){
         var nations = JSON.parse($.ajax({type:'GET', url:'../nation', async:false}).responseText);
         for (i = 0; i < 35; i++){
-            console.log("nations[i] " + nations[i].color);
-            console.log("nation + i" + "#nation" + (i + 1));
-            
-            document.querySelector("#nation" + (i +1)).style.backgroundColor = nations[i].color; 
+            var nacion = document.querySelector("#nation" + (i +1));
+            nacion.style.backgroundColor = nations[i].color; 
+            nacion.firstChild.textContent = nations[i].soldados;
         }
     }
     
@@ -178,7 +188,7 @@ var game = (function(){
         console.log("entro connect")
         self.connectAndSubscribe();
         self.añadirNacionesMapa();
-        // stompClient.send("/topic/nations", {}, JSON.stringify("Actualizacion tabla"));   
+        self.actualizeMap();
     })();
 
     return{

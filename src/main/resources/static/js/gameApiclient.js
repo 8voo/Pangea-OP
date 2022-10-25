@@ -24,13 +24,37 @@ var gameApiclient = (function(){
     },
 
     changeBlock:function(nation, block){
-      console.log(nation.id);
       var boolean = JSON.stringify(block);
       return new Promise((resolve) => {
         resolve($.ajax({
           type:"PUT",
           url: "../nation/" + nation.id + "/block",
           data: boolean,
+          contentType: "application/json"
+        }))
+      })
+    },
+
+    substractSoldiers:function(nickname, subsoldiers){
+      var subSoldiers = JSON.stringify(subsoldiers);
+      return new Promise((resolve) => {
+        resolve($.ajax({
+          type : "PUT",
+          url : "../player/" + nickname + "/subsoldiers",
+          data: subSoldiers,
+          contentType : "application/json"
+        }))
+      })
+    },
+
+    setSoldiers:function(nation, newSoldiers){
+      console.log("nation " + nation + " newSoldiers " + newSoldiers);
+      var newSoldiers = JSON.stringify(newSoldiers);
+      return new Promise((resolve) => {
+        resolve($.ajax({
+          type : "PUT",
+          url : "../nation/" + nation + "/soldiers",
+          data: newSoldiers,
           contentType: "application/json"
         }))
       })

@@ -82,6 +82,12 @@ public class PlayerAPIController {
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
+    @RequestMapping(path = "{nickname}/subsoldiers", method = RequestMethod.PUT)
+    public ResponseEntity<?> substractSoldiers(@PathVariable String nickname, @RequestBody int subsoldiers){
+        pgs.substractSoldiers(nickname, subsoldiers);
+        return new ResponseEntity<>(HttpStatus.ACCEPTED);
+    }
+
     @RequestMapping(path = "{nickname}/nations", method = RequestMethod.PUT)
     public ResponseEntity<?> addNations(@PathVariable String nickname, @RequestBody int idNation){
         //No esta terminado

@@ -31,4 +31,8 @@ public class NationServices {
     public void changeColor(String id, String color){
         np.changeColor(id, color);
     }
+
+    public void setSoldiers(String nationID, int newSoldiers){
+        np.setSoldados(np.getNationById(nationID), newSoldiers);
+    }
 }

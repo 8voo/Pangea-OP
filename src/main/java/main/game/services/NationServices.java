@@ -25,6 +25,7 @@ public class NationServices {
         Nation nation = np.getNationById(idNation);
         synchronized(nation){
             np.changeBlockNation(nation);
+            
         }
     }
 

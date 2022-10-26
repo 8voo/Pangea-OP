@@ -39,7 +39,7 @@ public class NationAPIController {
 
     @RequestMapping(path="{nation}/block", method = RequestMethod.PUT)
     public ResponseEntity<?> blockNation(@PathVariable String nation, @RequestBody boolean block){
-            ns.changeBlockNation(nation);
+        ns.changeBlockNation(nation);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 

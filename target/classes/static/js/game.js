@@ -46,16 +46,18 @@ var game = (function(){
 
     //Alerta con input que se crea al querer atacar una nacion
     self.formNations = function(currentNation){
-        var nacion = gameApiclient.getNationById(currentNation); 
+        var nacion = gameApiclient.getNationById(currentNation);
         // console.log("fuera del if ", nacion.bloqueada);
-        if(nacion.bloqueada === false){
+        // if(nacion.bloqueada === false){
             if (nacion.soldados < self.soldadosDisponibles()){
                 // console.log("inicio del if ", nacion.bloqueada);
-                gameApiclient.changeBlock(nacion,true).then(() =>{
+                gameApiclient.changeBlock(nacion,true, false).then(() =>{
                     console.log(nacion.soldados);
-                    // if (nacion.bloqueada === true){
+                    // if (nacion.bloqueada === false){
                         nacion = gameApiclient.getNationById(currentNation);
                         // console.log("dentro del then ", nacion.bloqueada);
+                        console.log("entro swal gamejs")
+                        console.log(gameApiclient.getNationById(currentNation).bloqueada);
                         swal("Atacar " + currentNation, "Los soldados necesarios para atacar esta nacion son 'numero'.", {
                             content: {
                                 element: "input",
@@ -85,7 +87,8 @@ var game = (function(){
                                     className: "nation-alert"
                                 });
                             }
-                            gameApiclient.changeBlock(nacion,false).then(() => {
+                            console.log("intenta desblouqar");
+                            gameApiclient.changeBlock(nacion,false,true).then(() => {
                                 console.log("desbloqueada")
                             });
                             })
@@ -96,11 +99,11 @@ var game = (function(){
                     icon: "error",
                   });
             }
-        } else {
-            swal("Esta nación ya esta siendo conquistada",{
-                icon: "error",
-              });
-        }
+        // } else {
+        //     swal("Esta nación ya esta siendo conquistada",{
+        //         icon: "error",
+        //       });
+        // }
     }
 
     self.atacarNacion = function(currentNation){

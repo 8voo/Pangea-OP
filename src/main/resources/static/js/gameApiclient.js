@@ -23,16 +23,26 @@ var gameApiclient = (function(){
       })
     },
 
-    changeBlock:function(nation, block){
+    changeBlock:function(nation, block, booleanoEntro){
       var boolean = JSON.stringify(block);
-      return new Promise((resolve) => {
-        resolve($.ajax({
-          type:"PUT",
-          url: "../nation/" + nation.id + "/block",
-          data: boolean,
-          contentType: "application/json"
-        }))
-      })
+      var nacion = gameApiclient.getNationById(nation.id);
+      if((!nacion.bloqueada && !booleanoEntro) || (nacion.bloqueada && booleanoEntro)){
+        return new Promise((resolve) => {
+          resolve($.ajax({
+            type:"PUT",
+            url: "../nation/" + nation.id + "/block",
+            data: boolean,
+            contentType: "application/json"
+          }))
+        })
+      } 
+      else{
+        return new Promise((resolve) => {
+          console.log("entro swal gameAPiClient");
+            swal("Esta nación ya esta siendo conquistada",{
+                icon: "error",
+              });
+      })}
     },
 
     substractSoldiers:function(nickname, subsoldiers){

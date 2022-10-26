@@ -1,13 +1,15 @@
 package main.game.model;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 public class Player {
     private int id;
     private String nickname="";
     private int soldadosDisponibles = 0;
     private int soldadosTotales = 0;
-    private ArrayList<Integer> naciones = new ArrayList<Integer>();
+    private Set<String> naciones = new HashSet<String>();
     private boolean listo = false;
     private String color;
 
@@ -23,7 +25,7 @@ public class Player {
         this.soldadosTotales = soldados;
     }
 
-    public void setNacion(int nacion){
+    public void addNacion(String nacion){
         this.naciones.add(nacion);
     }
 
@@ -51,7 +53,7 @@ public class Player {
         return this.soldadosTotales;
     }
 
-    public ArrayList<Integer> getNaciones(){
+    public Set<String> getNaciones(){
         return this.naciones;
     }
     

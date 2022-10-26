@@ -7,6 +7,7 @@ var powerIcons = {
 var game = (function(){
     var self = this;
     self.nickname = ko.observable(JSON.parse(localStorage.nickname));
+    self.iniciado = JSON.parse(localStorage.iniciado);
     self.currentPlayer = JSON.parse($.ajax({type:'GET', url:'../player/' + self.nickname(), async:false}).responseText);
     self.currentColor = self.currentPlayer.color;
     self.clickSum = 1;
@@ -34,14 +35,22 @@ var game = (function(){
 
 
         //Asigna una nacion a cada jugador
-        var nacionesDisponibles = [1, 35, 5, 31, 18]
-        players().forEach(player => {
-            var nationToUse = nacionesDisponibles.shift();
-            gameApiclient.changeColor("nation" + nationToUse, player.color).then(() => {
-                document.querySelector("#nation" + nationToUse).style.backgroundColor = player.color; 
-                stompClient.send("/topic/nations", {}, JSON.stringify("cambio de color"));   
-            }).catch(error => console.log("No se pudo cambiar color de la nacion " + nationToUse));
-        });
+        if (!iniciado){
+            var nacionesDisponibles = [1, 35, 5, 31, 18]
+            players().forEach(player => {
+                var nationToUse = nacionesDisponibles.shift();
+                gameApiclient.changeColor("nation" + nationToUse, player.color).then(() => {
+                    document.querySelector("#nation" + nationToUse).style.backgroundColor = player.color; 
+                    stompClient.send("/topic/nations", {}, JSON.stringify("cambio de color"));
+                }).catch(error => console.log("No se pudo cambiar color de la nacion " + nationToUse));
+                gameApiclient.addNation(self.currentPlayer.nickname, "nation" + nationToUse).then(()=>{
+                    console.log("XXXXXXXXXXXXXXXXXX")
+                    self.nacionesConquistadas(gameApiclient.getNationsByNickname(self.currentPlayer.nickname).length);
+                }).catch(error => console.log("No se pudo agregar la nacion " + nationToUse));
+            });
+            self.iniciado = true;
+            localStorage.iniciado = JSON.stringify(self.iniciado);
+        }
     },
 
     //Alerta con input que se crea al querer atacar una nacion
@@ -116,6 +125,9 @@ var game = (function(){
             document.querySelector("#" + currentNation).style.backgroundColor = self.currentColor; 
             stompClient.send("/topic/nations", {}, JSON.stringify("cambio de color"));   
         }).catch(error => console.log("No se pudo cambiar color de la nacion " + currentNation));
+        gameApiclient.addNation(self.currentPlayer.nickname, currentNation).then(()=>{
+            self.nacionesConquistadas(gameApiclient.getNationsByNickname(self.currentPlayer.nickname).length);
+        })
     },
 
     //Con cada click al boton de crear, suma la cantidad de soldados

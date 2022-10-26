@@ -1,6 +1,7 @@
 package main.game.persistence.impl;
 
 import java.util.ArrayList;
+import java.util.Set;
 
 import org.springframework.stereotype.Component;
 
@@ -15,8 +16,6 @@ public class PlayerPersistenceImpl implements PlayerPersistence{
 
     private ArrayList<Player> players = new ArrayList<Player>();
     
-
-
     @Override
     public void addPlayer(Player player){
         this.players.add(player);
@@ -59,7 +58,7 @@ public class PlayerPersistenceImpl implements PlayerPersistence{
     }
 
     @Override
-    public ArrayList<Integer> getNacionesPlayer(Player player) {
+    public Set<String> getNacionesPlayer(Player player) {
         return player.getNaciones();
     }
 
@@ -68,6 +67,12 @@ public class PlayerPersistenceImpl implements PlayerPersistence{
         Player player = getPlayer(nickname);
         player.setSoldadosDisponibles(player.getSoldadosDisponibles() - subsoldiers);   
         player.setSoldadosTotales(player.getSoldadosTotales() - subsoldiers);
+    }
+
+    @Override
+    public void addNacion(String idNation, String nickname) {
+        Player player = getPlayer(nickname);
+        player.addNacion(idNation);
     }
 
     

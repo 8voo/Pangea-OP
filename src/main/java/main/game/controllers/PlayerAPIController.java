@@ -89,9 +89,8 @@ public class PlayerAPIController {
     }
 
     @RequestMapping(path = "{nickname}/nations", method = RequestMethod.PUT)
-    public ResponseEntity<?> addNations(@PathVariable String nickname, @RequestBody int idNation){
-        //No esta terminado
-        // pgs.addNationToPlayer(pgs.getPlayer(nickname), idNation);
+    public ResponseEntity<?> addNations(@PathVariable String nickname, @RequestBody String idNation){
+        pgs.addNacion(idNation, nickname);
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
 

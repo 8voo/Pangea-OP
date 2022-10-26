@@ -2,7 +2,7 @@ var gameApiclient = (function(){
   return {
     addSoldier:function(nickname, quant){
         var quantity = JSON.stringify({quant});
-            return new Promise((resolve) => {
+        return new Promise((resolve) => {
                 resolve($.ajax({
                     type:"PUT",
                     url: "../player/" + nickname + "/soldiers",
@@ -10,6 +10,17 @@ var gameApiclient = (function(){
                     contentType: "application/json"
                 }))
             })
+    },
+
+    addNation:function(nickname,nation){
+      return new Promise((resolve) => {
+        resolve($.ajax({
+          type:"PUT",
+          url: "../player/" + nickname + "/nations",
+          data:nation,
+          contentType: "application/json"
+        }))
+      })
     },
 
     changeColor:function(nation, color){
@@ -82,6 +93,14 @@ var gameApiclient = (function(){
         url: "../nation/" + id, 
         async:false
       }).responseText); 
+    },
+
+    getNationsByNickname: function(nickname){
+      return JSON.parse($.ajax({
+        type:'GET',
+        url:"../player/" + nickname + "/nations",
+        async:false
+      }).responseText)
     }
     
   }  

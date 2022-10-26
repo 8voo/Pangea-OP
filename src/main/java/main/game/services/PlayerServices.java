@@ -1,6 +1,7 @@
 package main.game.services;
 
 import java.util.ArrayList;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -41,8 +42,12 @@ public class PlayerServices {
         pp.substractSoldiers(nickname, subsoldiers);
     }
 
-    public ArrayList<Integer> getNations(Player player){
+    public Set<String> getNations(Player player){
         return pp.getNacionesPlayer(player);
+    }
+
+    public void addNacion(String idNacion, String nickname){
+        pp.addNacion(idNacion, nickname);
     }
     
 }

@@ -1,0 +1,17 @@
+main\game\model\Player.class
+main\gameAPI\PangeaAPIAplication.class
+main\game\model\poderes\DeleteSoldados.class
+main\game\services\NationServices.class
+main\game\model\Nation.class
+main\game\services\Main.class
+main\game\model\poderes\TripleClick.class
+main\game\persistence\impl\PlayerPersistenceImpl.class
+main\game\controllers\PlayerAPIController.class
+main\game\persistence\NationsPersistence.class
+main\gameAPI\RealTimeGameConfig.class
+main\game\persistence\PlayerPersistence.class
+main\game\model\poderes\Freeze.class
+main\game\persistence\impl\NationsPersistenceImpl.class
+main\game\model\Poder.class
+main\game\controllers\NationAPIController.class
+main\game\services\PlayerServices.class

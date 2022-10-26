@@ -25,7 +25,6 @@ public class NationServices {
         Nation nation = np.getNationById(idNation);
         synchronized(nation){
             np.changeBlockNation(nation);
-            
         }
     }
 
@@ -35,5 +34,9 @@ public class NationServices {
 
     public void setSoldiers(String nationID, int newSoldiers){
         np.setSoldados(np.getNationById(nationID), newSoldiers);
+    }
+    
+    public void setLeader(String nation, String nickname){
+        np.setLeader(nation, nickname);
     }
 }

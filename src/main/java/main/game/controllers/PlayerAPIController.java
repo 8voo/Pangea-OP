@@ -83,14 +83,21 @@ public class PlayerAPIController {
     }
 
     @RequestMapping(path = "{nickname}/subsoldiers", method = RequestMethod.PUT)
-    public ResponseEntity<?> substractSoldiers(@PathVariable String nickname, @RequestBody int subsoldiers){
-        pgs.substractSoldiers(nickname, subsoldiers);
+    public ResponseEntity<?> substractSoldiers(@PathVariable String nickname, @RequestBody String[] subsoldiers){
+        System.out.println(subsoldiers[1]);
+        pgs.substractSoldiers(nickname, Integer.parseInt(subsoldiers[0]), subsoldiers[1]);
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
 
     @RequestMapping(path = "{nickname}/nations", method = RequestMethod.PUT)
     public ResponseEntity<?> addNations(@PathVariable String nickname, @RequestBody String idNation){
         pgs.addNacion(idNation, nickname);
+        return new ResponseEntity<>(HttpStatus.ACCEPTED);
+    }
+
+    @RequestMapping(path = "{nickname}/deletenation", method = RequestMethod.PUT)
+    public ResponseEntity<?> deleteNation(@PathVariable String nickname, @RequestBody String idNation){
+        pgs.removeNation(idNation, nickname);
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
 

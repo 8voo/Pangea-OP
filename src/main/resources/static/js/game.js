@@ -20,7 +20,6 @@ var game = (function(){
     //Añade las naciones al mapa y asigna una nacion de inicio a cada jugador
     self.añadirNacionesMapa = function(){
         gameApiclient.getNations();
-        console.log("entro");
         var gameMap = $("#game-map");
 
         for (i = 1; i <= 35; i++){
@@ -43,10 +42,10 @@ var game = (function(){
                     document.querySelector("#nation" + nationToUse).style.backgroundColor = player.color; 
                     stompClient.send("/topic/nations", {}, JSON.stringify("cambio de color"));
                 }).catch(error => console.log("No se pudo cambiar color de la nacion " + nationToUse));
-                gameApiclient.addNation(self.currentPlayer.nickname, "nation" + nationToUse).then(()=>{
-                    console.log("XXXXXXXXXXXXXXXXXX")
-                    self.nacionesConquistadas(gameApiclient.getNationsByNickname(self.currentPlayer.nickname).length);
+                gameApiclient.addNation(player.nickname, "nation" + nationToUse).then(()=>{
+                    self.nacionesConquistadas(gameApiclient.getNationsByNickname(player.nickname).length);
                 }).catch(error => console.log("No se pudo agregar la nacion " + nationToUse));
+                gameApiclient.setLeader("nation" + nationToUse,player.nickname).then(() =>{})
             });
             self.iniciado = true;
             localStorage.iniciado = JSON.stringify(self.iniciado);
@@ -56,16 +55,11 @@ var game = (function(){
     //Alerta con input que se crea al querer atacar una nacion
     self.formNations = function(currentNation){
         var nacion = gameApiclient.getNationById(currentNation);
-        // console.log("fuera del if ", nacion.bloqueada);
         if(nacion.bloqueada === false){
             if (nacion.soldados < self.soldadosDisponibles()){
-                // console.log("inicio del if ", nacion.bloqueada);
                 gameApiclient.changeBlock(nacion,true).then(() =>{
-                    console.log(nacion.soldados);
                     nacion = gameApiclient.getNationById(currentNation);
-                    // console.log("dentro del then ", nacion.bloqueada);
-                    console.log("entro swal gamejs")
-                    console.log(gameApiclient.getNationById(currentNation).bloqueada);
+                    // console.log(gameApiclient.getNationById(currentNation).bloqueada);
                     if (gameApiclient.getNationById(currentNation).bloqueada){
                         swal("Atacar " + currentNation, "Los soldados necesarios para atacar esta nacion son 'numero'.", {
                             content: {
@@ -78,46 +72,52 @@ var game = (function(){
                             },
                             buttons: ["Retirada", "Atacar"],
                             className : "nation-alert"
-                        })
-                        .then((value) => {
+                        }).then((value) => {
                             if (value == null){}
                             else if (value != ""){
-                                gameApiclient.substractSoldiers(self.currentPlayer.nickname, value).then(() => {
+                                gameApiclient.substractSoldiers(self.currentPlayer.nickname, value, "disponibles").then(() => {
+                                    // var nationAtacked = gameApiclient.getNationById(currentNation);
+                                    gameApiclient.substractSoldiers(self.currentPlayer.nickname, nacion.soldados, "totales").then(() => {
+                                        // console.log("Se resto " + nacion.soldados + " soldados a totales de " + nationAtacked.leader);
+                                    }).catch(error => console.log("No se pudo restar soldados al lider anterior"));
+                                    if(nacion.leader){
+                                        gameApiclient.substractSoldiers(nacion.leader, nacion.soldados, "totales").then(() => {
+                                            console.log("Se resto " + nacion.soldados + " soldados a totales de " + nationAtacked.leader);
+                                        }).catch(error => console.log("No se pudo restar soldados al lider anterior"));
+                                    }
                                     self.soldadosDisponibles(gameApiclient.getSoldiers(self.currentPlayer.nickname)[0]);
                                     self.soldadosTotal(gameApiclient.getSoldiers(self.currentPlayer.nickname)[1]);
                                     stompClient.send("/topic/soldiers", {}, JSON.stringify("se restaron" + value));
                                     gameApiclient.setSoldiers(currentNation, value - nacion.soldados).then(() => {
                                         stompClient.send("/topic/nations", {}, JSON.stringify("actualizo naciones"));
                                     })
+                                    atacarNacion(currentNation);
                                 });
-                                atacarNacion(currentNation);
                             } else {
                                 swal(`Por favor, agregue el numero de soldados con el que va a atacar.`, {
                                     className: "nation-alert"
                                 });
                             }
-                            console.log("intenta desblouqar");
                             gameApiclient.changeBlock(nacion,false).then(() => {
                                 console.log("desbloqueada")
                             });
                             })
                         }else {
-                            console.log("SSSSSSSSAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
                             swal("Esta nación ya esta siendo conquistada",{
                                 icon: "error",
+                                className : "nation-alert"
                               });
                         }
-            })
-            } else {
+            })} else {
                 swal("No tienes suficientes soldados para conquistar esta nacion",{
                     icon: "error",
-                  });
-            }
+                    className : "nation-alert"
+                  });}
         } else {
             swal("Esta nación ya esta siendo conquistada",{
                 icon: "error",
-              });
-        }
+                className : "nation-alert"
+              });}
     }
 
     self.atacarNacion = function(currentNation){
@@ -125,9 +125,18 @@ var game = (function(){
             document.querySelector("#" + currentNation).style.backgroundColor = self.currentColor; 
             stompClient.send("/topic/nations", {}, JSON.stringify("cambio de color"));   
         }).catch(error => console.log("No se pudo cambiar color de la nacion " + currentNation));
+
         gameApiclient.addNation(self.currentPlayer.nickname, currentNation).then(()=>{
             self.nacionesConquistadas(gameApiclient.getNationsByNickname(self.currentPlayer.nickname).length);
-        })
+        }).catch(error => console.log("No se añadio la nacion" + currentNation));
+        
+        let nacion = gameApiclient.getNationById(currentNation);
+        gameApiclient.deleteNation(nacion, nacion.leader).then(() =>{            
+        }).catch(error => console.log("No se pudo eliminar la nacion " + currentNation));
+
+        gameApiclient.setLeader(currentNation, self.currentPlayer.nickname).then(() => {
+            // console.log("Se seteo como lider a" + self.currentPlayer.nickname + "a ls nacion" + currentNation)
+        }).catch(error => console.log("No se pudo setear como lider a " + self.currentPlayer.nickname));
     },
 
     //Con cada click al boton de crear, suma la cantidad de soldados
@@ -137,7 +146,7 @@ var game = (function(){
             self.soldadosDisponibles(gameApiclient.getSoldiers(self.nickname())[0]);
             self.soldadosTotal(gameApiclient.getSoldiers(self.nickname())[1]);
             stompClient.send("/topic/soldiers", {}, JSON.stringify("añadio soldados stomp"));
-            console.log("Soldado añadido");
+            // console.log("Soldado añadido");
         }).catch(error => console.log("No se pudo añadir el soldado"));
     },
 
@@ -191,7 +200,6 @@ var game = (function(){
     },
 
     self.actualizeTable = function(){
-        console.log("actualicetable")
         self.players(JSON.parse($.ajax({type:'GET', url:'../player', async:false}).responseText).slice(0,5));
     }
 
@@ -203,9 +211,13 @@ var game = (function(){
             nacion.firstChild.textContent = nations[i].soldados;
         }
     }
+
+    // self.actualizeLocalTable = function(disponibles, totales){
+    //     self.soldadosDisponibles(gameApiclient.getSoldiers(disponibles);
+    //     self.soldadosTotal(gameApiclient.getSoldiers(self.currentPlayer.nickname)[1]);
+    // }
     
     connect = (function(){
-        console.log("entro connect")
         self.connectAndSubscribe();
         self.añadirNacionesMapa();
         self.actualizeMap();

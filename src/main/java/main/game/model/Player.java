@@ -8,13 +8,13 @@ public class Player {
     private int id;
     private String nickname="";
     private int soldadosDisponibles = 0;
-    private int soldadosTotales = 0;
+    private int soldadosTotales = 10;
     private Set<String> naciones = new HashSet<String>();
     private boolean listo = false;
     private String color;
 
-    public void deleteNation(int nacion){
-        this.naciones.remove(nacion);
+    public void deleteNation(String idNation){
+        this.naciones.remove(idNation);
     }
 
     public void setId(int id){

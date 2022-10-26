@@ -5,7 +5,6 @@ import java.util.Set;
 
 import org.springframework.stereotype.Component;
 
-import main.game.model.Nation;
 import main.game.model.Player;
 import main.game.persistence.PlayerPersistence;
 
@@ -23,7 +22,9 @@ public class PlayerPersistenceImpl implements PlayerPersistence{
 
     @Override
     public void addSoldier(Player player){
-        player.addOneSol();
+        synchronized(player){
+            player.addOneSol();
+        }
     }
 
     @Override
@@ -63,10 +64,15 @@ public class PlayerPersistenceImpl implements PlayerPersistence{
     }
 
     @Override
-    public void substractSoldiers(String nickname, int subsoldiers) {
+    public void substractSoldiers(String nickname, int subsoldiers, String tipo) {
         Player player = getPlayer(nickname);
-        player.setSoldadosDisponibles(player.getSoldadosDisponibles() - subsoldiers);   
-        player.setSoldadosTotales(player.getSoldadosTotales() - subsoldiers);
+        synchronized(player){
+            if(tipo.equals("totales")){
+                player.setSoldadosTotales(player.getSoldadosTotales() - subsoldiers);
+            }else{
+                player.setSoldadosDisponibles(player.getSoldadosDisponibles() - subsoldiers);       
+            }
+        }
     }
 
     @Override
@@ -75,5 +81,9 @@ public class PlayerPersistenceImpl implements PlayerPersistence{
         player.addNacion(idNation);
     }
 
-    
+	@Override
+	public void removeNation(String idNation, String nickname) {
+		Player player = getPlayer(nickname);
+        player.deleteNation(idNation);
+	}
 }

@@ -16,4 +16,6 @@ public interface NationsPersistence {
 
     public void setSoldados(Nation nation, int newSoldiers);
 
+    public void setLeader(String nation, String nickname);
+
 }

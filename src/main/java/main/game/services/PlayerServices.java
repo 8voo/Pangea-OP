@@ -27,7 +27,9 @@ public class PlayerServices {
     }
 
     public void addOneSol(Player player){
-        pp.addSoldier(player);
+        synchronized(player){
+            pp.addSoldier(player);
+        }
     }
 
     public ArrayList<Player> getAllPlayers(){
@@ -38,8 +40,8 @@ public class PlayerServices {
         return pp.getPlayer(nickname);
     }
     
-    public void substractSoldiers(String nickname, int subsoldiers){
-        pp.substractSoldiers(nickname, subsoldiers);
+    public void substractSoldiers(String nickname, int subsoldiers, String tipo){
+        pp.substractSoldiers(nickname, subsoldiers, tipo);
     }
 
     public Set<String> getNations(Player player){
@@ -49,5 +51,8 @@ public class PlayerServices {
     public void addNacion(String idNacion, String nickname){
         pp.addNacion(idNacion, nickname);
     }
-    
+
+    public void removeNation(String idNation, String nickname){
+        pp.removeNation(idNation, nickname);
+    }
 }

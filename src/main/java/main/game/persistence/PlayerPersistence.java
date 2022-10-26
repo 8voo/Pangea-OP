@@ -11,7 +11,7 @@ public interface PlayerPersistence {
         
     public void addSoldier(Player player);
 
-    public void substractSoldiers(String nickname, int subsoldiers);
+    public void substractSoldiers(String nickname, int subsoldiers,String tipo);
     
     public Set<String> getNacionesPlayer(Player player);
 
@@ -22,4 +22,6 @@ public interface PlayerPersistence {
     public boolean allReady();
 
     public Player getPlayer(String nickname);
+
+    public void removeNation(String idNation, String nickname);
 }

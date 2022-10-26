@@ -49,4 +49,10 @@ public class NationAPIController {
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
 
+    @RequestMapping(path = "{nation}/leader", method = RequestMethod.PUT)
+    public ResponseEntity<?> setLeader(@PathVariable String nation, @RequestBody String nickname){
+        ns.setLeader(nation, nickname);
+        return new ResponseEntity<>(HttpStatus.ACCEPTED);
+    }
+
 }

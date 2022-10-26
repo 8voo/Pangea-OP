@@ -51,4 +51,13 @@ public class NationsPersistenceImpl implements NationsPersistence{
         nation.setSoldados(newSoldiers);
     }
 
+    @Override
+    public void setLeader(String nation, String nickname) {
+        for(Nation n:naciones){
+            if(n.getId().equals(nation)){
+                n.setleader(nickname);;
+            }
+        }
+    }
+
 }

@@ -46,14 +46,15 @@ var gameApiclient = (function(){
         }) 
     },
 
-    substractSoldiers:function(nickname, subsoldiers){
-      var subSoldiers = JSON.stringify(subsoldiers);
+    substractSoldiers:function(nickname, subSoldiers, tipo){
+      var array = JSON.stringify([subSoldiers, tipo]);
       return new Promise((resolve) => {
         resolve($.ajax({
           type : "PUT",
           url : "../player/" + nickname + "/subsoldiers",
-          data: subSoldiers,
+          data: array,
           contentType : "application/json"
+          // async: true
         }))
       })
     },
@@ -101,6 +102,28 @@ var gameApiclient = (function(){
         url:"../player/" + nickname + "/nations",
         async:false
       }).responseText)
+    },
+
+    setLeader: function(nation,nickname){
+      return new Promise((resolve) => {
+        resolve($.ajax({
+          type : "PUT",
+          url : "../nation/" + nation + "/leader",
+          data: nickname,
+          contentType: "application/json"
+        }))
+      })
+    },
+
+    deleteNation: function(nation,nickname){
+      return new Promise((resolver) => {
+        resolve($.ajax({
+          type:"PUT",
+          url: "../player/" + nickname + "/deletenation",
+          data:nation,
+          contentType: "application/json"
+        }))
+      })
     }
     
   }  

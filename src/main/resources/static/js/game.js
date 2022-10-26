@@ -48,16 +48,16 @@ var game = (function(){
     self.formNations = function(currentNation){
         var nacion = gameApiclient.getNationById(currentNation);
         // console.log("fuera del if ", nacion.bloqueada);
-        // if(nacion.bloqueada === false){
+        if(nacion.bloqueada === false){
             if (nacion.soldados < self.soldadosDisponibles()){
                 // console.log("inicio del if ", nacion.bloqueada);
-                gameApiclient.changeBlock(nacion,true, false).then(() =>{
+                gameApiclient.changeBlock(nacion,true).then(() =>{
                     console.log(nacion.soldados);
-                    // if (nacion.bloqueada === false){
-                        nacion = gameApiclient.getNationById(currentNation);
-                        // console.log("dentro del then ", nacion.bloqueada);
-                        console.log("entro swal gamejs")
-                        console.log(gameApiclient.getNationById(currentNation).bloqueada);
+                    nacion = gameApiclient.getNationById(currentNation);
+                    // console.log("dentro del then ", nacion.bloqueada);
+                    console.log("entro swal gamejs")
+                    console.log(gameApiclient.getNationById(currentNation).bloqueada);
+                    if (gameApiclient.getNationById(currentNation).bloqueada){
                         swal("Atacar " + currentNation, "Los soldados necesarios para atacar esta nacion son 'numero'.", {
                             content: {
                                 element: "input",
@@ -88,22 +88,27 @@ var game = (function(){
                                 });
                             }
                             console.log("intenta desblouqar");
-                            gameApiclient.changeBlock(nacion,false,true).then(() => {
+                            gameApiclient.changeBlock(nacion,false).then(() => {
                                 console.log("desbloqueada")
                             });
                             })
+                        }else {
+                            console.log("SSSSSSSSAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
+                            swal("Esta nación ya esta siendo conquistada",{
+                                icon: "error",
+                              });
                         }
-                    )
+            })
             } else {
                 swal("No tienes suficientes soldados para conquistar esta nacion",{
                     icon: "error",
                   });
             }
-        // } else {
-        //     swal("Esta nación ya esta siendo conquistada",{
-        //         icon: "error",
-        //       });
-        // }
+        } else {
+            swal("Esta nación ya esta siendo conquistada",{
+                icon: "error",
+              });
+        }
     }
 
     self.atacarNacion = function(currentNation){

@@ -12,8 +12,8 @@ var game = (function(){
     self.currentColor = self.currentPlayer.color;
     self.clickSum = 1;
     self.soldadosDisponibles = ko.observable(0);
-    self.soldadosTotal = ko.observable(0);
-    self.nacionesConquistadas = ko.observable(0);
+    self.soldadosTotal = ko.observable(10);
+    self.nacionesConquistadas = ko.observable(1);
     self.iconImage = ko.observable(powerIcons["congelar"]);
     self.activePower = "congelar";
     self.players = ko.observable(JSON.parse($.ajax({type:'GET', url:'../player', async:false}).responseText).slice(0,5));
@@ -85,8 +85,7 @@ var game = (function(){
                                             console.log("Se resto " + nacion.soldados + " soldados a totales de " + nationAtacked.leader);
                                         }).catch(error => console.log("No se pudo restar soldados al lider anterior"));
                                     }
-                                    self.soldadosDisponibles(gameApiclient.getSoldiers(self.currentPlayer.nickname)[0]);
-                                    self.soldadosTotal(gameApiclient.getSoldiers(self.currentPlayer.nickname)[1]);
+                                    self.actualizeLocalTable(gameApiclient.getSoldiers(self.currentPlayer.nickname)[0], gameApiclient.getSoldiers(self.currentPlayer.nickname)[1]);
                                     stompClient.send("/topic/soldiers", {}, JSON.stringify("se restaron" + value));
                                     gameApiclient.setSoldiers(currentNation, value - nacion.soldados).then(() => {
                                         stompClient.send("/topic/nations", {}, JSON.stringify("actualizo naciones"));
@@ -131,7 +130,7 @@ var game = (function(){
         }).catch(error => console.log("No se añadio la nacion" + currentNation));
         
         let nacion = gameApiclient.getNationById(currentNation);
-        gameApiclient.deleteNation(nacion, nacion.leader).then(() =>{            
+        gameApiclient.deleteNation(nacion.id, nacion.leader).then(() =>{        
         }).catch(error => console.log("No se pudo eliminar la nacion " + currentNation));
 
         gameApiclient.setLeader(currentNation, self.currentPlayer.nickname).then(() => {
@@ -143,8 +142,7 @@ var game = (function(){
     //predeterminados a la cantidad de soldados disponibles del usuario
     self.addDisponibles = function(){
         gameApiclient.addSoldier(self.nickname(), self.clickSum).then(() => {
-            self.soldadosDisponibles(gameApiclient.getSoldiers(self.nickname())[0]);
-            self.soldadosTotal(gameApiclient.getSoldiers(self.nickname())[1]);
+            self.actualizeLocalTable(gameApiclient.getSoldiers(self.nickname())[0], gameApiclient.getSoldiers(self.nickname())[1]);
             stompClient.send("/topic/soldiers", {}, JSON.stringify("añadio soldados stomp"));
             // console.log("Soldado añadido");
         }).catch(error => console.log("No se pudo añadir el soldado"));
@@ -190,10 +188,8 @@ var game = (function(){
             console.log('Connected: ' + frame);
             stompClient.subscribe('/topic/soldiers', function () {
                 actualizeTable();
-                // actualizeMap();
             });
             stompClient.subscribe('/topic/nations', function () {
-            
                 actualizeMap();
             });
         });
@@ -212,10 +208,10 @@ var game = (function(){
         }
     }
 
-    // self.actualizeLocalTable = function(disponibles, totales){
-    //     self.soldadosDisponibles(gameApiclient.getSoldiers(disponibles);
-    //     self.soldadosTotal(gameApiclient.getSoldiers(self.currentPlayer.nickname)[1]);
-    // }
+    self.actualizeLocalTable = function(disponibles, totales){
+        self.soldadosDisponibles(disponibles);
+        self.soldadosTotal(totales);
+    }
     
     connect = (function(){
         self.connectAndSubscribe();

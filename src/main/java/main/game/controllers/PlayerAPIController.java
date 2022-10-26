@@ -84,7 +84,6 @@ public class PlayerAPIController {
 
     @RequestMapping(path = "{nickname}/subsoldiers", method = RequestMethod.PUT)
     public ResponseEntity<?> substractSoldiers(@PathVariable String nickname, @RequestBody String[] subsoldiers){
-        System.out.println(subsoldiers[1]);
         pgs.substractSoldiers(nickname, Integer.parseInt(subsoldiers[0]), subsoldiers[1]);
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }

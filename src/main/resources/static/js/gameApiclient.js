@@ -116,7 +116,8 @@ var gameApiclient = (function(){
     },
 
     deleteNation: function(nation,nickname){
-      return new Promise((resolver) => {
+      console.log("nacion " + nation + "nickname " + nickname)
+      return new Promise((resolve) => {
         resolve($.ajax({
           type:"PUT",
           url: "../player/" + nickname + "/deletenation",

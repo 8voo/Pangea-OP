@@ -86,4 +86,9 @@ public class PlayerPersistenceImpl implements PlayerPersistence{
 		Player player = getPlayer(nickname);
         player.deleteNation(idNation);
 	}
+
+    @Override
+    public void setPoder(String poder, String nickname) {
+        
+    }
 }

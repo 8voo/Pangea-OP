@@ -148,6 +148,11 @@ var game = (function(){
         }).catch(error => console.log("No se pudo añadir el soldado"));
     },
 
+    self.runPower = function(){
+        self.changePower();
+        stompClient.send("/topic/power", {}, JSON.stringify("Se activo el poder"));
+    }
+
     //Cambia el icono del poder que se va a desplegar
     self.changePower = function(){
         activarAlerta();
@@ -157,11 +162,11 @@ var game = (function(){
         self.iconImage(powerIcons[activePower]);
         
         //Cambio la posicion del poder a una posicion random
-        var xPosition = Math.floor(Math.random() * 100);
-        var yPosition = Math.floor(Math.random() * 100);
+        var xPosition = Math.floor(Math.random() * 50);
+        var yPosition = Math.floor(Math.random() * 50);
         var currentPower = document.getElementById("power");
-        currentPower.style.left = xPosition + "%";
-        currentPower.style.top = yPosition + "%";
+        currentPower.style.left = xPosition + "vw";
+        currentPower.style.top = yPosition + "vh";
 
         //Se hace invisible el icono del poder por un tiempo definido
         currentPower.style.visibility = "hidden";
@@ -169,7 +174,6 @@ var game = (function(){
             currentPower.style.visibility = "visible";
         }, 60)//60000
     },
-
     //Alerta sobre el poder que se ha activado
     self.activarAlerta = function(){
         swal("Se ha utilizado un poder!", "'Jugador' ha activado " + activePower.toUpperCase(), "warning", {
@@ -191,6 +195,9 @@ var game = (function(){
             });
             stompClient.subscribe('/topic/nations', function () {
                 actualizeMap();
+            });
+            stompClient.subscribe('/topic/power', function () {
+                changePower();
             });
         });
     },

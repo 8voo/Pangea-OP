@@ -24,4 +24,5 @@ public interface PlayerPersistence {
     public Player getPlayer(String nickname);
 
     public void removeNation(String idNation, String nickname);
+
 }

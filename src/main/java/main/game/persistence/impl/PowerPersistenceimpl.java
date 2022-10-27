@@ -22,5 +22,8 @@ public class PowerPersistenceimpl implements PowerPersistence{
         return null;
     }
 
+    // public Poder getPoderRandom(){
+
+    // }
 
 }

@@ -12,7 +12,6 @@ public class Player {
     private Set<String> naciones = new HashSet<String>();
     private boolean listo = false;
     private String color;
-    private String poder;
 
     public void deleteNation(String idNation){
         this.naciones.remove(idNation);
@@ -78,11 +77,4 @@ public class Player {
         this.soldadosTotales+=1;
     }
 
-    public String getPoder(){
-        return this.poder;
-    }
-
-    public void setPoder(String poder){
-        this.poder = poder;
-    }
 }

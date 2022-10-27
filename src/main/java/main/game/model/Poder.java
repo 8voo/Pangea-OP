@@ -1,5 +1,7 @@
 package main.game.model;
 
-public interface Poder {
-        public void activatePower(Player player);
+public abstract class Poder {
+        public void activatePower(Player player){
+                
+        }
 }

@@ -1,9 +1,13 @@
 package main.game.persistence;
 
-import main.game.model.Poder;
+import java.util.ArrayList;
 
 public interface PowerPersistence {
+
+    public void activatePower(ArrayList<String> players);
     
-    public Poder getActivePower();
+    public String getActivePower();
+
+    public void deactivatePower();
 
 }

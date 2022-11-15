@@ -172,7 +172,7 @@ var game = (function(){
         currentPower.style.visibility = "hidden";
         setTimeout(() => {
             currentPower.style.visibility = "visible";
-        }, 20000)//60000
+        }, 10)//60000
     },
     //Alerta sobre el poder que se ha activado
     self.activarAlerta = function(){
@@ -219,6 +219,7 @@ var game = (function(){
         self.soldadosDisponibles(disponibles);
         self.soldadosTotal(totales);
     }
+
     
     connect = (function(){
         self.connectAndSubscribe();

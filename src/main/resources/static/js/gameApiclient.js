@@ -72,6 +72,38 @@ var gameApiclient = (function(){
       })
     },
 
+    setLeader: function(nation,nickname){
+      return new Promise((resolve) => {
+        resolve($.ajax({
+          type : "PUT",
+          url : "../nation/" + nation + "/leader",
+          data: nickname,
+          contentType: "application/json"
+        }))
+      })
+    },
+
+    deleteNation: function(nation,nickname){
+      return new Promise((resolve) => {
+        resolve($.ajax({
+          type:"PUT",
+          url: "../player/" + nickname + "/deletenation",
+          data:nation,
+          contentType: "application/json"
+        }))
+      })
+    },
+
+    activatePower: function(){
+      return new Promise((resolve) => {
+        resolve($.ajax({
+          type:"PUT",
+          url: "../power/activatePower/",
+          contentType: "application/json"
+        }))
+      })
+    },
+
     getSoldiers:function(nickname){
       return JSON.parse($.ajax({
         type:'GET',
@@ -104,27 +136,12 @@ var gameApiclient = (function(){
       }).responseText)
     },
 
-    setLeader: function(nation,nickname){
-      return new Promise((resolve) => {
-        resolve($.ajax({
-          type : "PUT",
-          url : "../nation/" + nation + "/leader",
-          data: nickname,
-          contentType: "application/json"
-        }))
-      })
-    },
-
-    deleteNation: function(nation,nickname){
-      console.log("nacion " + nation + "nickname " + nickname)
-      return new Promise((resolve) => {
-        resolve($.ajax({
-          type:"PUT",
-          url: "../player/" + nickname + "/deletenation",
-          data:nation,
-          contentType: "application/json"
-        }))
-      })
+    getActivePower: function(){
+      return JSON.parse($.ajax({
+        typeof:'GET',
+        url:"../power/activePower",
+        aync:false
+      }).responseText)
     }
     
   }  

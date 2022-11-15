@@ -13,17 +13,31 @@ import main.game.persistence.PowerPersistence;
 @Component
 public class PowerPersistenceimpl implements PowerPersistence{
     private Poder[] poderes = {new TripleClick(), new Freeze(), new DeleteSoldados()};
+    private int currPower;
 
-    public Poder getActivePower(){
+    public String getActivePower(){
         for (Poder poder : poderes){
-            if (poder.isActive());
-            return poder;
+            if (poder.isActive()){
+                return poder.getName();
+            }
         }
         return null;
     }
 
-    // public Poder getPoderRandom(){
+    @Override
+    public void activatePower(ArrayList<String> players) {
+        this.currPower = (int)(Math.random() * poderes.length) - 1;
+        if(getActivePower() == "TripleClick"){
+            players.remove(players.size() - 1);
+            poderes[currPower].activatePower(players);
+        } else{
+            String singlePlayer = players.get(players.size());
+            poderes[currPower].activatePower(singlePlayer);
+        }
+    }
 
-    // }
-
+    @Override
+    public void deactivatePower() {
+        poderes[currPower].deactivatePower();
+    }
 }

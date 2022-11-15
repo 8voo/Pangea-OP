@@ -148,10 +148,18 @@ var game = (function(){
         }).catch(error => console.log("No se pudo añadir el soldado"));
     },
 
+    /*
+    si se activa un poder, hacer post al back, luego hacer get de los jugadores con el poder activo
+    si está en los jugadores, entonces hacer get para saber cual es el poder activo, activar funcionalidad
+    del poder
+    */
+
     self.runPower = function(){
-        self.changePower();
+        // self.changePower();
         stompClient.send("/topic/power", {}, JSON.stringify("Se activo el poder"));
     }
+
+
 
     //Cambia el icono del poder que se va a desplegar
     self.changePower = function(){
@@ -220,7 +228,6 @@ var game = (function(){
         self.soldadosTotal(totales);
     }
 
-    
     connect = (function(){
         self.connectAndSubscribe();
         self.añadirNacionesMapa();

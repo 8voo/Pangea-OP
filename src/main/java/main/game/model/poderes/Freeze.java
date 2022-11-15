@@ -5,35 +5,15 @@ import java.util.ArrayList;
 import main.game.model.Player;
 import main.game.model.Poder;
 
-public class Freeze implements Poder{
-    private String name = "Freeze";
-    private boolean active;
-    private ArrayList<String> activePowerPlayers;
+public class Freeze extends Poder{
 
-    @Override
-    public void activatePower(String player) {
+    public Freeze(){
+        super("Freeze");
     }
 
-    @Override
-    public boolean isActive() {
-        return active;
-    }
-
-    @Override
-    public String getName() {
-        return this.name;
-    }
-
-    @Override
-    public void deactivatePower() {
-        this.activePowerPlayers = new ArrayList<String>();
-        this.active = false;
-    }
-
-    @Override
-    public void activatePower(ArrayList<String> players) {
-        this.activePowerPlayers = players;
-        this.active = true;
+    public void activatePower(ArrayList<String> players) {    
+        super.activePowerPlayers = players;
+        super.active = true;    
     }
     
 }

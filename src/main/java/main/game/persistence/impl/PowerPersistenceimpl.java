@@ -40,4 +40,9 @@ public class PowerPersistenceimpl implements PowerPersistence{
     public void deactivatePower() {
         poderes[currPower].deactivatePower();
     }
+
+    @Override
+    public ArrayList<String> getActivePlayers() {
+        return poderes[currPower].getActivePlayers();
+    }
 }

@@ -5,34 +5,13 @@ import java.util.ArrayList;
 import main.game.model.Player;
 import main.game.model.Poder;
 
-public class TripleClick implements Poder {
-    private boolean active;
-    private String name = "TripleClick";
-    private String[] activePowerPlayers;
-    private String singlePlayer;
+public class TripleClick extends Poder {
+    public TripleClick(){
+        super("TripleClick");
+    }
 
-    @Override
     public void activatePower(String player) {
-        this.singlePlayer = player;
+        super.activePowerPlayers.add(player);
+        super.active = true;
     }
-
-    @Override
-    public boolean isActive() {
-        return active;
-    }
-
-    @Override
-    public String getName() {
-        return this.name;
-    }
-
-    @Override
-    public void deactivatePower() {
-        this.activePowerPlayers = new String[] {};
-        this.active = false;
-    }
-
-    @Override
-    public void activatePower(ArrayList<String> players) {
-    }   
 }

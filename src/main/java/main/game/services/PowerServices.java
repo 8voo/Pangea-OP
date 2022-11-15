@@ -24,4 +24,8 @@ public class PowerServices {
     public void deactivatePower(){
         pp.deactivatePower();
     }
+
+    public ArrayList<String> getActivePlayers(){
+        return pp.getActivePlayers();
+    }
 }

@@ -2,16 +2,35 @@ package main.game.model;
 
 import java.util.ArrayList;
 
-public interface Poder {
-
-        public String getName();
-
-        public void activatePower(ArrayList<String> players);
+public abstract class  Poder {
+        private String name;
         
-        public void activatePower(String  players);
+        protected boolean active;
+        protected ArrayList<String> activePowerPlayers;
 
-        public boolean isActive();
+        public Poder(String name){
+                this.name = name;
+        }
 
-        public void deactivatePower();
+        public String getName(){
+                return this.name;
+        }
+
+        public boolean isActive(){
+                return active;
+        };
+
+        public void activatePower(ArrayList<String> players){};
+        
+        public void activatePower(String  players){};
+
+        public ArrayList<String> getActivePlayers(){
+                return activePowerPlayers;
+        }
+
+        public void deactivatePower(){
+                this.activePowerPlayers = new ArrayList<String>();
+                this.active = false;
+        };
 
 }

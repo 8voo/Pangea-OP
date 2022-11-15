@@ -1,15 +1,30 @@
 var gameApiclient = (function(){
   return {
+
+    //Player
     addSoldier:function(nickname, quant){
         var quantity = JSON.stringify({quant});
         return new Promise((resolve) => {
-                resolve($.ajax({
-                    type:"PUT",
-                    url: "../player/" + nickname + "/soldiers",
-                    data:quantity,
-                    contentType: "application/json"
-                }))
-            })
+          resolve($.ajax({
+            type:"PUT",
+            url: "../player/" + nickname + "/soldiers",
+            data:quantity,
+            contentType: "application/json"
+        }))
+      })
+    },
+
+    substractSoldiers:function(nickname, subSoldiers, tipo){
+      var array = JSON.stringify([subSoldiers, tipo]);
+      return new Promise((resolve) => {
+        resolve($.ajax({
+          type : "PUT",
+          url : "../player/" + nickname + "/subsoldiers",
+          data: array,
+          contentType : "application/json"
+          // async: true
+        }))
+      })
     },
 
     addNation:function(nickname,nation){
@@ -18,6 +33,40 @@ var gameApiclient = (function(){
           type:"PUT",
           url: "../player/" + nickname + "/nations",
           data:nation,
+          contentType: "application/json"
+        }))
+      })
+    },
+
+    deleteNation: function(nation,nickname){
+      return new Promise((resolve) => {
+        resolve($.ajax({
+          type:"PUT",
+          url: "../player/" + nickname + "/deletenation",
+          data:nation,
+          contentType: "application/json"
+        }))
+      })
+    },
+
+    getSoldiers:function(nickname){
+      return JSON.parse($.ajax({
+        type:'GET',
+        url: "../player/" + nickname + "/soldierQuantity", 
+        async:false
+      }).responseText); 
+    },
+
+    //Nation
+
+    setSoldiers:function(nation, newSoldiers){
+      console.log("nation " + nation + " newSoldiers " + newSoldiers);
+      var newSoldiers = JSON.stringify(newSoldiers);
+      return new Promise((resolve) => {
+        resolve($.ajax({
+          type : "PUT",
+          url : "../nation/" + nation + "/soldiers",
+          data: newSoldiers,
           contentType: "application/json"
         }))
       })
@@ -46,32 +95,6 @@ var gameApiclient = (function(){
         }) 
     },
 
-    substractSoldiers:function(nickname, subSoldiers, tipo){
-      var array = JSON.stringify([subSoldiers, tipo]);
-      return new Promise((resolve) => {
-        resolve($.ajax({
-          type : "PUT",
-          url : "../player/" + nickname + "/subsoldiers",
-          data: array,
-          contentType : "application/json"
-          // async: true
-        }))
-      })
-    },
-
-    setSoldiers:function(nation, newSoldiers){
-      console.log("nation " + nation + " newSoldiers " + newSoldiers);
-      var newSoldiers = JSON.stringify(newSoldiers);
-      return new Promise((resolve) => {
-        resolve($.ajax({
-          type : "PUT",
-          url : "../nation/" + nation + "/soldiers",
-          data: newSoldiers,
-          contentType: "application/json"
-        }))
-      })
-    },
-
     setLeader: function(nation,nickname){
       return new Promise((resolve) => {
         resolve($.ajax({
@@ -81,35 +104,6 @@ var gameApiclient = (function(){
           contentType: "application/json"
         }))
       })
-    },
-
-    deleteNation: function(nation,nickname){
-      return new Promise((resolve) => {
-        resolve($.ajax({
-          type:"PUT",
-          url: "../player/" + nickname + "/deletenation",
-          data:nation,
-          contentType: "application/json"
-        }))
-      })
-    },
-
-    activatePower: function(){
-      return new Promise((resolve) => {
-        resolve($.ajax({
-          type:"PUT",
-          url: "../power/activatePower/",
-          contentType: "application/json"
-        }))
-      })
-    },
-
-    getSoldiers:function(nickname){
-      return JSON.parse($.ajax({
-        type:'GET',
-        url: "../player/" + nickname + "/soldierQuantity", 
-        async:false
-      }).responseText); 
     },
 
     getNations:function(){
@@ -136,13 +130,32 @@ var gameApiclient = (function(){
       }).responseText)
     },
 
+    //Power
+
+    activatePower: function(){
+      return new Promise((resolve) => {
+        resolve($.ajax({
+          type:"PUT",
+          url: "../power/activatePower/",
+          contentType: "application/json"
+        }))
+      })
+    },
+
     getActivePower: function(){
       return JSON.parse($.ajax({
         typeof:'GET',
         url:"../power/activePower",
-        aync:false
+        async:false
+      }).responseText)
+    },
+
+    getActivePlayers: function(){
+      return JSON.parse($ajax({
+        typeof: 'GET',
+        url:"../power/activePlayers",
+        async:false
       }).responseText)
     }
-    
   }  
 })();

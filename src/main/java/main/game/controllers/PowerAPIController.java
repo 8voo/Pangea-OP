@@ -25,6 +25,11 @@ public class PowerAPIController {
         return new ResponseEntity<>(new Gson().toJson(ps.getActivePower()), HttpStatus.ACCEPTED);
     }
 
+    @RequestMapping(path = "activePlayers", method = RequestMethod.GET)
+    public ResponseEntity<?> activePlayers(){
+        return new ResponseEntity<>(new Gson().toJson(ps.getActivePlayers()), HttpStatus.ACCEPTED); 
+    }
+
     @RequestMapping(path = "activatePower", method  = RequestMethod.PUT)
     public ResponseEntity<?> activatePower(@RequestBody ArrayList<String> nicknames){
         ps.activatePower(nicknames);

@@ -10,4 +10,6 @@ public interface PowerPersistence {
 
     public void deactivatePower();
 
+    public ArrayList<String> getActivePlayers();
+
 }

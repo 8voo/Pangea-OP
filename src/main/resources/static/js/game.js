@@ -1,7 +1,7 @@
 var powerIcons = {
-    tripleClick : "../img/click.png", 
-    quitaSoldados : "../img/soldado.png", 
-    congelar : "../img/winter.png"
+    TripleClick : "../img/click.png", 
+    DeleteSoldados : "../img/soldado.png", 
+    Freeze : "../img/winter.png"
 }
 
 var game = (function(){
@@ -14,9 +14,10 @@ var game = (function(){
     self.soldadosDisponibles = ko.observable(0);
     self.soldadosTotal = ko.observable(10);
     self.nacionesConquistadas = ko.observable(1);
-    self.iconImage = ko.observable(powerIcons["congelar"]);
-    self.activePower = "congelar";
+    self.iconImage = ko.observable(powerIcons["TripleClick"]);
+    self.activePower = "TripleClick";
     self.players = ko.observable(JSON.parse($.ajax({type:'GET', url:'../player', async:false}).responseText).slice(0,5));
+    
     //Añade las naciones al mapa y asigna una nacion de inicio a cada jugador
     self.añadirNacionesMapa = function(){
         gameApiclient.getNations();
@@ -148,14 +149,8 @@ var game = (function(){
         }).catch(error => console.log("No se pudo añadir el soldado"));
     },
 
-    /*
-    activar el poder para luego solo pedir cual era
-    si se activa un poder, hacer post al back, luego hacer get de los jugadores con el poder activo
-    si está en los jugadores, entonces hacer get para saber cual es el poder activo, activar funcionalidad
-    del poder
-    */
 
-    self.runPower = function(){
+    self.setNextPower = function(){
         var copyPlayers = self.players();
         for(let i = 0; i < copyPlayers.length; i++){
             if(copyPlayers[i].nickname == self.currentPlayer.nickname){
@@ -169,28 +164,20 @@ var game = (function(){
             nicknames[i] = copyPlayers[i].nickname;
         }
         gameApiclient.activatePower(nicknames);
-        self.activePower = gameApiclient.getActivePower();
         console.log(self.activePower);
-        var jugadoresPoderActivo = gameApiclient.getActivePlayers();
-        // if (activePower == "TripleClick" || activePower == "DeleteSoldados"){
+    },
 
-        // }else if (activePower == "Freeze"){
-
-        // }
-        
+    self.runPower = function(){
         stompClient.send("/topic/power", {}, JSON.stringify("Se activo el poder"));
-    }
-
+        self.setNextPower();
+    },
 
 
     //Cambia el icono del poder que se va a desplegar
     self.changePower = function(){
         activarAlerta();
-
-        // var powerNames = Object.keys(powerIcons);
-        // self.activePower = powerNames[Math.floor(Math.random() * powerNames.length)];
+        self.activePower = gameApiclient.getActivePower();
         self.iconImage(powerIcons[self.activePower]);
-        
         //Cambio la posicion del poder a una posicion random
         var xPosition = Math.floor(Math.random() * 50);
         var yPosition = Math.floor(Math.random() * 50);

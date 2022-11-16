@@ -22,7 +22,6 @@ public class PowerPersistenceimpl implements PowerPersistence{
     @Override
     public void activatePower(ArrayList<String> players) {
         this.currPower = (int)(Math.random() * poderes.length);
-        System.out.println("currpwr " + currPower);
         if(poderes[currPower].getName() != "TripleClick"){
             players.remove(players.size() - 1);
             poderes[currPower].activatePower(players);
@@ -32,7 +31,6 @@ public class PowerPersistenceimpl implements PowerPersistence{
         }
         // System.out.println("primero " + poderes[currPower]);
         // System.out.println("segundo " + getActivePower());
-        deactivatePower();
     }
 
     @Override

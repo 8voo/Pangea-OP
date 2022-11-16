@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public abstract class  Poder {
         private String name;
         
-        protected static String active = "";
+        protected static String active = "TripleClick";
         protected ArrayList<String> activePowerPlayers = new ArrayList<String>();
 
         public Poder(String name){

@@ -132,11 +132,13 @@ var gameApiclient = (function(){
 
     //Power
 
-    activatePower: function(){
+    activatePower: function(players){
+      var nicknames = JSON.stringify(players);
       return new Promise((resolve) => {
         resolve($.ajax({
           type:"PUT",
           url: "../power/activatePower/",
+          data: nicknames,
           contentType: "application/json"
         }))
       })
@@ -151,7 +153,7 @@ var gameApiclient = (function(){
     },
 
     getActivePlayers: function(){
-      return JSON.parse($ajax({
+      return JSON.parse($.ajax({
         typeof: 'GET',
         url:"../power/activePlayers",
         async:false

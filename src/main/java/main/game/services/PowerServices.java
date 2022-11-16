@@ -17,8 +17,12 @@ public class PowerServices {
         return pp.getActivePower();
     }
 
-    public void activatePower(ArrayList<String> players){
-        pp.activatePower(players);
+    public void activatePower(String[] players){
+        ArrayList<String> playersAL = new ArrayList<String>();
+        for (String player : players){
+            playersAL.add(player);
+        }
+        pp.activatePower(playersAL);
     }
 
     public void deactivatePower(){

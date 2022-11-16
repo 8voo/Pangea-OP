@@ -31,7 +31,7 @@ public class PowerAPIController {
     }
 
     @RequestMapping(path = "activatePower", method  = RequestMethod.PUT)
-    public ResponseEntity<?> activatePower(@RequestBody ArrayList<String> nicknames){
+    public ResponseEntity<?> activatePower(@RequestBody String[] nicknames){
         ps.activatePower(nicknames);
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }

@@ -5,8 +5,8 @@ import java.util.ArrayList;
 public abstract class  Poder {
         private String name;
         
-        protected boolean active;
-        protected ArrayList<String> activePowerPlayers;
+        protected static String active = "";
+        protected ArrayList<String> activePowerPlayers = new ArrayList<String>();
 
         public Poder(String name){
                 this.name = name;
@@ -16,13 +16,15 @@ public abstract class  Poder {
                 return this.name;
         }
 
-        public boolean isActive(){
+        public static String getActive(){
                 return active;
         };
 
-        public void activatePower(ArrayList<String> players){};
+        public void activatePower(ArrayList<String> players){
+        };
         
-        public void activatePower(String  players){};
+        public void activatePower(String  players){
+        };
 
         public ArrayList<String> getActivePlayers(){
                 return activePowerPlayers;
@@ -30,7 +32,7 @@ public abstract class  Poder {
 
         public void deactivatePower(){
                 this.activePowerPlayers = new ArrayList<String>();
-                this.active = false;
+                this.active = "";
         };
 
 }

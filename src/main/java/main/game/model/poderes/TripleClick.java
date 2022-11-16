@@ -12,6 +12,6 @@ public class TripleClick extends Poder {
 
     public void activatePower(String player) {
         super.activePowerPlayers.add(player);
-        super.active = true;
+        super.active = "TripleClick";
     }
 }

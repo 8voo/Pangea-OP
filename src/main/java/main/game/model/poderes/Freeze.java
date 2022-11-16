@@ -13,7 +13,7 @@ public class Freeze extends Poder{
 
     public void activatePower(ArrayList<String> players) {    
         super.activePowerPlayers = players;
-        super.active = true;    
+        super.active = "Freeze";
     }
     
 }

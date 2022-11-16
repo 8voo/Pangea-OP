@@ -149,13 +149,35 @@ var game = (function(){
     },
 
     /*
+    activar el poder para luego solo pedir cual era
     si se activa un poder, hacer post al back, luego hacer get de los jugadores con el poder activo
     si está en los jugadores, entonces hacer get para saber cual es el poder activo, activar funcionalidad
     del poder
     */
 
     self.runPower = function(){
-        // self.changePower();
+        var copyPlayers = self.players();
+        for(let i = 0; i < copyPlayers.length; i++){
+            if(copyPlayers[i].nickname == self.currentPlayer.nickname){
+                copyPlayers.splice(i,1);
+                break;
+            }
+        }
+        copyPlayers.push(self.currentPlayer);
+        var nicknames = [];
+        for(let i = 0; i <copyPlayers.length; i++){
+            nicknames[i] = copyPlayers[i].nickname;
+        }
+        gameApiclient.activatePower(nicknames);
+        self.activePower = gameApiclient.getActivePower();
+        console.log(self.activePower);
+        var jugadoresPoderActivo = gameApiclient.getActivePlayers();
+        // if (activePower == "TripleClick" || activePower == "DeleteSoldados"){
+
+        // }else if (activePower == "Freeze"){
+
+        // }
+        
         stompClient.send("/topic/power", {}, JSON.stringify("Se activo el poder"));
     }
 
@@ -165,9 +187,9 @@ var game = (function(){
     self.changePower = function(){
         activarAlerta();
 
-        var powerNames = Object.keys(powerIcons);
-        self.activePower = powerNames[Math.floor(Math.random() * powerNames.length)];
-        self.iconImage(powerIcons[activePower]);
+        // var powerNames = Object.keys(powerIcons);
+        // self.activePower = powerNames[Math.floor(Math.random() * powerNames.length)];
+        self.iconImage(powerIcons[self.activePower]);
         
         //Cambio la posicion del poder a una posicion random
         var xPosition = Math.floor(Math.random() * 50);

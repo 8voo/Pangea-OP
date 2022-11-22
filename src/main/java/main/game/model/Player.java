@@ -1,13 +1,12 @@
 package main.game.model;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
 public class Player {
     private int id;
     private String nickname="";
-    private int soldadosDisponibles = 0;
+    private int soldadosDisponibles = 1000;
     private int soldadosTotales = 10;
     private Set<String> naciones = new HashSet<String>();
     private boolean listo = false;

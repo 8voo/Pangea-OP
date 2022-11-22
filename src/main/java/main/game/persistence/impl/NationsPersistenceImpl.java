@@ -60,4 +60,19 @@ public class NationsPersistenceImpl implements NationsPersistence{
         }
     }
 
+    @Override
+    public String allConquered(){
+        String lider = naciones.get(0).getleader();
+        boolean isWinner = true;
+        for(Nation n:naciones){
+            if(!(n.getleader().equals(lider))){
+                isWinner = false;
+            }
+        }
+        if(isWinner){
+            return lider;
+        }
+        return "none";
+    }
+
 }

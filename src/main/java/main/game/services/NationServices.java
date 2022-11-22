@@ -39,4 +39,8 @@ public class NationServices {
     public void setLeader(String nation, String nickname){
         np.setLeader(nation, nickname);
     }
+
+    public String allConquered(){
+        return np.allConquered();
+    }
 }

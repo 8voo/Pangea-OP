@@ -55,4 +55,9 @@ public class NationAPIController {
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
 
+    @RequestMapping(path="winner", method = RequestMethod.GET)
+    public ResponseEntity<?> getWinner(){
+        return new ResponseEntity<>(new Gson().toJson(ns.allConquered()), HttpStatus.ACCEPTED);
+    }
+
 }

@@ -1,0 +1,62 @@
+@import url('https://fonts.googleapis.com/css2?family=Rubik+Dirt&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Peralta&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Black+Ops+One&display=swap');
+@-webkit-keyframes tracking-in-expand-fwd{0%{letter-spacing:-.5em;-webkit-transform:translateZ(-700px);transform:translateZ(-700px);opacity:0}40%{opacity:.6}100%{-webkit-transform:translateZ(0);transform:translateZ(0);opacity:1}}@keyframes tracking-in-expand-fwd{0%{letter-spacing:-.5em;-webkit-transform:translateZ(-700px);transform:translateZ(-700px);opacity:0}40%{opacity:.6}100%{-webkit-transform:translateZ(0);transform:translateZ(0);opacity:1}}
+@-webkit-keyframes scale-in-hor-center{0%{-webkit-transform:scaleX(0);transform:scaleX(0);opacity:1}100%{-webkit-transform:scaleX(1);transform:scaleX(1);opacity:1}}@keyframes scale-in-hor-center{0%{-webkit-transform:scaleX(0);transform:scaleX(0);opacity:1}100%{-webkit-transform:scaleX(1);transform:scaleX(1);opacity:1}}
+
+.tracking-in-expand-fwd{-webkit-animation:tracking-in-expand-fwd 1s cubic-bezier(.215,.61,.355,1.000) both;animation:tracking-in-expand-fwd 1s cubic-bezier(.215,.61,.355,1.000) both}
+.scale-in-hor-center{-webkit-animation:scale-in-hor-center 1s cubic-bezier(.25,.46,.45,.94) both;animation:scale-in-hor-center 1s cubic-bezier(.25,.46,.45,.94) both}
+
+body{
+    background-color: #260a07;
+}
+
+.winner-div{
+    font-family: 'Peralta', cursive;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    position: absolute;
+    top: 35%;
+    left: 25%;
+    transform: translate(-50%, -50%);
+    background-color: #7b2624;
+    color: #ffcb7c;
+    border-radius: 10px;
+    width: 50%;
+    height: 30%;
+    align-items: center;
+    background-image: linear-gradient(to right, #260a07,#7b2624,#7b2624,#260a07);
+    outline: transparent;
+    border: transparent;
+}
+
+#header{
+    text-align: center;
+    font-family: 'Rubik Dirt', cursive;
+    color: #ffcb7c;
+    font-size: 800%;
+}
+
+button {
+    margin-top: 5%;
+    padding: 5%;
+    border-radius: 5px;
+    font-family: 'Peralta', cursive;
+    color: #260a07;
+    overflow: hidden;
+    cursor: pointer;
+    background-color: #b25c41;
+    width:160px;
+    transition: 0.2s;
+}
+
+button:hover{
+    background-color: #ffcb7c;
+    width: 200px;
+}
+
+button:active{
+    background-color: #7b2624;
+    color: white;
+}

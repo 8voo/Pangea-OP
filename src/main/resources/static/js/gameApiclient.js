@@ -130,6 +130,14 @@ var gameApiclient = (function(){
       }).responseText)
     },
 
+    getWinner: function(){
+      return JSON.parse($.ajax({
+        type:'GET',
+        url:"../nation/winner",
+        async:false
+      }).responseText)
+    },
+
     //Power
 
     activatePower: function(players){

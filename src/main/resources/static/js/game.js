@@ -137,6 +137,8 @@ var game = (function(){
         gameApiclient.setLeader(currentNation, self.currentPlayer.nickname).then(() => {
             // console.log("Se seteo como lider a" + self.currentPlayer.nickname + "a ls nacion" + currentNation)
         }).catch(error => console.log("No se pudo setear como lider a " + self.currentPlayer.nickname));
+
+        
     },
 
     //Con cada click al boton de crear, suma la cantidad de soldados
@@ -229,6 +231,11 @@ var game = (function(){
             var nacion = document.querySelector("#nation" + (i +1));
             nacion.style.backgroundColor = nations[i].color; 
             nacion.firstChild.textContent = nations[i].soldados;
+        }
+        var winner = gameApiclient.getWinner();
+        console.log(winner);
+        if(winner!="none"){
+            location.href = location.href.slice(0,-15) + "/html/gameover.html";
         }
     }
 

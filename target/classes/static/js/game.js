@@ -218,8 +218,30 @@ var game = (function(){
             stompClient.subscribe('/topic/power', function () {
                 changePower();
             });
+            stompClient.subscribe('/topic/pause', function(){
+                pauseEveryGame();
+            })
+            stompClient.subscribe('/topic/gameOver', function(){
+                gameOver();
+            })
         });
-    },
+    }
+
+    self.pauseGame = function(){
+        stompClient.send("/topic/pause", {}, JSON.stringify("juego pausado por admin"));
+    }
+
+    self.finishGame = function(){
+        stompClient.send("/topic/gameOver", {}, JSON.stringify("juego terminado por admin"));
+    }
+
+    self.pauseEveryGame = function(){
+        swal("El admin ha pausado la partida", "Por favor esperar que el admin reanude la partida ", "warning", {
+            button : false,
+            className : "power-alert",
+            closeOnClickOutside: false
+        });
+    }
 
     self.actualizeTable = function(){
         self.players(JSON.parse($.ajax({type:'GET', url:'../player', async:false}).responseText).slice(0,5));
@@ -235,8 +257,12 @@ var game = (function(){
         var winner = gameApiclient.getWinner();
         console.log(winner);
         if(winner!="none"){
-            location.href = location.href.slice(0,-15) + "/html/gameover.html";
+            self.gameOver();
         }
+    }
+
+    self.gameOver = function(){
+        location.href = location.href.slice(0,-15) + "/html/gameover.html";
     }
 
     self.actualizeLocalTable = function(disponibles, totales){

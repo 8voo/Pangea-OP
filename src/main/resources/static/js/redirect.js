@@ -1,9 +1,9 @@
 async function signIn(){
     const config = {
         auth: {
-            clientId: '4d509855-b16c-4287-b8a3-72448421a496',
-            authority: 'https://login.microsoftonline.com/common/',
-            redirectUri: 'https://questik-api-1669770264047.azurewebsites.net/start.html'
+            clientId: '4decc0c0-8022-4698-bc7e-6d2a498d6f5b',
+            authority: 'https://login.microsoftonline.com/368e69d2-6e39-4f7d-a4c2-c1af88eeab75/',
+            redirectUri: 'https://pangeaop.azurewebsites.net'
         }
     };
     var client = new Msal.UserAgentApplication(config);

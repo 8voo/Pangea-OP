@@ -44,3 +44,11 @@
     width: 49.2px;
     height: 49.2px;
 }
+
+#admin{
+    position: absolute;
+    top: 2%;
+    left:2%;
+    font-family: 'Peralta', cursive;
+    color: #ffcb7c;
+}

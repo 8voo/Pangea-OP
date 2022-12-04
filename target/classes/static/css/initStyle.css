@@ -51,4 +51,6 @@
     left:2%;
     font-family: 'Peralta', cursive;
     color: #ffcb7c;
+    text-decoration: underline;
+    cursor: pointer;
 }

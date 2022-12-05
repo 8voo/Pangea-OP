@@ -6,12 +6,12 @@ async function signIn(){
             redirectUri: 'http://localhost:8080/html/admin.html'
         }
     };
-    var client = new Msal.UserAgentApplication(config);
+    var client = new Msal.UserKAgentApplication(config);
     var request = {
         scopes: ['user.read']
     };
-    localStorage.iniciado = JSON.stringify(true);
     let loginResponse = await client.loginPopup(request);
+    location.href += "html/admin.html"
     localStorage.infoUsuario = JSON.stringify(loginResponse.account.username);
     console.dir(loginResponse);
 }

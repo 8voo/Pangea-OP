@@ -6,15 +6,8 @@ var powerIcons = {
 
 var game = (function(){
     var self = this;
-    self.nickname = ko.observable(JSON.parse(localStorage.nickname));
     console.log(self.nickname)
     self.iniciado = JSON.parse(localStorage.iniciado);
-    self.currentPlayer = JSON.parse($.ajax({type:'GET', url:'../player/' + self.nickname(), async:false}).responseText);
-    self.currentColor = self.currentPlayer.color;
-    self.clickSum = 1;
-    self.soldadosDisponibles = ko.observable(0);
-    self.soldadosTotal = ko.observable(10);
-    self.nacionesConquistadas = ko.observable(1);
     self.iconImage = ko.observable(powerIcons["TripleClick"]);
     self.activePower = "TripleClick";
     self.players = ko.observable(JSON.parse($.ajax({type:'GET', url:'../player', async:false}).responseText).slice(0,5));
@@ -121,36 +114,6 @@ var game = (function(){
               });}
     }
 
-    self.atacarNacion = function(currentNation){
-        gameApiclient.changeColor(currentNation, self.currentColor).then(() => {
-            document.querySelector("#" + currentNation).style.backgroundColor = self.currentColor; 
-            stompClient.send("/topic/nations", {}, JSON.stringify("cambio de color"));   
-        }).catch(error => console.log("No se pudo cambiar color de la nacion " + currentNation));
-
-        gameApiclient.addNation(self.currentPlayer.nickname, currentNation).then(()=>{
-            self.nacionesConquistadas(gameApiclient.getNationsByNickname(self.currentPlayer.nickname).length);
-        }).catch(error => console.log("No se añadio la nacion" + currentNation));
-        
-        let nacion = gameApiclient.getNationById(currentNation);
-        gameApiclient.deleteNation(nacion.id, nacion.leader).then(() =>{        
-        }).catch(error => console.log("No se pudo eliminar la nacion " + currentNation));
-
-        gameApiclient.setLeader(currentNation, self.currentPlayer.nickname).then(() => {
-            // console.log("Se seteo como lider a" + self.currentPlayer.nickname + "a ls nacion" + currentNation)
-        }).catch(error => console.log("No se pudo setear como lider a " + self.currentPlayer.nickname));
-
-        
-    },
-
-    //Con cada click al boton de crear, suma la cantidad de soldados
-    //predeterminados a la cantidad de soldados disponibles del usuario
-    self.addDisponibles = function(){
-        gameApiclient.addSoldier(self.nickname(), self.clickSum).then(() => {
-            self.actualizeLocalTable(gameApiclient.getSoldiers(self.nickname())[0], gameApiclient.getSoldiers(self.nickname())[1]);
-            stompClient.send("/topic/soldiers", {}, JSON.stringify("añadio soldados stomp"));
-            // console.log("Soldado añadido");
-        }).catch(error => console.log("No se pudo añadir el soldado"));
-    },
 
 
     self.setNextPower = function(){
@@ -265,10 +228,6 @@ var game = (function(){
     self.gameOver = function(){
         gameApiclient.deletePlayers().then(() => {
             location.href = location.href.slice(0,-15) + "/html/gameover.html";
-            localStorage.nickname = JSON.stringify("");
-            localStorage.iniciado = JSON.stringify(false);
-        }).catch(error => console.log("No se pudo terminar el juego"));
-        gameApiclient.deleteNation().then(() => {
         }).catch(error => console.log("No se pudo terminar el juego"));
         
 
@@ -286,7 +245,6 @@ var game = (function(){
     })();
 
     return{
-        addDisponibles:addDisponibles,
         changePower:changePower
     }
 });

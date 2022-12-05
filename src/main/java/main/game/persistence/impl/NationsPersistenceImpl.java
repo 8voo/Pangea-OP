@@ -75,4 +75,8 @@ public class NationsPersistenceImpl implements NationsPersistence{
         return "none";
     }
 
+    @Override
+    public void deleteAll(){
+        naciones = new ArrayList<Nation>();
+    }
 }

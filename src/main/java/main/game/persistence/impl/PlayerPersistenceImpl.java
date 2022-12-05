@@ -87,4 +87,9 @@ public class PlayerPersistenceImpl implements PlayerPersistence{
         player.deleteNation(idNation);
 	}
 
+    @Override
+    public void deleteAll(){
+        players = new ArrayList<Player>();
+    }
+
 }

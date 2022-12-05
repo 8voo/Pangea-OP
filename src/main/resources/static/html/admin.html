@@ -38,33 +38,11 @@
                         </tbody>
                     </table>
                 </div>
-                <div class="container" id="boton-crear-container">
-                    <button id="crear" data-bind="click : addDisponibles">Crear Soldados</button>
-                </div>
             </div>
         </div>
-        <div id="game-controller">
-            <div id="info-personal" class="container">
-                <table id="tabla-perso" class="tabla-datos">
-                    <thead>
-                        <tr>
-                            <th>Mi nickname</th>
-                            <th>Soldados disponibles</th>
-                            <th>Naciones conquistadas</th>
-                            <th>Total soldados</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <td data-bind="text : nickname"></td>
-                        <td data-bind="text : soldadosDisponibles"></td>
-                        <td data-bind="text : nacionesConquistadas"></td>
-                        <td data-bind="text : soldadosTotal"></td>
-                    </tbody>
-                </table>
-            </div>
-            </div>
             <div id="poder-activo" class="container">
-                <h2 class="tittle">Poder Activo:</h2>
+                <button class="boton" data-bind="click : pauseGame">Pausa</button>
+                <button class="boton" data-bind="click : finishGame">Finish game</button>
             </div>
         </div>
     </div>
@@ -73,7 +51,7 @@
     <script src = "..\lib\knockout.js"></script>
     <script src = "..\lib\jquery.js"></script>
     <script src="..\js\gameApiclient.js"></script>
-    <script src = "..\js\game.js"></script>
+    <script src = "..\js\admin.js"></script>
     
 </body>
 </html>

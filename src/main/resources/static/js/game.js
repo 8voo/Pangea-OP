@@ -7,6 +7,7 @@ var powerIcons = {
 var game = (function(){
     var self = this;
     self.nickname = ko.observable(JSON.parse(localStorage.nickname));
+    console.log(self.nickname)
     self.iniciado = JSON.parse(localStorage.iniciado);
     self.currentPlayer = JSON.parse($.ajax({type:'GET', url:'../player/' + self.nickname(), async:false}).responseText);
     self.currentColor = self.currentPlayer.color;
@@ -262,7 +263,15 @@ var game = (function(){
     }
 
     self.gameOver = function(){
-        location.href = location.href.slice(0,-15) + "/html/gameover.html";
+        gameApiclient.deletePlayers().then(() => {
+            location.href = location.href.slice(0,-15) + "/html/gameover.html";
+            localStorage.nickname = JSON.stringify("");
+            localStorage.iniciado = JSON.stringify(false);
+        }).catch(error => console.log("No se pudo terminar el juego"));
+        gameApiclient.deleteNation().then(() => {
+        }).catch(error => console.log("No se pudo terminar el juego"));
+        
+
     }
 
     self.actualizeLocalTable = function(disponibles, totales){

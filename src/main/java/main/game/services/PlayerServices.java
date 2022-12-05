@@ -55,4 +55,8 @@ public class PlayerServices {
     public void removeNation(String idNation, String nickname){
         pp.removeNation(idNation, nickname);
     }
+
+    public void deleteAll(){
+        pp.deleteAll();
+    }
 }

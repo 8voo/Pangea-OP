@@ -20,4 +20,6 @@ public interface NationsPersistence {
     
     public String allConquered();
 
+    public void deleteAll();
+
 }

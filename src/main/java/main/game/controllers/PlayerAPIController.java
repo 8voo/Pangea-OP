@@ -100,4 +100,9 @@ public class PlayerAPIController {
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
 
+    @RequestMapping(method = RequestMethod.DELETE)
+    public ResponseEntity<?> deleteAllPlayer(){
+        pgs.deleteAll();
+        return new ResponseEntity<>(HttpStatus.ACCEPTED);
+    }
 }

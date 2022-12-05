@@ -166,6 +166,24 @@ var gameApiclient = (function(){
         url:"../power/activePlayers",
         async:false
       }).responseText)
+    },
+
+    deletePlayers : function(){
+      return new Promise((resolve) => {
+        resolve($.ajax({
+          type:"DELETE",
+          url: "../player"
+        }))
+      })
+    },
+
+    deleteNation:function(){
+      return new Promise((resolve) => {
+        resolve($.ajax({
+          type:"DELETE",
+          url: "../nation"
+        }))
+      })
     }
   }  
 })();

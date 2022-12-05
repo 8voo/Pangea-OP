@@ -43,4 +43,8 @@ public class NationServices {
     public String allConquered(){
         return np.allConquered();
     }
+
+    public void deleteAll(){
+        np.deleteAll();
+    }
 }

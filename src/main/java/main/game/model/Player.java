@@ -6,8 +6,8 @@ import java.util.Set;
 public class Player {
     private int id;
     private String nickname="";
-    private int soldadosDisponibles = 1000;
-    private int soldadosTotales = 1000;
+    private int soldadosDisponibles = 10;
+    private int soldadosTotales = 10;
     private Set<String> naciones = new HashSet<String>();
     private boolean listo = false;
     private String color;

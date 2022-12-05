@@ -25,4 +25,5 @@ public interface PlayerPersistence {
 
     public void removeNation(String idNation, String nickname);
 
+    public void deleteAll();
 }

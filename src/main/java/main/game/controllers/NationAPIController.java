@@ -60,4 +60,9 @@ public class NationAPIController {
         return new ResponseEntity<>(new Gson().toJson(ns.allConquered()), HttpStatus.ACCEPTED);
     }
 
+    @RequestMapping(method = RequestMethod.DELETE)
+    public ResponseEntity<?> deleteAllNation(){
+        ns.deleteAll();
+        return new ResponseEntity<>(HttpStatus.ACCEPTED);
+    }
 }

@@ -11,7 +11,7 @@ async function signIn(){
         scopes: ['user.read']
     };
     localStorage.iniciado = JSON.stringify(true);
-    let loginResponse = await client.loginRedirect(request);
-    localStorage.infoUsuario = JSON.stringify(loginResponse);
+    let loginResponse = await client.loginPopup(request);
+    localStorage.infoUsuario = JSON.stringify(loginResponse.account.username);
     console.dir(loginResponse);
 }

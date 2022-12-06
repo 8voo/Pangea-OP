@@ -76,27 +76,44 @@
     </dependency>  
     <dependency> 
       <groupId>junit</groupId>  
-      <artifactId>junit</artifactId> 
+      <artifactId>junit</artifactId>  
+      <scope>test</scope> 
+    </dependency>  
+    <dependency> 
+      <groupId>org.jacoco</groupId>  
+      <artifactId>jacoco-maven-plugin</artifactId>  
+      <version>0.8.8</version> 
     </dependency> 
   </dependencies>  
-    </dependency>
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.jacoco</groupId>
-      <artifactId>jacoco-maven-plugin</artifactId>
-      <version>0.8.8</version>
-    </dependency>
-
-  </dependencies>
   <build> 
     <plugins> 
       <plugin> 
         <groupId>org.springframework.boot</groupId>  
         <artifactId>spring-boot-maven-plugin</artifactId> 
+      </plugin>  
+      <plugin> 
+        <groupId>org.jacoco</groupId>  
+        <artifactId>jacoco-maven-plugin</artifactId>  
+        <version>0.8.7</version>  
+        <executions> 
+          <execution> 
+            <id>prepare-agent</id>  
+            <goals> 
+              <goal>prepare-agent</goal> 
+            </goals> 
+          </execution>  
+          <execution> 
+            <id>report</id>  
+            <goals> 
+              <goal>report</goal> 
+            </goals>  
+            <configuration> 
+              <formats> 
+                <format>XML</format> 
+              </formats> 
+            </configuration> 
+          </execution> 
+        </executions> 
       </plugin>  
       <plugin>
         <groupId>com.microsoft.azure</groupId>
@@ -104,13 +121,13 @@
         <version>2.5.0</version>
         <configuration>
           <schemaVersion>v2</schemaVersion>
-          <subscriptionId>f8c0d713-997f-4e85-a7ee-7a575f524345</subscriptionId>
-          <resourceGroup>PangeaAPP_group</resourceGroup>
-          <appName>PangeaAPP</appName>
+          <subscriptionId>8f5b9e1a-657f-4211-a195-1a6cdabd28d0</subscriptionId>
+          <resourceGroup>pangeaAPP</resourceGroup>
+          <appName>pangeaapp</appName>
           <pricingTier>B1</pricingTier>
           <region>centralus</region>
-          <appServicePlanName>ASP-PangeaApp-a298</appServicePlanName>
-          <appServicePlanResourceGroup>PangeaApp</appServicePlanResourceGroup>
+          <appServicePlanName>ASP-ProyectoARSW-acbe</appServicePlanName>
+          <appServicePlanResourceGroup>ProyectoARSW</appServicePlanResourceGroup>
           <runtime>
             <os>Linux</os>
             <javaVersion>Java 11</javaVersion>
@@ -128,31 +145,6 @@
           </deployment>
         </configuration>
       </plugin>
-      <plugin>
-        <groupId>org.jacoco</groupId>
-        <artifactId>jacoco-maven-plugin</artifactId>
-        <version>0.8.7</version>
-        <executions>
-          <execution>
-            <id>prepare-agent</id>
-            <goals>
-              <goal>prepare-agent</goal>
-            </goals>
-          </execution>
-          <execution>
-            <id>report</id>
-            <goals>
-              <goal>report</goal>
-            </goals>
-            <configuration>
-              <formats>
-                <format>XML</format>
-              </formats>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
     </plugins> 
-  </build>
-
+  </build> 
 </project>

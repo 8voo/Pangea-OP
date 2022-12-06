@@ -33,7 +33,6 @@ var app = (function(){
             if(allready){
                 localStorage.nickname = JSON.stringify($("#nickname").val());
                 localStorage.iniciado = JSON.stringify(false);
-                console.log("local" + localStorage.iniciado);
                 location.href += "html/game.html"
                 console.log("Todos listos");
             }

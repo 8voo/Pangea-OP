@@ -6,12 +6,13 @@
     <title>Pangea</title>
     <link rel="stylesheet" href="..\css\styles.css" type="text/css">
     <link rel="stylesheet" href="..\css\gameStyles.css" type="text/css">
+    <link rel="stylesheet" href="../css/gamoverStyles.css" type="text/css">
     <script src="/webjars/jquery/jquery.min.js"></script>
     <script src="/webjars/sockjs-client/sockjs.min.js"></script>
     <script src="/webjars/stomp-websocket/stomp.min.js"></script>
 </head>
 <body >
-    <div>
+    <div id = "admin-view">
         <div id="game-container">
             <div class="container" id="map">
                 <div id="game-map">
@@ -43,6 +44,17 @@
             <div id="poder-activo" class="container">
                 <button class="boton" data-bind="click : pauseGame">Pausa</button>
                 <button class="boton" data-bind="click : finishGame">Finish game</button>
+            </div>
+        </div>
+    </div>
+    <div id="not-logged" style="display: none;">
+        <h1 class="tracking-in-expand-fwd" id="header">No autorizado</h1>
+        <div class="winner-div scale-in-hor-center">
+            <div>
+                <div><h2> ERROR </h2></div>
+                <div>
+                    <h3>Debe logearse primero</h3>
+                </div>
             </div>
         </div>
     </div>

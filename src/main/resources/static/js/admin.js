@@ -4,10 +4,24 @@ var powerIcons = {
     Freeze : "../img/winter.png"
 }
 
+var admins = ["engosuca@hotmail.com", "yesid@engosucahotmail.onmicrosoft.com"]
+
 var game = (function(){
     var self = this;
-    console.log(self.nickname)
-    self.iniciado = JSON.parse(localStorage.iniciado);
+    console.log("info " + localStorage.infoUsuario)
+    self.iniciado = false;
+    if (localStorage.infoUsuario != undefined){
+        admins.forEach(admin => {
+            if (admin == JSON.parse(localStorage.infoUsuario).toLowerCase()){
+                self.iniciado = true;
+                console.log("messi");
+            }
+        });
+    }
+    if (iniciado == false){
+        document.getElementById("admin-view").style.display = "none";
+        document.getElementById("not-logged").style.display = "block";
+    }
     self.iconImage = ko.observable(powerIcons["TripleClick"]);
     self.activePower = "TripleClick";
     self.players = ko.observable(JSON.parse($.ajax({type:'GET', url:'../player', async:false}).responseText).slice(0,5));

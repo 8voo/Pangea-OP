@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>NationAPIController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Pangea_API</a> &gt; <a href="index.source.html" class="el_package">main.game.controllers</a> &gt; <span class="el_source">NationAPIController.java</span></div><h1>NationAPIController.java</h1><pre class="source lang-java linenums">package main.game.controllers;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.*;
+
+import com.google.gson.Gson;
+
+import main.game.services.NationServices;
+
+@Service
+@RestController
+@RequestMapping(value = &quot;/nation&quot;)
+<span class="nc" id="L16">public class NationAPIController {</span>
+    
+    @Autowired 
+    NationServices ns;
+
+
+    //GET
+    @RequestMapping(method = RequestMethod.GET)
+    public ResponseEntity&lt;?&gt; getAllNations(){
+<span class="nc" id="L25">        return new ResponseEntity&lt;&gt;(new Gson().toJson(ns.getAllNations()), HttpStatus.ACCEPTED);</span>
+    }
+
+    @RequestMapping(path = &quot;{nation}&quot;,method = RequestMethod.GET)
+    public ResponseEntity&lt;?&gt; getNationById(@PathVariable String nation){
+<span class="nc" id="L30">        return new ResponseEntity&lt;&gt;(new Gson().toJson(ns.getNationById(nation)), HttpStatus.ACCEPTED);</span>
+    }
+
+    //PUT
+    @RequestMapping(path=&quot;{nation}&quot;, method = RequestMethod.PUT)
+    public ResponseEntity&lt;?&gt; changeColor(@PathVariable String nation, @RequestBody String color){
+<span class="nc" id="L36">        ns.changeColor(nation, color);</span>
+<span class="nc" id="L37">        return new ResponseEntity&lt;&gt;(HttpStatus.CREATED);</span>
+    }
+
+    @RequestMapping(path=&quot;{nation}/block&quot;, method = RequestMethod.PUT)
+    public ResponseEntity&lt;?&gt; blockNation(@PathVariable String nation, @RequestBody boolean block){
+<span class="nc" id="L42">        ns.changeBlockNation(nation);</span>
+<span class="nc" id="L43">        return new ResponseEntity&lt;&gt;(HttpStatus.CREATED);</span>
+    }
+
+    @RequestMapping(path = &quot;{nation}/soldiers&quot;, method = RequestMethod.PUT)
+    public ResponseEntity&lt;?&gt; setSoldiers(@PathVariable String nation, @RequestBody int newSoldiers){
+<span class="nc" id="L48">        ns.setSoldiers(nation, newSoldiers);</span>
+<span class="nc" id="L49">        return new ResponseEntity&lt;&gt;(HttpStatus.ACCEPTED);</span>
+    }
+
+    @RequestMapping(path = &quot;{nation}/leader&quot;, method = RequestMethod.PUT)
+    public ResponseEntity&lt;?&gt; setLeader(@PathVariable String nation, @RequestBody String nickname){
+<span class="nc" id="L54">        ns.setLeader(nation, nickname);</span>
+<span class="nc" id="L55">        return new ResponseEntity&lt;&gt;(HttpStatus.ACCEPTED);</span>
+    }
+
+    @RequestMapping(path=&quot;winner&quot;, method = RequestMethod.GET)
+    public ResponseEntity&lt;?&gt; getWinner(){
+<span class="nc" id="L60">        return new ResponseEntity&lt;&gt;(new Gson().toJson(ns.allConquered()), HttpStatus.ACCEPTED);</span>
+    }
+
+    @RequestMapping(method = RequestMethod.DELETE)
+    public ResponseEntity&lt;?&gt; deleteAllNation(){
+<span class="nc" id="L65">        ns.deleteAll();</span>
+<span class="nc" id="L66">        return new ResponseEntity&lt;&gt;(HttpStatus.ACCEPTED);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

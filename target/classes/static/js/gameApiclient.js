@@ -177,7 +177,7 @@ var gameApiclient = (function(){
       })
     },
 
-    deleteNation:function(){
+    deleteAllNation:function(){
       return new Promise((resolve) => {
         resolve($.ajax({
           type:"DELETE",

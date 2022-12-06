@@ -76,7 +76,7 @@ var game = (function(){
                             className : "nation-alert"
                         }).then((value) => {
                             if (value == null){}
-                            else if (value != ""){
+                            else if (value > nacion.soldados){
                                 gameApiclient.substractSoldiers(self.currentPlayer.nickname, value, "disponibles").then(() => {
                                     // var nationAtacked = gameApiclient.getNationById(currentNation);
                                     gameApiclient.substractSoldiers(self.currentPlayer.nickname, nacion.soldados, "totales").then(() => {
@@ -94,7 +94,12 @@ var game = (function(){
                                     })
                                     atacarNacion(currentNation);
                                 });
-                            } else {
+                            } else if (value != "") {
+                                swal(`Por favor, ingrese un numero de soldados valido.`, {
+                                    className: "nation-alert"
+                                });
+                            } 
+                            else {
                                 swal(`Por favor, agregue el numero de soldados con el que va a atacar.`, {
                                     className: "nation-alert"
                                 });
@@ -133,6 +138,7 @@ var game = (function(){
         
         let nacion = gameApiclient.getNationById(currentNation);
         gameApiclient.deleteNation(nacion.id, nacion.leader).then(() =>{        
+            
         }).catch(error => console.log("No se pudo eliminar la nacion " + currentNation));
 
         gameApiclient.setLeader(currentNation, self.currentPlayer.nickname).then(() => {
@@ -257,18 +263,19 @@ var game = (function(){
         }
         var winner = gameApiclient.getWinner();
         console.log(winner);
-        if(winner!="none"){
+        if(winner!="none" && winner !=""){
             self.gameOver();
         }
     }
 
     self.gameOver = function(){
-        gameApiclient.deletePlayers().then(() => {
-            location.href = location.href.slice(0,-15) + "/html/gameover.html";
+        location.href = location.href.slice(0,-15) + "/html/gameover.html";
             localStorage.nickname = JSON.stringify("");
             localStorage.iniciado = JSON.stringify(false);
+        gameApiclient.deletePlayers().then(() => {
+            
         }).catch(error => console.log("No se pudo terminar el juego"));
-        gameApiclient.deleteNation().then(() => {
+        gameApiclient.deleteAllNation().then(() => {
         }).catch(error => console.log("No se pudo terminar el juego"));
         
 

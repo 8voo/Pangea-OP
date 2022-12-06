@@ -1,5 +1,4 @@
 main\game\model\Player.class
-test\NationTest.class
 main\gameAPI\PangeaAPIAplication.class
 main\game\model\poderes\DeleteSoldados.class
 main\game\services\NationServices.class
@@ -10,12 +9,10 @@ main\game\persistence\impl\PowerPersistenceimpl.class
 main\game\model\poderes\TripleClick.class
 main\game\persistence\impl\PlayerPersistenceImpl.class
 main\game\controllers\PowerAPIController.class
-test\PowerTest.class
 main\game\controllers\PlayerAPIController.class
 main\game\persistence\NationsPersistence.class
 main\gameAPI\RealTimeGameConfig.class
 main\game\persistence\PlayerPersistence.class
-test\PlayerTest.class
 main\game\model\poderes\Freeze.class
 main\game\persistence\impl\NationsPersistenceImpl.class
 main\game\model\Poder.class

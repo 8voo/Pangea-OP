@@ -33,7 +33,9 @@ var app = (function(){
             if(allready){
                 localStorage.nickname = JSON.stringify($("#nickname").val());
                 localStorage.iniciado = JSON.stringify(false);
-                location.href += "html/game.html"
+                if ($("#nickname").val()){
+                    location.href += "html/game.html"
+                }
                 console.log("Todos listos");
             }
         }

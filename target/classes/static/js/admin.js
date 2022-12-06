@@ -10,6 +10,7 @@ var game = (function(){
     var self = this;
     console.log("info " + localStorage.infoUsuario)
     self.iniciado = false;
+    self.players = ko.observable(JSON.parse($.ajax({type:'GET', url:'../player', async:false}).responseText).slice(0,5));
     if (localStorage.infoUsuario != undefined){
         admins.forEach(admin => {
             if (admin == JSON.parse(localStorage.infoUsuario).toLowerCase()){
@@ -24,7 +25,6 @@ var game = (function(){
     }
     self.iconImage = ko.observable(powerIcons["TripleClick"]);
     self.activePower = "TripleClick";
-    self.players = ko.observable(JSON.parse($.ajax({type:'GET', url:'../player', async:false}).responseText).slice(0,5));
     
     //Añade las naciones al mapa y asigna una nacion de inicio a cada jugador
     self.añadirNacionesMapa = function(){

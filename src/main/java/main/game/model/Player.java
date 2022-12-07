@@ -3,7 +3,12 @@ package main.game.model;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+
+@Document("Player")
 public class Player {
+    @Id
     private int id;
     private String nickname="";
     private int soldadosDisponibles = 10;

@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 import main.game.model.Nation;
 import main.game.persistence.NationsPersistence;
 
-@Component
+
 public class NationsPersistenceImpl implements NationsPersistence{
 
     private ArrayList<Nation> naciones = new ArrayList<Nation>();

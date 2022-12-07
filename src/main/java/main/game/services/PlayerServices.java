@@ -4,14 +4,17 @@ import java.util.ArrayList;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 import org.springframework.stereotype.Service;
 
 import main.game.model.Player;
 import main.game.persistence.PlayerPersistence;
 
+
+@EnableMongoRepositories
 @Service
 public class PlayerServices {
-    @Autowired 
+    @Autowired
     private PlayerPersistence pp = null;
 
     public void setPangeaPersistence(PlayerPersistence pp){

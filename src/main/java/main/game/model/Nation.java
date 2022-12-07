@@ -1,6 +1,11 @@
 package main.game.model;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+
+@Document("Nation")
 public class Nation {
+    @Id
     private String id;
     private int soldados = 10;
     private String color = "transparent";

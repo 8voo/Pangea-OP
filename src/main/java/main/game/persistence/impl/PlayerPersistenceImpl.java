@@ -3,6 +3,7 @@ package main.game.persistence.impl;
 import java.util.ArrayList;
 import java.util.Set;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import main.game.model.Player;

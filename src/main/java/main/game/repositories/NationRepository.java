@@ -6,7 +6,7 @@ import main.game.model.Nation;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 @Repository
-@Component("ns")
+@Component
 public interface NationRepository extends MongoRepository<Nation, String>{
     
 }

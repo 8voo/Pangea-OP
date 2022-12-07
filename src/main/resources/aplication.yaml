@@ -1,6 +1,0 @@
-spring:
-  data:
-    mongodb:
-      user: admin
-      password: admin
-      uri: mongodb+srv://admin:admin@pangea.dnmazrl.mongodb.net/?retryWrites=true&w=majority

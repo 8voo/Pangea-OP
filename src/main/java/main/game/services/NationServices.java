@@ -16,17 +16,17 @@ import main.game.repositories.NationRepository;
 public class NationServices {
 
     @Autowired
-    NationRepository ns;
+    NationRepository nationRepository;
 
 
     public List<Nation> getAllNations(){
-        List<Nation> naciones = ns.findAll();
+        List<Nation> naciones = nationRepository.findAll();
         if(naciones.size() <= 0){
             for (int i = 1; i <= 35; i++){
-                ns.save(new Nation("nation" + i));
+                nationRepository.save(new Nation("nation" + i));
             }
         }
-        return ns.findAll();
+        return nationRepository.findAll();
     }
 
     // public Nation getNationById(String id){

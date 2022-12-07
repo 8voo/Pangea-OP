@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 import main.game.model.Player;
 
 @Repository
-@Component("playerRepository")
+@Component
 public interface PlayerRepository extends MongoRepository<Player, Integer>{
     
 }

@@ -2,6 +2,7 @@ package main.game.services;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -29,38 +30,53 @@ public class NationServices {
         return nationRepository.findAll();
     }
 
-    // public Nation getNationById(String id){
-    //     return np.getNationById(id);
-    // }
+    public Nation getNationById(String id){
+        System.out.println(nationRepository.findById(id).get().toString());
+        return nationRepository.findById(id).get();
+    }
 
-    // public ArrayList<Nation> getAllNations(){
-    //     return np.getAllNations();
-    // }
+    public void changeBlockNation(String idNation){
+        Nation nation = nationRepository.findById(idNation).get();
+        synchronized(nation){
+            nation.changeBloqueado();
+            nationRepository.save(nation);
+        }
+    }
 
-    // public void changeBlockNation(String idNation){
-    //     Nation nation = np.getNationById(idNation);
-    //     synchronized(nation){
-    //         np.changeBlockNation(nation);
-    //     }
-    // }
+    public void changeColor(String id, String color){
+        Nation nation = nationRepository.findById(id).get();
+        nation.setColor(color);
+        nationRepository.save(nation);
+    }
 
-    // public void changeColor(String id, String color){
-    //     np.changeColor(id, color);
-    // }
-
-    // public void setSoldiers(String nationID, int newSoldiers){
-    //     np.setSoldados(np.getNationById(nationID), newSoldiers);
-    // }
+    public void setSoldiers(String nationID, int newSoldiers){
+        Nation nation = nationRepository.findById(nationID).get();
+        nation.setSoldados(newSoldiers);
+        nationRepository.save(nation);
+    }
     
-    // public void setLeader(String nation, String nickname){
-    //     np.setLeader(nation, nickname);
-    // }
+    public void setLeader(String nationId, String nickname){
+        Nation nation = nationRepository.findById(nationId).get();
+        nation.setColor(nickname);
+        nationRepository.save(nation);
+    }
 
-    // public String allConquered(){
-    //     return np.allConquered();
-    // }
+    public String allConquered(){
+        List<Nation> naciones = nationRepository.findAll();
+        String lider = naciones.get(0).getleader();
+        boolean isWinner = true;
+        for(Nation n:naciones){
+            if(!(n.getleader().equals(lider))){
+                isWinner = false;
+            }
+        }
+        if(isWinner){
+            return lider;
+        }
+        return "none";
+    }
 
-    // public void deleteAll(){
-    //     np.deleteAll();
-    // }
+    public void deleteAll(){
+        nationRepository.deleteAll();
+    }
 }

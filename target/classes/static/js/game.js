@@ -21,9 +21,7 @@ var game = (function(){
     
     //Añade las naciones al mapa y asigna una nacion de inicio a cada jugador
     self.añadirNacionesMapa = function(){
-        gameApiclient.getNations();
         var gameMap = $("#game-map");
-
         for (i = 1; i <= 35; i++){
             gameMap.append('<div class="grid-item" id = "nation' + i + '"><div class = "nationSoldiers">10</div></div>');
             var currentNation = "nation" + i;
@@ -39,17 +37,19 @@ var game = (function(){
         if (!iniciado){
             var nacionesDisponibles = [1, 35, 5, 31, 18]
             players().forEach(player => {
+                console.log("player " + player + "Player color " + player.color);
                 var nationToUse = nacionesDisponibles.shift();
-                console.log("nation" + nationToUse)
-                console.log(player.color);
+
                 gameApiclient.changeColor("nation" + nationToUse, player.color).then(() => {
-                    
+                    console.log("nation " + nationToUse + " " + player.color)
                     document.querySelector("#nation" + nationToUse).style.backgroundColor = player.color; 
                     stompClient.send("/topic/nations", {}, JSON.stringify("cambio de color"));
-                }).//catch(error => console.log("No se pudo cambiar color de la nacion " + nationToUse));
+                })//.catch(error => console.log("No se pudo cambiar color de la nacion " + nationToUse));
+
                 gameApiclient.addNation(player.nickname, "nation" + nationToUse).then(()=>{
                     self.nacionesConquistadas(gameApiclient.getNationsByNickname(player.nickname).length);
                 }).catch(error => console.log("No se pudo agregar la nacion " + nationToUse));
+                
                 gameApiclient.setLeader("nation" + nationToUse,player.nickname).then(() =>{})
             });
             self.iniciado = true;
@@ -81,7 +81,7 @@ var game = (function(){
                             if (value == null){}
                             else if (value > nacion.soldados){
                                 gameApiclient.substractSoldiers(self.currentPlayer.nickname, value, "disponibles").then(() => {
-                                    // var nationAtacked = gameApiclient.getNationById(currentNation);
+                                    var nationAtacked = gameApiclient.getNationById(currentNation);
                                     gameApiclient.substractSoldiers(self.currentPlayer.nickname, nacion.soldados, "totales").then(() => {
                                         // console.log("Se resto " + nacion.soldados + " soldados a totales de " + nationAtacked.leader);
                                     }).catch(error => console.log("No se pudo restar soldados al lider anterior"));
@@ -142,7 +142,7 @@ var game = (function(){
         let nacion = gameApiclient.getNationById(currentNation);
         gameApiclient.deleteNation(nacion.id, nacion.leader).then(() =>{        
             
-        }).catch(error => console.log("No se pudo eliminar la nacion " + currentNation));
+        })//.catch(error => console.log("No se pudo eliminar la nacion " + currentNation));
 
         gameApiclient.setLeader(currentNation, self.currentPlayer.nickname).then(() => {
             // console.log("Se seteo como lider a" + self.currentPlayer.nickname + "a ls nacion" + currentNation)

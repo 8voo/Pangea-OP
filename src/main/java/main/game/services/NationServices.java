@@ -42,6 +42,7 @@ public class NationServices {
 
     public void changeColor(String id, String color){
         Nation nation = nationRepository.findById(id).get();
+        System.out.println("id nation " + nation.getId() + "color a poner nation " + color);
         nation.setColor(color);
         nationRepository.save(nation);
     }

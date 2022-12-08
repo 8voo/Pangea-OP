@@ -39,7 +39,6 @@ var gameApiclient = (function(){
     },
 
     deleteNation: function(nation,nickname){
-      console.log("alo" + nation)
       return new Promise((resolve) => {
         resolve($.ajax({
           type:"PUT",

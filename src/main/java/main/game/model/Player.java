@@ -3,13 +3,14 @@ package main.game.model;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document("Player")
 public class Player {
     @Id
-    private int id;
+    private ObjectId id;
     private String nickname="";
     private int soldadosDisponibles = 10;
     private int soldadosTotales = 10;
@@ -21,7 +22,7 @@ public class Player {
         this.naciones.remove(idNation);
     }
 
-    public void setId(int id){
+    public void setId(ObjectId id){
         this.id = id;
     }
 
@@ -64,7 +65,7 @@ public class Player {
     public boolean isListo(){
         return listo;
     }
-    public int getId(){
+    public ObjectId getId(){
         return this.id;
     }
 

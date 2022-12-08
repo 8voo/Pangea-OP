@@ -107,11 +107,13 @@ var gameApiclient = (function(){
     },
 
     getNations:function(){
-      return JSON.parse($.ajax({
-        type:'GET',
-        url: "../nation", 
-        async:false
-      }).responseText); 
+      return new Promise((resolve) => {
+        resolve(JSON.parse($.ajax({
+          type:'GET',
+          url: "../nation", 
+          async:false
+        }).responseText))
+      })
     },
 
     getNationById:function(id){

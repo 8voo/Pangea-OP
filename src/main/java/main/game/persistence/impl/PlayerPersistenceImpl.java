@@ -53,7 +53,7 @@ public class PlayerPersistenceImpl implements PlayerPersistence{
         for(int i = 0; i < players.size(); i++){
             Player p = players.get(i);
             p.setColor(colors[i]);
-            p.setId(players.indexOf(p));
+            // p.setId(players.indexOf(p));
         }
 
         return true;

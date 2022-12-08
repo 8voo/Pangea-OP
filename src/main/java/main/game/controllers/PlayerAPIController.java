@@ -70,9 +70,7 @@ public class PlayerAPIController {
     //PUT
     @RequestMapping(path="{nickname}" ,method = RequestMethod.PUT)
     public ResponseEntity<?> changeToReady(@PathVariable String nickname, @RequestBody boolean state){
-        Player player = pgs.getPlayer(nickname);
-        System.out.println(player);
-        player.setListo(state);
+        pgs.changeToListo(nickname, state);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 

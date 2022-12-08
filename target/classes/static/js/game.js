@@ -255,28 +255,30 @@ var game = (function(){
     }
 
     self.actualizeMap = function(){
-        var nations = JSON.parse($.ajax({type:'GET', url:'../nation', async:false}).responseText);
-        for (i = 0; i < 35; i++){
-            var nacion = document.querySelector("#nation" + (i +1));
-            nacion.style.backgroundColor = nations[i].color; 
-            nacion.firstChild.textContent = nations[i].soldados;
-        }
-        var winner = gameApiclient.getWinner();
-        console.log(winner);
-        if(winner!="none" && winner !=""){
-            self.gameOver();
-        }
+        var nations = gameApiclient.getNations().then(() => {
+            for (i = 0; i < 35; i++){
+                console.log(nations[i])
+                var nacion = document.querySelector("#nation" + (i +1));
+                nacion.style.backgroundColor = nations[i].color; 
+                nacion.firstChild.textContent = nations[i].soldados;
+            }
+            var winner = gameApiclient.getWinner();
+            console.log(winner);
+            if(winner!="none" && winner !=""){
+                self.gameOver();
+            }
+        })//.catch(error => console.log("No se pudo consultar naciones"));;
     }
 
     self.gameOver = function(){
-        location.href = location.href.slice(0,-15) + "/html/gameover.html";
-            localStorage.nickname = JSON.stringify("");
-            localStorage.iniciado = JSON.stringify(false);
-        gameApiclient.deletePlayers().then(() => {
+        // location.href = location.href.slice(0,-15) + "/html/gameover.html";
+        //     localStorage.nickname = JSON.stringify("");
+        //     localStorage.iniciado = JSON.stringify(false);
+        // gameApiclient.deletePlayers().then(() => {
             
-        }).catch(error => console.log("No se pudo terminar el juego"));
-        gameApiclient.deleteAllNation().then(() => {
-        }).catch(error => console.log("No se pudo terminar el juego"));
+        // }).catch(error => console.log("No se pudo terminar el juego"));
+        // gameApiclient.deleteAllNation().then(() => {
+        // }).catch(error => console.log("No se pudo terminar el juego"));
         
 
     }

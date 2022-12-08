@@ -7,7 +7,6 @@ var powerIcons = {
 var game = (function(){
     var self = this;
     self.nickname = ko.observable(JSON.parse(localStorage.nickname));
-    console.log(self.nickname)
     self.iniciado = JSON.parse(localStorage.iniciado);
     self.currentPlayer = JSON.parse($.ajax({type:'GET', url:'../player/' + self.nickname(), async:false}).responseText);
     self.currentColor = self.currentPlayer.color;
@@ -17,7 +16,7 @@ var game = (function(){
     self.nacionesConquistadas = ko.observable(1);
     self.iconImage = ko.observable(powerIcons["TripleClick"]);
     self.activePower = "TripleClick";
-    self.players = ko.observable(JSON.parse($.ajax({type:'GET', url:'../player', async:false}).responseText).slice(0,5));
+    self.players = ko.observable(gameApiclient.getPlayers());
     
     //Añade las naciones al mapa y asigna una nacion de inicio a cada jugador
     self.añadirNacionesMapa = function(){
@@ -36,21 +35,15 @@ var game = (function(){
         //Asigna una nacion a cada jugador
         if (!iniciado){
             var nacionesDisponibles = [1, 35, 5, 31, 18]
-            players().forEach(player => {
+            self.players().forEach(player => {
                 console.log("player " + player + "Player color " + player.color);
+
                 var nationToUse = nacionesDisponibles.shift();
-
-                gameApiclient.changeColor("nation" + nationToUse, player.color).then(() => {
-                    console.log("nation " + nationToUse + " " + player.color)
-                    document.querySelector("#nation" + nationToUse).style.backgroundColor = player.color; 
-                    stompClient.send("/topic/nations", {}, JSON.stringify("cambio de color"));
-                })//.catch(error => console.log("No se pudo cambiar color de la nacion " + nationToUse));
-
                 gameApiclient.addNation(player.nickname, "nation" + nationToUse).then(()=>{
                     self.nacionesConquistadas(gameApiclient.getNationsByNickname(player.nickname).length);
+                    stompClient.send("/topic/nations", {}, JSON.stringify("cambio de color"));
                 }).catch(error => console.log("No se pudo agregar la nacion " + nationToUse));
-                
-                gameApiclient.setLeader("nation" + nationToUse,player.nickname).then(() =>{})
+
             });
             self.iniciado = true;
             localStorage.iniciado = JSON.stringify(self.iniciado);
@@ -130,26 +123,32 @@ var game = (function(){
     }
 
     self.atacarNacion = function(currentNation){
-        gameApiclient.changeColor(currentNation, self.currentColor).then(() => {
-            document.querySelector("#" + currentNation).style.backgroundColor = self.currentColor; 
-            stompClient.send("/topic/nations", {}, JSON.stringify("cambio de color"));   
-        }).catch(error => console.log("No se pudo cambiar color de la nacion " + currentNation));
+        var nacion = gameApiclient.getNationById(currentNation);
+        console.log(nacion.id);
+        playerList = gameApiclient.getPlayers();
+        playerList.forEach(player => {
+            naciones = player.naciones;
+            naciones.forEach(nation => {
+                if(nation == nacion.id){
+                    console.log(nacion.id)
+                    lider = player.nickname;
+                    gameApiclient.deleteNation(nacion.id, lider).then(() =>{        
+            
+                    })
+                }
+            });
+        });
 
         gameApiclient.addNation(self.currentPlayer.nickname, currentNation).then(()=>{
             self.nacionesConquistadas(gameApiclient.getNationsByNickname(self.currentPlayer.nickname).length);
         }).catch(error => console.log("No se añadio la nacion" + currentNation));
         
-        let nacion = gameApiclient.getNationById(currentNation);
-        gameApiclient.deleteNation(nacion.id, nacion.leader).then(() =>{        
-            
-        })//.catch(error => console.log("No se pudo eliminar la nacion " + currentNation));
-
-        gameApiclient.setLeader(currentNation, self.currentPlayer.nickname).then(() => {
-            // console.log("Se seteo como lider a" + self.currentPlayer.nickname + "a ls nacion" + currentNation)
-        }).catch(error => console.log("No se pudo setear como lider a " + self.currentPlayer.nickname));
+        
+        //.catch(error => console.log("No se pudo eliminar la nacion " + currentNation));
 
         
     },
+
 
     //Con cada click al boton de crear, suma la cantidad de soldados
     //predeterminados a la cantidad de soldados disponibles del usuario
@@ -215,8 +214,7 @@ var game = (function(){
         console.info('Connecting to WS...');
         var socket = new SockJS('/stompendstart');
         stompClient = Stomp.over(socket);
-        
-        //subscribe to /topic/TOPICXX when connections succeed
+
         stompClient.connect({}, function (frame) {
             console.log('Connected: ' + frame);
             stompClient.subscribe('/topic/soldiers', function () {
@@ -258,30 +256,59 @@ var game = (function(){
     }
 
     self.actualizeMap = function(){
+        // gameApiclient.getPlayers().then((resolve) => {
+        //     self.players(resolve)
+        //     self.players().forEach(player => {
+        //         nationsToPaint = player.nations
+        //         nationsToPaint.forEach(nation => {
+        //             nationId = document.querySelector("#" + nation.id);
+        //             nationId.style.backgroundColor = player.color;
+        //         });
+        //     });
+        //     if (gameApiclient.getWinner() != "none" && gameApiclient.getWinner() != ""){
+        //         self.gameOver();
+        //     }
+        // });
+        
+        // self.nations(JSON.parse(gameApiclient.getNations())).then((resolve) => {
+        //     nations().forEach(nation => {
+        //         nationId = document.querySelector("#" + nation.id);
+        //         nationId.firstChild.textContent = nation.soldados;
+        //     });
+        // });
+
+        
+        self.players(gameApiclient.getPlayers())
+        self.players().forEach(player => {
+            nationsToPaint = player.naciones
+            nationsToPaint.forEach(nation => {
+                nationId = document.querySelector("#" + nation);
+                nationId.style.backgroundColor = player.color;
+            });
+        });
+        if (gameApiclient.getWinner() != "none" && gameApiclient.getWinner() != ""){
+            self.gameOver();
+        }
+        
         gameApiclient.getNations().then((nations) => {
             nations = JSON.parse(nations)
-            for (i = 0; i < 35; i++){
-                var nacion = document.querySelector("#nation" + (i +1));
-                nacion.style.backgroundColor = nations[i].color; 
-                nacion.firstChild.textContent = nations[i].soldados;
-            }
-            var winner = gameApiclient.getWinner();
-            console.log(winner);
-            if(winner!="none" && winner !=""){
-                self.gameOver();
-            }
-        }).catch(error => console.log("No se pudo consultar naciones"));;
+            nations.forEach(nation => {
+                nationId = document.querySelector("#" + nation.id);
+                nationId.firstChild.textContent = nation.soldados;
+            });
+        });
+
     }
 
     self.gameOver = function(){
-        // location.href = location.href.slice(0,-15) + "/html/gameover.html";
-        //     localStorage.nickname = JSON.stringify("");
-        //     localStorage.iniciado = JSON.stringify(false);
-        // gameApiclient.deletePlayers().then(() => {
+        location.href = location.href.slice(0,-15) + "/html/gameover.html";
+            localStorage.nickname = JSON.stringify("");
+            localStorage.iniciado = JSON.stringify(false);
+        gameApiclient.deletePlayers().then(() => {
             
-        // }).catch(error => console.log("No se pudo terminar el juego"));
-        // gameApiclient.deleteAllNation().then(() => {
-        // }).catch(error => console.log("No se pudo terminar el juego"));
+        }).catch(error => console.log("No se pudo terminar el juego"));
+        gameApiclient.deleteAllNation().then(() => {
+        }).catch(error => console.log("No se pudo terminar el juego"));
         
 
     }

@@ -2,6 +2,14 @@ var gameApiclient = (function(){
   return {
 
     //Player
+    getPlayers:function(){
+      return JSON.parse($.ajax({
+        type:'GET', 
+        url:'../player', 
+        async:false}).responseText).slice(0,5)
+    },
+
+
     addSoldier:function(nickname, quant){
         var quantity = JSON.stringify({quant});
         return new Promise((resolve) => {
@@ -138,7 +146,7 @@ var gameApiclient = (function(){
     getWinner: function(){
       return JSON.parse($.ajax({
         type:'GET',
-        url:"../nation/winner",
+        url:"../player/winner",
         async:false
       }).responseText)
     },

@@ -31,6 +31,7 @@ public class PlayerAPIController {
     // GET
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<?> getAllPlayers(){
+        System.out.println("players " + pgs.getAllPlayers());
         return new ResponseEntity<>(new Gson().toJson(pgs.getAllPlayers()), HttpStatus.ACCEPTED);
     }
 
@@ -102,5 +103,11 @@ public class PlayerAPIController {
     public ResponseEntity<?> deleteAllPlayer(){
         pgs.deleteAll();
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
+    }
+
+    
+    @RequestMapping(path="winner", method = RequestMethod.GET)
+    public ResponseEntity<?> getWinner(){
+        return new ResponseEntity<>(new Gson().toJson(pgs.getWinner()), HttpStatus.ACCEPTED);
     }
 }

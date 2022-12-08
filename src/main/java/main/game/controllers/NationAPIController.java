@@ -31,12 +31,6 @@ public class NationAPIController {
     }
 
     //PUT
-    @RequestMapping(path="{nation}", method = RequestMethod.PUT)
-    public ResponseEntity<?> changeColor(@PathVariable String nation, @RequestBody String color){
-        ns.changeColor(nation, color);
-        return new ResponseEntity<>(HttpStatus.CREATED);
-    }
-
     @RequestMapping(path="{nation}/block", method = RequestMethod.PUT)
     public ResponseEntity<?> blockNation(@PathVariable String nation, @RequestBody boolean block){
         ns.changeBlockNation(nation);
@@ -47,17 +41,6 @@ public class NationAPIController {
     public ResponseEntity<?> setSoldiers(@PathVariable String nation, @RequestBody int newSoldiers){
         ns.setSoldiers(nation, newSoldiers);
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
-    }
-
-    @RequestMapping(path = "{nation}/leader", method = RequestMethod.PUT)
-    public ResponseEntity<?> setLeader(@PathVariable String nation, @RequestBody String nickname){
-        ns.setLeader(nation, nickname);
-        return new ResponseEntity<>(HttpStatus.ACCEPTED);
-    }
-
-    @RequestMapping(path="winner", method = RequestMethod.GET)
-    public ResponseEntity<?> getWinner(){
-        return new ResponseEntity<>(new Gson().toJson(ns.allConquered()), HttpStatus.ACCEPTED);
     }
 
     @RequestMapping(method = RequestMethod.DELETE)

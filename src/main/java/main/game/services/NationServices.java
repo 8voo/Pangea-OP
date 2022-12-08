@@ -40,38 +40,10 @@ public class NationServices {
         }
     }
 
-    public void changeColor(String id, String color){
-        Nation nation = nationRepository.findById(id).get();
-        System.out.println("id nation " + nation.getId() + "color a poner nation " + color);
-        nation.setColor(color);
-        nationRepository.save(nation);
-    }
-
     public void setSoldiers(String nationID, int newSoldiers){
         Nation nation = nationRepository.findById(nationID).get();
         nation.setSoldados(newSoldiers);
         nationRepository.save(nation);
-    }
-    
-    public void setLeader(String nationId, String nickname){
-        Nation nation = nationRepository.findById(nationId).get();
-        nation.setleader(nickname);
-        nationRepository.save(nation);
-    }
-
-    public String allConquered(){
-        List<Nation> naciones = nationRepository.findAll();
-        String lider = naciones.get(0).getleader();
-        boolean isWinner = true;
-        for(Nation n:naciones){
-            if(!(n.getleader().equals(lider))){
-                isWinner = false;
-            }
-        }
-        if(isWinner){
-            return lider;
-        }
-        return "none";
     }
 
     public void deleteAll(){

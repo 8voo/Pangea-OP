@@ -126,6 +126,16 @@ public class PlayerServices {
         playerRepository.save(player);
     }
 
+    public String getWinner(){
+        List<Player> playerList = playerRepository.findAll();
+        for(Player p: playerList){
+            if(p.getNaciones().size() == 35){
+                return p.getNickname();
+            }
+        }
+        return "none";
+    }
+
     public void deleteAll(){
         playerRepository.deleteAll();
     }

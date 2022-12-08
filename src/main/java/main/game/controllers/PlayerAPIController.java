@@ -24,7 +24,7 @@ public class PlayerAPIController {
     //POST
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<?> addNewPlayer(@RequestBody Player p){
-        pgs.addNewPlayer(p);
+        pgs.addPlayer(p);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
@@ -63,7 +63,7 @@ public class PlayerAPIController {
         if(player == null){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }else{
-            return new ResponseEntity<>(new Gson().toJson(pgs.getNations(player)), HttpStatus.ACCEPTED);
+            return new ResponseEntity<>(new Gson().toJson(pgs.getNacionesPlayer(player)), HttpStatus.ACCEPTED);
         }
     }
 
@@ -78,7 +78,7 @@ public class PlayerAPIController {
 
     @RequestMapping(path = "{nickname}/soldiers", method = RequestMethod.PUT)
     public ResponseEntity<?> addSoldiers(@PathVariable String nickname, @RequestBody String quant){
-        pgs.addOneSol(pgs.getPlayer(nickname));
+        pgs.addSoldier(pgs.getPlayer(nickname));
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 

@@ -1,6 +1,7 @@
 package main.game.services;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,57 +10,82 @@ import org.springframework.stereotype.Service;
 
 import main.game.model.Player;
 import main.game.persistence.PlayerPersistence;
+import main.game.repositories.PlayerRepository;
 
 
-@EnableMongoRepositories
+@EnableMongoRepositories(basePackageClasses = PlayerRepository.class)
 @Service
 public class PlayerServices {
+
     @Autowired
-    private PlayerPersistence pp = null;
+    PlayerRepository playerRepository;
 
-    public void setPangeaPersistence(PlayerPersistence pp){
-        this.pp = pp;
-    }
+    private String[] colors = {"red", "blue", "green", "purple", "yellow"};
     
-    public boolean allReady(){
-        return pp.allReady();
+    public void addPlayer(Player player){
+        playerRepository.save(player);
     }
 
-    public void addNewPlayer(Player player){
-        pp.addPlayer(player);
-    }
-
-    public void addOneSol(Player player){
+    public void addSoldier(Player player){
         synchronized(player){
-            pp.addSoldier(player);
+            player.addOneSol();
         }
     }
 
-    public ArrayList<Player> getAllPlayers(){
-        return pp.getAllPlayers();
+    public List<Player> getAllPlayers(){
+        return playerRepository.findAll();
     }
 
     public Player getPlayer(String nickname){
-        return pp.getPlayer(nickname);
-    }
-    
-    public void substractSoldiers(String nickname, int subsoldiers, String tipo){
-        pp.substractSoldiers(nickname, subsoldiers, tipo);
-    }
-
-    public Set<String> getNations(Player player){
-        return pp.getNacionesPlayer(player);
+        for(Player p : playerRepository.findAll()){
+            if(p.getNickname().equals(nickname)){
+                return p;
+            }
+        }
+        return null;
     }
 
-    public void addNacion(String idNacion, String nickname){
-        pp.addNacion(idNacion, nickname);
+    public boolean allReady() {
+        for(Player p: playerRepository.findAll()){
+            if(p.isListo() == false){
+                return false;
+            }
+        }
+        for(int i = 0; i < playerRepository.findAll().size(); i++){
+            Player p = playerRepository.findAll().get(i);
+            p.setColor(colors[i]);
+            p.setId(playerRepository.findAll().indexOf(p));
+        }
+
+        return true;
     }
 
-    public void removeNation(String idNation, String nickname){
-        pp.removeNation(idNation, nickname);
+    public Set<String> getNacionesPlayer(Player player) {
+        return player.getNaciones();
     }
+
+    public void substractSoldiers(String nickname, int subsoldiers, String tipo) {
+        Player player = getPlayer(nickname);
+        synchronized(player){
+            if(tipo.equals("totales")){
+                player.setSoldadosTotales(player.getSoldadosTotales() - subsoldiers);
+            }else{
+                player.setSoldadosDisponibles(player.getSoldadosDisponibles() - subsoldiers);       
+            }
+        }
+    }
+
+    public void addNacion(String idNation, String nickname) {
+        Player player = getPlayer(nickname);
+        player.addNacion(idNation);
+    }
+
+	public void removeNation(String idNation, String nickname) {
+		Player player = getPlayer(nickname);
+        player.deleteNation(idNation);
+	}
 
     public void deleteAll(){
-        pp.deleteAll();
+        playerRepository.deleteAll();
     }
 }

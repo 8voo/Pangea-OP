@@ -46,7 +46,7 @@ var game = (function(){
                     
                     document.querySelector("#nation" + nationToUse).style.backgroundColor = player.color; 
                     stompClient.send("/topic/nations", {}, JSON.stringify("cambio de color"));
-                }).catch(error => console.log("No se pudo cambiar color de la nacion " + nationToUse));
+                }).//catch(error => console.log("No se pudo cambiar color de la nacion " + nationToUse));
                 gameApiclient.addNation(player.nickname, "nation" + nationToUse).then(()=>{
                     self.nacionesConquistadas(gameApiclient.getNationsByNickname(player.nickname).length);
                 }).catch(error => console.log("No se pudo agregar la nacion " + nationToUse));
@@ -88,7 +88,7 @@ var game = (function(){
                                     if(nacion.leader){
                                         gameApiclient.substractSoldiers(nacion.leader, nacion.soldados, "totales").then(() => {
                                             console.log("Se resto " + nacion.soldados + " soldados a totales de " + nationAtacked.leader);
-                                        }).catch(error => console.log("No se pudo restar soldados al lider anterior"));
+                                        })//.catch(error => console.log("No se pudo restar soldados al lider anterior"));
                                     }
                                     self.actualizeLocalTable(gameApiclient.getSoldiers(self.currentPlayer.nickname)[0], gameApiclient.getSoldiers(self.currentPlayer.nickname)[1]);
                                     stompClient.send("/topic/soldiers", {}, JSON.stringify("se restaron" + value));

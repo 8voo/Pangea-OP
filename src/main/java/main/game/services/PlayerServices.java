@@ -54,6 +54,7 @@ public class PlayerServices {
         for(int i = 0; i < playerRepository.findAll().size(); i++){
             Player p = playerRepository.findAll().get(i);
             p.setColor(colors[i]);
+            playerRepository.save(p);
             // p.setId(playerRepository.findAll().indexOf(p));
         }
 

@@ -28,8 +28,8 @@ public class NationServices {
     }
 
     public Nation getNationById(String id){
-        System.out.println(nationRepository.findById(id).get().toString());
-        return nationRepository.findById(id).get();
+        Nation nation = nationRepository.findById(id).get();
+        return nation;
     }
 
     public void changeBlockNation(String idNation){
@@ -54,7 +54,7 @@ public class NationServices {
     
     public void setLeader(String nationId, String nickname){
         Nation nation = nationRepository.findById(nationId).get();
-        nation.setColor(nickname);
+        nation.setleader(nickname);
         nationRepository.save(nation);
     }
 

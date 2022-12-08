@@ -40,7 +40,10 @@ var game = (function(){
             var nacionesDisponibles = [1, 35, 5, 31, 18]
             players().forEach(player => {
                 var nationToUse = nacionesDisponibles.shift();
+                console.log("nation" + nationToUse)
+                console.log(player.color);
                 gameApiclient.changeColor("nation" + nationToUse, player.color).then(() => {
+                    
                     document.querySelector("#nation" + nationToUse).style.backgroundColor = player.color; 
                     stompClient.send("/topic/nations", {}, JSON.stringify("cambio de color"));
                 }).catch(error => console.log("No se pudo cambiar color de la nacion " + nationToUse));
@@ -255,9 +258,9 @@ var game = (function(){
     }
 
     self.actualizeMap = function(){
-        var nations = gameApiclient.getNations().then(() => {
+        gameApiclient.getNations().then((nations) => {
+            nations = JSON.parse(nations)
             for (i = 0; i < 35; i++){
-                console.log(nations[i])
                 var nacion = document.querySelector("#nation" + (i +1));
                 nacion.style.backgroundColor = nations[i].color; 
                 nacion.firstChild.textContent = nations[i].soldados;
@@ -267,7 +270,7 @@ var game = (function(){
             if(winner!="none" && winner !=""){
                 self.gameOver();
             }
-        })//.catch(error => console.log("No se pudo consultar naciones"));;
+        }).catch(error => console.log("No se pudo consultar naciones"));;
     }
 
     self.gameOver = function(){

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Player.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Pangea_API</a> &gt; <a href="index.source.html" class="el_package">main.game.model</a> &gt; <span class="el_source">Player.java</span></div><h1>Player.java</h1><pre class="source lang-java linenums">package main.game.model;
+
+import java.util.HashSet;
+import java.util.Set;
+
+<span class="nc" id="L6">public class Player {</span>
+    private int id;
+<span class="nc" id="L8">    private String nickname=&quot;&quot;;</span>
+<span class="nc" id="L9">    private int soldadosDisponibles = 10;</span>
+<span class="nc" id="L10">    private int soldadosTotales = 10;</span>
+<span class="nc" id="L11">    private Set&lt;String&gt; naciones = new HashSet&lt;String&gt;();</span>
+<span class="nc" id="L12">    private boolean listo = false;</span>
+    private String color;
+
+    public void deleteNation(String idNation){
+<span class="nc" id="L16">        this.naciones.remove(idNation);</span>
+<span class="nc" id="L17">    }</span>
+
+    public void setId(int id){
+<span class="nc" id="L20">        this.id = id;</span>
+<span class="nc" id="L21">    }</span>
+
+    public void setSoldadosTotales(int soldados){
+<span class="nc" id="L24">        this.soldadosTotales = soldados;</span>
+<span class="nc" id="L25">    }</span>
+
+    public void addNacion(String nacion){
+<span class="nc" id="L28">        this.naciones.add(nacion);</span>
+<span class="nc" id="L29">    }</span>
+
+    public void setSoldadosDisponibles(int soldados){
+<span class="nc" id="L32">        this.soldadosDisponibles = soldados;</span>
+<span class="nc" id="L33">    }</span>
+
+    public void setListo(boolean listo){
+<span class="nc" id="L36">        this.listo = listo;</span>
+<span class="nc" id="L37">    }</span>
+
+    public void setNickname(String nickname){
+<span class="nc" id="L40">        this.nickname = nickname;</span>
+<span class="nc" id="L41">    }</span>
+
+    public void setColor(String color){
+<span class="nc" id="L44">        this.color = color;</span>
+<span class="nc" id="L45">    }</span>
+
+    public int getSoldadosDisponibles(){
+<span class="nc" id="L48">        return this.soldadosDisponibles;</span>
+    }
+
+    public int getSoldadosTotales(){
+<span class="nc" id="L52">        return this.soldadosTotales;</span>
+    }
+
+    public Set&lt;String&gt; getNaciones(){
+<span class="nc" id="L56">        return this.naciones;</span>
+    }
+    
+    public boolean isListo(){
+<span class="nc" id="L60">        return listo;</span>
+    }
+    public int getId(){
+<span class="nc" id="L63">        return this.id;</span>
+    }
+
+    public String getNickname(){
+<span class="nc" id="L67">        return this.nickname;</span>
+    }
+
+    public String getColor(){
+<span class="nc" id="L71">        return this.color;</span>
+    }
+
+    public void addOneSol(){
+<span class="nc" id="L75">        this.soldadosDisponibles+=1;</span>
+<span class="nc" id="L76">        this.soldadosTotales+=1;</span>
+<span class="nc" id="L77">    }</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

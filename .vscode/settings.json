@@ -1,0 +1,4 @@
+{
+    "appService.preDeployTask": "package:pangea-api",
+    "appService.deploySubpath": "target/pangea-api-0.0.1-SNAPSHOT.jar"
+}
